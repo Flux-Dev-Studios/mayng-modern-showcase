@@ -38,7 +38,7 @@ const Navigation = () => {
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-6 bg-white/10 backdrop-blur-xl border border-white/20 rounded-lg px-6 py-3">
+          <div className="hidden md:flex items-center gap-6 bg-white/5 backdrop-blur-xl rounded-2xl px-6 py-3">
             {navLinks.map((link) => (
               <Link
                 key={link.path}
