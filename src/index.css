@@ -42,6 +42,7 @@ All colors MUST be HSL.
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     --shadow-elegant: 0 10px 40px -10px hsl(15 75% 55% / 0.15);
     --shadow-hover: 0 20px 60px -15px hsl(15 75% 55% / 0.25);
+    --glass-gradient: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
   }
 
   .dark {

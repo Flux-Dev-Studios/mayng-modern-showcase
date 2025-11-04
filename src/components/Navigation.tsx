@@ -32,8 +32,10 @@ const Navigation = () => {
   return (
     <nav
       className={cn(
-        "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
-        isScrolled ? "bg-background/95 backdrop-blur-md shadow-sm" : "bg-transparent"
+        "fixed top-0 left-0 right-0 z-50 transition-all duration-500",
+        isScrolled 
+          ? "bg-background/70 backdrop-blur-xl shadow-elegant border-b border-white/10" 
+          : "bg-gradient-to-b from-black/30 to-transparent backdrop-blur-sm"
       )}
     >
       <div className="container mx-auto px-6 lg:px-12">
@@ -49,7 +51,7 @@ const Navigation = () => {
                 key={link.path}
                 to={link.path}
                 className={cn(
-                  "text-sm font-medium transition-colors relative py-2",
+                  "text-sm font-medium transition-all duration-300 relative py-2 group",
                   location.pathname === link.path
                     ? "text-primary"
                     : "text-foreground hover:text-primary"
@@ -57,13 +59,11 @@ const Navigation = () => {
               >
                 {link.name}
                 {location.pathname === link.path && (
-                  <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary" />
+                  <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary animate-scale-in" />
                 )}
+                <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
               </Link>
             ))}
-            <Button variant="hero" size="default" asChild>
-              <Link to="/contact">Let's Talk</Link>
-            </Button>
           </div>
 
           {/* Mobile Menu Button */}
@@ -78,25 +78,22 @@ const Navigation = () => {
 
         {/* Mobile Navigation */}
         {isOpen && (
-          <div className="md:hidden py-6 animate-fade-in-up">
+          <div className="md:hidden py-6 animate-fade-in-up bg-background/90 backdrop-blur-xl rounded-b-2xl">
             <div className="flex flex-col gap-4">
               {navLinks.map((link) => (
                 <Link
                   key={link.path}
                   to={link.path}
                   className={cn(
-                    "text-base font-medium py-3 px-4 rounded-lg transition-colors",
+                    "text-base font-medium py-3 px-4 rounded-lg transition-all duration-300",
                     location.pathname === link.path
                       ? "bg-primary text-primary-foreground"
-                      : "text-foreground hover:bg-secondary"
+                      : "text-foreground hover:bg-white/10 hover:backdrop-blur-sm"
                   )}
                 >
                   {link.name}
                 </Link>
               ))}
-              <Button variant="hero" size="lg" className="mt-2" asChild>
-                <Link to="/contact">Let's Talk</Link>
-              </Button>
             </div>
           </div>
         )}
