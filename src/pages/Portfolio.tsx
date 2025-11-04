@@ -1,4 +1,5 @@
 import Navigation from "@/components/Navigation";
+import PageHero from "@/components/PageHero";
 import project1 from "@/assets/project-1.jpg";
 import project2 from "@/assets/project-2.jpg";
 import project3 from "@/assets/project-3.jpg";
@@ -52,17 +53,13 @@ const Portfolio = () => {
   return (
     <div className="min-h-screen bg-background">
       <Navigation />
+      <PageHero 
+        title="Our Portfolio" 
+        subtitle="Explore our collection of transformative design projects across Nigeria"
+      />
       
-      <main className="pt-32 pb-24">
+      <main className="py-24">
         <div className="container mx-auto px-6 lg:px-12">
-          <div className="text-center mb-16 animate-fade-in-up">
-            <h1 className="font-heading font-bold text-5xl md:text-6xl lg:text-7xl mb-6 text-foreground">
-              Our Portfolio
-            </h1>
-            <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-              Explore our collection of transformative design projects across Nigeria
-            </p>
-          </div>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
             {projects.map((project, index) => (

@@ -1,4 +1,5 @@
 import Navigation from "@/components/Navigation";
+import PageHero from "@/components/PageHero";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 
@@ -6,14 +7,14 @@ const About = () => {
   return (
     <div className="min-h-screen bg-background">
       <Navigation />
+      <PageHero 
+        title="About Designs By May" 
+        subtitle="Transforming spaces into stunning reflections of our clients' vision"
+      />
       
-      <main className="pt-32 pb-24">
+      <main className="py-24">
         <div className="container mx-auto px-6 lg:px-12 max-w-4xl">
           <div className="animate-fade-in-up">
-            <h1 className="font-heading font-bold text-5xl md:text-6xl lg:text-7xl mb-6 text-foreground">
-              About Designs By May
-            </h1>
-            <div className="h-1 w-24 bg-primary mb-12" />
             
             <div className="prose prose-lg max-w-none space-y-6 text-muted-foreground leading-relaxed">
               <p className="text-xl text-foreground font-medium">
