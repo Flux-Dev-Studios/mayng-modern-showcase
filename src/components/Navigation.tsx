@@ -38,18 +38,16 @@ const Navigation = () => {
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-4">
+          <div className="hidden md:flex items-center gap-6 bg-white/10 backdrop-blur-xl border border-white/20 rounded-lg px-6 py-3">
             {navLinks.map((link) => (
               <Link
                 key={link.path}
                 to={link.path}
                 className={cn(
-                  "text-sm font-medium transition-all duration-300 relative py-2 px-4 rounded-lg group",
-                  "bg-white/10 backdrop-blur-xl border border-white/20",
-                  "hover:bg-white/20",
+                  "text-sm font-medium transition-all duration-300 relative py-1",
                   location.pathname === link.path
-                    ? "text-primary bg-white/20"
-                    : "text-white"
+                    ? "text-primary"
+                    : "text-white hover:text-primary"
                 )}
               >
                 {link.name}
