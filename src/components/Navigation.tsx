@@ -68,18 +68,16 @@ const Navigation = () => {
         {/* Mobile Navigation */}
         {isOpen && (
           <div className="md:hidden py-6 animate-fade-in-up">
-            <div className="flex flex-col gap-4">
+            <div className="bg-white/5 backdrop-blur-xl rounded-2xl px-6 py-4 flex flex-col gap-2">
               {navLinks.map((link) => (
                 <Link
                   key={link.path}
                   to={link.path}
                   className={cn(
-                    "text-base font-medium py-3 px-4 rounded-lg transition-all duration-300",
-                    "bg-white/10 backdrop-blur-xl border border-white/20",
-                    "hover:bg-white/20",
+                    "text-base font-medium py-2 transition-all duration-300",
                     location.pathname === link.path
-                      ? "text-primary bg-white/20"
-                      : "text-white"
+                      ? "text-primary"
+                      : "text-white hover:text-primary"
                   )}
                 >
                   {link.name}

@@ -52,6 +52,9 @@ const Hero = () => {
         </div>
       </div>
 
+      {/* Minimal Fade Overlay */}
+      <div className="absolute inset-0 bg-black/20" />
+
       {/* Content */}
       <div className="relative z-10 container mx-auto px-6 lg:px-12 pt-32 pb-20 text-center animate-fade-in-up">
         <h1 className="font-heading font-bold text-5xl md:text-7xl lg:text-8xl mb-6 text-white">
