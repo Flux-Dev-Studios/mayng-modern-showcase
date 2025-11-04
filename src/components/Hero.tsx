@@ -55,19 +55,19 @@ const Hero = () => {
 
       {/* Content */}
       <div className="relative z-10 container mx-auto px-6 lg:px-12 pt-32 pb-20 text-center animate-fade-in-up">
-        <h1 className="font-heading font-bold text-5xl md:text-7xl lg:text-8xl mb-6 text-foreground">
+        <h1 className="font-heading font-bold text-5xl md:text-7xl lg:text-8xl mb-6 text-white">
           Transforming Spaces
           <br />
           <span className="text-primary">in Nigeria</span>
         </h1>
-        <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-10 leading-relaxed">
+        <p className="text-lg md:text-xl text-white max-w-2xl mx-auto mb-10 leading-relaxed">
           Premium interior design, bespoke furniture, and curated art that reflect your unique vision and elevate your living experience.
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-          <Button variant="hero" size="lg" asChild>
+          <Button variant="hero" size="lg" asChild className="shadow-none">
             <Link to="/portfolio">View Our Work</Link>
           </Button>
-          <Button variant="outline" size="lg" asChild>
+          <Button variant="outline" size="lg" asChild className="shadow-none">
             <Link to="/contact">Get Started</Link>
           </Button>
         </div>
