@@ -3,6 +3,7 @@ import PageHero from "@/components/PageHero";
 import project1 from "@/assets/project-1.jpg";
 import project2 from "@/assets/project-2.jpg";
 import project3 from "@/assets/project-3.jpg";
+import heroPortfolio from "@/assets/hero-portfolio.jpg";
 
 const projects = [
   {
@@ -56,6 +57,7 @@ const Portfolio = () => {
       <PageHero 
         title="Our Portfolio" 
         subtitle="Explore our collection of transformative design projects across Nigeria"
+        backgroundImage={heroPortfolio}
       />
       
       <main className="py-24">

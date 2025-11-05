@@ -3,6 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import logo from "@/assets/logo-3d.png";
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -33,8 +34,8 @@ const Navigation = () => {
     <nav className="fixed top-0 left-0 right-0 z-50">
       <div className="container mx-auto px-6 lg:px-12">
         <div className="flex items-center justify-between h-20">
-          <Link to="/" className="font-heading font-bold text-2xl text-white hover:text-primary transition-colors">
-            Designs By May
+          <Link to="/">
+            <img src={logo} alt="Designs By May" className="h-12 w-auto" />
           </Link>
 
           {/* Desktop Navigation */}

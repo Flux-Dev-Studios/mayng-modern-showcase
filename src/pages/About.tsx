@@ -2,6 +2,7 @@ import Navigation from "@/components/Navigation";
 import PageHero from "@/components/PageHero";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
+import heroAbout from "@/assets/hero-about.jpg";
 
 const About = () => {
   return (
@@ -10,6 +11,7 @@ const About = () => {
       <PageHero 
         title="About Designs By May" 
         subtitle="Transforming spaces into stunning reflections of our clients' vision"
+        backgroundImage={heroAbout}
       />
       
       <main className="py-24">

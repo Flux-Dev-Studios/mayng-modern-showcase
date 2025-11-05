@@ -6,6 +6,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Mail, Phone, MapPin } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
+import heroContact from "@/assets/hero-contact.jpg";
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -31,6 +32,7 @@ const Contact = () => {
       <PageHero 
         title="Let's Talk" 
         subtitle="Ready to transform your space? Get in touch and let's start creating something extraordinary together."
+        backgroundImage={heroContact}
       />
       
       <main className="py-24">

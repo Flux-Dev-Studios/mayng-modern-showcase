@@ -3,6 +3,7 @@ import PageHero from "@/components/PageHero";
 import { Home, Armchair, Palette, Lightbulb, Layout, PackageCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
+import heroServices from "@/assets/hero-services.jpg";
 
 const services = [
   {
@@ -50,6 +51,7 @@ const ServicesPage = () => {
       <PageHero 
         title="Our Services" 
         subtitle="Comprehensive design solutions tailored to transform your space from concept to completion"
+        backgroundImage={heroServices}
       />
       
       <main className="py-24">
