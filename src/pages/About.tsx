@@ -9,7 +9,7 @@ const About = () => {
     <div className="min-h-screen bg-background">
       <Navigation />
       <PageHero 
-        title="About Designs By May" 
+        title="About" 
         subtitle="Transforming spaces into stunning reflections of our clients' vision"
         backgroundImage={heroAbout}
       />
