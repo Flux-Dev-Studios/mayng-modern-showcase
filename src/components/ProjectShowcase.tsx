@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
+import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import project1 from "@/assets/project-1.jpg";
 import project2 from "@/assets/project-2.jpg";
 import project3 from "@/assets/project-3.jpg";
@@ -26,10 +27,18 @@ const projects = [
 ];
 
 const ProjectShowcase = () => {
+  const { ref: titleRef, isVisible: titleVisible } = useScrollAnimation({ threshold: 0.3 });
+  const { ref: gridRef, isVisible: gridVisible } = useScrollAnimation({ threshold: 0.1 });
+
   return (
     <section className="py-24 lg:py-32 bg-background">
       <div className="container mx-auto px-6 lg:px-12">
-        <div className="text-center mb-16 animate-fade-in-up">
+        <div 
+          ref={titleRef}
+          className={`text-center mb-16 transition-all duration-700 ${
+            titleVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+          }`}
+        >
           <h2 className="font-heading font-bold text-4xl md:text-5xl lg:text-6xl mb-4 text-foreground">
             Featured Projects
           </h2>
@@ -38,13 +47,20 @@ const ProjectShowcase = () => {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-12 mb-12">
+        <div 
+          ref={gridRef}
+          className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-12 mb-12"
+        >
           {projects.map((project, index) => (
             <Link
               key={project.id}
               to="/portfolio"
-              className="group relative overflow-hidden rounded-2xl shadow-[var(--shadow-elegant)] hover:shadow-[var(--shadow-hover)] transition-all duration-500 animate-scale-in"
-              style={{ animationDelay: `${index * 150}ms` }}
+              className={`group relative overflow-hidden rounded-2xl shadow-[var(--shadow-elegant)] hover:shadow-[var(--shadow-hover)] transition-all duration-700 ${
+                gridVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+              }`}
+              style={{ 
+                transitionDelay: gridVisible ? `${index * 150}ms` : '0ms'
+              }}
             >
               <div className="aspect-[4/5] overflow-hidden">
                 <img

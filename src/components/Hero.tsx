@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import heroImage from "@/assets/hero-interior.jpg";
 import project1 from "@/assets/project-1.jpg";
 import project2 from "@/assets/project-2.jpg";
@@ -8,6 +9,7 @@ import project3 from "@/assets/project-3.jpg";
 
 const Hero = () => {
   const [rotation, setRotation] = useState(0);
+  const { ref, isVisible } = useScrollAnimation({ threshold: 0.2 });
   
   const images = [heroImage, project1, project2, project3];
   
@@ -56,7 +58,12 @@ const Hero = () => {
       <div className="absolute inset-0 bg-black/20" />
 
       {/* Content */}
-      <div className="relative z-10 container mx-auto px-6 lg:px-12 pt-32 pb-20 text-center animate-fade-in-up">
+      <div 
+        ref={ref}
+        className={`relative z-10 container mx-auto px-6 lg:px-12 pt-32 pb-20 text-center transition-all duration-1000 ${
+          isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+        }`}
+      >
         <h1 className="font-heading font-bold text-5xl md:text-7xl lg:text-8xl mb-6 text-white">
           Transforming Spaces
           <br />
