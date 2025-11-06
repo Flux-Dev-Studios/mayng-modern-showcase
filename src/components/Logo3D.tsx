@@ -10,89 +10,85 @@ const RotatingLogo = () => {
   useFrame((state) => {
     if (groupRef.current) {
       groupRef.current.rotation.y = state.clock.elapsedTime * 0.5;
-      groupRef.current.rotation.x = Math.sin(state.clock.elapsedTime * 0.3) * 0.1;
+      groupRef.current.rotation.x = Math.sin(state.clock.elapsedTime * 0.3) * 0.15;
     }
   });
 
   return (
     <Float
       speed={2}
-      rotationIntensity={0.3}
-      floatIntensity={0.3}
+      rotationIntensity={0.4}
+      floatIntensity={0.4}
     >
-      <group ref={groupRef}>
-        {/* D shape */}
-        <mesh position={[-0.6, 0, 0]}>
-          <boxGeometry args={[0.15, 1, 0.2]} />
+      <group ref={groupRef} scale={1.2}>
+        {/* Left vertical bar (D) */}
+        <mesh position={[-0.5, 0, 0]}>
+          <boxGeometry args={[0.2, 1.2, 0.25]} />
           <meshStandardMaterial
             color="#ec4899"
-            metalness={0.8}
-            roughness={0.2}
+            metalness={0.9}
+            roughness={0.1}
             emissive="#ec4899"
-            emissiveIntensity={0.3}
-          />
-        </mesh>
-        <mesh position={[-0.3, 0.35, 0]}>
-          <boxGeometry args={[0.4, 0.15, 0.2]} />
-          <meshStandardMaterial
-            color="#ec4899"
-            metalness={0.8}
-            roughness={0.2}
-            emissive="#ec4899"
-            emissiveIntensity={0.3}
-          />
-        </mesh>
-        <mesh position={[-0.3, -0.35, 0]}>
-          <boxGeometry args={[0.4, 0.15, 0.2]} />
-          <meshStandardMaterial
-            color="#ec4899"
-            metalness={0.8}
-            roughness={0.2}
-            emissive="#ec4899"
-            emissiveIntensity={0.3}
-          />
-        </mesh>
-        <mesh position={[-0.1, 0, 0]}>
-          <cylinderGeometry args={[0.35, 0.35, 0.2, 32]} />
-          <meshStandardMaterial
-            color="#ec4899"
-            metalness={0.8}
-            roughness={0.2}
-            emissive="#ec4899"
-            emissiveIntensity={0.3}
-            side={THREE.DoubleSide}
+            emissiveIntensity={0.4}
           />
         </mesh>
         
-        {/* M shape */}
-        <mesh position={[0.3, 0, 0]}>
-          <boxGeometry args={[0.15, 1, 0.2]} />
+        {/* Curved section (D meets M) */}
+        <mesh position={[0, 0, 0]} rotation={[0, 0, Math.PI / 2]}>
+          <torusGeometry args={[0.6, 0.1, 16, 32, Math.PI]} />
           <meshStandardMaterial
             color="#ec4899"
-            metalness={0.8}
-            roughness={0.2}
+            metalness={0.9}
+            roughness={0.1}
             emissive="#ec4899"
-            emissiveIntensity={0.3}
+            emissiveIntensity={0.4}
           />
         </mesh>
-        <mesh position={[0.6, 0, 0]}>
-          <boxGeometry args={[0.15, 1, 0.2]} />
+        
+        {/* Right peak forming M peaks */}
+        <mesh position={[0.25, 0.2, 0]} rotation={[0, 0, -Math.PI / 6]}>
+          <boxGeometry args={[0.18, 0.7, 0.25]} />
           <meshStandardMaterial
             color="#ec4899"
-            metalness={0.8}
-            roughness={0.2}
+            metalness={0.9}
+            roughness={0.1}
             emissive="#ec4899"
-            emissiveIntensity={0.3}
+            emissiveIntensity={0.4}
           />
         </mesh>
-        <mesh position={[0.45, 0.2, 0]} rotation={[0, 0, Math.PI / 6]}>
-          <boxGeometry args={[0.15, 0.5, 0.2]} />
+        
+        <mesh position={[0.55, 0.2, 0]} rotation={[0, 0, Math.PI / 6]}>
+          <boxGeometry args={[0.18, 0.7, 0.25]} />
           <meshStandardMaterial
             color="#ec4899"
-            metalness={0.8}
-            roughness={0.2}
+            metalness={0.9}
+            roughness={0.1}
             emissive="#ec4899"
-            emissiveIntensity={0.3}
+            emissiveIntensity={0.4}
+          />
+        </mesh>
+        
+        {/* Center connector */}
+        <mesh position={[0.4, -0.2, 0]}>
+          <boxGeometry args={[0.15, 0.4, 0.25]} />
+          <meshStandardMaterial
+            color="#ec4899"
+            metalness={0.9}
+            roughness={0.1}
+            emissive="#ec4899"
+            emissiveIntensity={0.4}
+          />
+        </mesh>
+        
+        {/* Right vertical bar (M) */}
+        <mesh position={[0.7, -0.15, 0]}>
+          <boxGeometry args={[0.18, 0.9, 0.25]} />
+          <meshStandardMaterial
+            color="#ec4899"
+            metalness={0.9}
+            roughness={0.1}
+            emissive="#ec4899"
+            emissiveIntensity={0.4}
           />
         </mesh>
       </group>
@@ -102,14 +98,15 @@ const RotatingLogo = () => {
 
 const Logo3D = () => {
   return (
-    <div className="w-16 h-16">
+    <div className="w-24 h-24">
       <Canvas
-        camera={{ position: [0, 0, 4], fov: 50 }}
+        camera={{ position: [0, 0, 3.5], fov: 50 }}
         dpr={[1, 2]}
       >
-        <ambientLight intensity={0.5} />
-        <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} intensity={1} />
-        <pointLight position={[-10, -10, -10]} intensity={0.5} />
+        <ambientLight intensity={0.6} />
+        <spotLight position={[10, 10, 10]} angle={0.2} penumbra={1} intensity={1.5} />
+        <pointLight position={[-10, -10, -10]} intensity={0.7} />
+        <pointLight position={[5, -5, 5]} intensity={0.5} color="#ec4899" />
         <RotatingLogo />
       </Canvas>
     </div>
