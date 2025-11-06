@@ -3,7 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import Logo3D from "@/components/Logo3D";
+import logoImage from "@/assets/logo-dm.png";
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -35,7 +35,7 @@ const Navigation = () => {
       <div className="container mx-auto px-6 lg:px-12">
         <div className="flex items-center justify-between h-20">
           <Link to="/" className="flex items-center hover:opacity-80 transition-opacity">
-            <Logo3D />
+            <img src={logoImage} alt="Design by Mays Logo" className="h-16 w-auto" />
           </Link>
 
           {/* Desktop Navigation */}
