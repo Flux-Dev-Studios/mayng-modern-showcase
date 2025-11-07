@@ -45,6 +45,26 @@ All colors MUST be HSL.
     --glass-gradient: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
   }
 
+  @keyframes gradient-shift {
+    0%, 100% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+  }
+
+  .animated-bg {
+    background: linear-gradient(
+      135deg,
+      hsl(var(--background)),
+      hsl(var(--secondary)),
+      hsl(var(--background))
+    );
+    background-size: 200% 200%;
+    animation: gradient-shift 15s ease infinite;
+  }
+
   .dark {
     --background: 20 20% 8%;
     --foreground: 38 30% 95%;

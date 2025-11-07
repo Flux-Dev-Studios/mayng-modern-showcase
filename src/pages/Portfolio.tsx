@@ -60,7 +60,7 @@ const Portfolio = () => {
         backgroundImage={heroPortfolio}
       />
       
-      <main className="py-24">
+      <main className="py-24 animated-bg">
         <div className="container mx-auto px-6 lg:px-12">
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">

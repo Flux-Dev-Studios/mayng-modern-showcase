@@ -14,7 +14,7 @@ const About = () => {
         backgroundImage={heroAbout}
       />
       
-      <main className="py-24">
+      <main className="py-24 animated-bg">
         <div className="container mx-auto px-6 lg:px-12 max-w-4xl">
           <div className="animate-fade-in-up">
             

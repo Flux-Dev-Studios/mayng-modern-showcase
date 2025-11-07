@@ -6,12 +6,14 @@ import Testimonials from "@/components/Testimonials";
 
 const Index = () => {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen">
       <Navigation />
       <Hero />
-      <ProjectShowcase />
-      <Services />
-      <Testimonials />
+      <div className="animated-bg">
+        <ProjectShowcase />
+        <Services />
+        <Testimonials />
+      </div>
     </div>
   );
 };
