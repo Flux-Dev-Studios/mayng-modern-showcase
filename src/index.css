@@ -65,6 +65,47 @@ All colors MUST be HSL.
     animation: gradient-shift 15s ease infinite;
   }
 
+  /* Page-specific nav gradients */
+  .nav-gradient-home {
+    background: linear-gradient(180deg, hsl(20 20% 8% / 0.95), hsl(20 20% 8% / 0.7), transparent);
+  }
+
+  .nav-gradient-about {
+    background: linear-gradient(180deg, hsl(15 75% 55% / 0.2), hsl(15 75% 55% / 0.1), transparent);
+  }
+
+  .nav-gradient-services {
+    background: linear-gradient(180deg, hsl(25 25% 90% / 0.95), hsl(25 25% 90% / 0.7), transparent);
+  }
+
+  .nav-gradient-portfolio {
+    background: linear-gradient(180deg, hsl(20 15% 15% / 0.95), hsl(20 15% 15% / 0.7), transparent);
+  }
+
+  .nav-gradient-contact {
+    background: linear-gradient(180deg, hsl(15 75% 55% / 0.25), hsl(15 75% 55% / 0.15), transparent);
+  }
+
+  .dark .nav-gradient-home {
+    background: linear-gradient(180deg, hsl(20 20% 8% / 0.95), hsl(20 20% 8% / 0.7), transparent);
+  }
+
+  .dark .nav-gradient-about {
+    background: linear-gradient(180deg, hsl(15 75% 55% / 0.15), hsl(15 75% 55% / 0.08), transparent);
+  }
+
+  .dark .nav-gradient-services {
+    background: linear-gradient(180deg, hsl(20 15% 18% / 0.95), hsl(20 15% 18% / 0.7), transparent);
+  }
+
+  .dark .nav-gradient-portfolio {
+    background: linear-gradient(180deg, hsl(20 18% 12% / 0.95), hsl(20 18% 12% / 0.7), transparent);
+  }
+
+  .dark .nav-gradient-contact {
+    background: linear-gradient(180deg, hsl(15 75% 55% / 0.2), hsl(15 75% 55% / 0.12), transparent);
+  }
+
   .dark {
     --background: 20 20% 8%;
     --foreground: 38 30% 95%;
