@@ -54,7 +54,7 @@ const ProjectShowcase = () => {
           {projects.map((project, index) => (
             <Link
               key={project.id}
-              to="/portfolio"
+              to="/projects"
               className={`group relative overflow-hidden rounded-2xl shadow-[var(--shadow-elegant)] hover:shadow-[var(--shadow-hover)] transition-all duration-700 ${
                 gridVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
               }`}
@@ -84,7 +84,7 @@ const ProjectShowcase = () => {
 
         <div className="text-center animate-fade-in">
           <Link
-            to="/portfolio"
+            to="/projects"
             className="inline-flex items-center gap-2 text-primary font-medium hover:gap-4 transition-all"
           >
             <span>View All Projects</span>
