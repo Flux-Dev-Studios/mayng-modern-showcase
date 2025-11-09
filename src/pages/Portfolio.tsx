@@ -3,7 +3,7 @@ import Navigation from "@/components/Navigation";
 import PageHero from "@/components/PageHero";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Portfolio3DScene } from "@/components/Portfolio3DScene";
+
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import project1 from "@/assets/project-1.jpg";
 import project2 from "@/assets/project-2.jpg";
@@ -62,7 +62,6 @@ const projects = [
 ];
 
 const Portfolio = () => {
-  const [hoveredProjectId, setHoveredProjectId] = useState<number | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
   const intro = useScrollAnimation({ threshold: 0.2 });
   const gallery = useScrollAnimation({ threshold: 0.1 });
@@ -72,8 +71,6 @@ const Portfolio = () => {
   const filteredProjects = selectedCategory === "All" 
     ? projects 
     : projects.filter(p => p.category === selectedCategory);
-
-  const hoveredProject = projects.find(p => p.id === hoveredProjectId);
 
   return (
     <div className="min-h-screen bg-background">
@@ -117,55 +114,6 @@ const Portfolio = () => {
                 </Badge>
               ))}
             </div>
-          </div>
-        </section>
-
-        {/* 3D Interactive Gallery */}
-        <section className="pb-12">
-          <div 
-            ref={gallery.ref}
-            className={`container mx-auto px-6 lg:px-12 transition-all duration-1000 ${
-              gallery.isVisible ? 'opacity-100' : 'opacity-0'
-            }`}
-          >
-            <Card className="border-primary/20 bg-card/80 backdrop-blur-sm overflow-hidden">
-              <CardContent className="p-0">
-                <div className="relative">
-                  <Portfolio3DScene 
-                    projects={filteredProjects} 
-                    onProjectHover={setHoveredProjectId}
-                  />
-                  
-                  {/* Hover Info Overlay */}
-                  {hoveredProject && (
-                    <div className="absolute bottom-6 left-6 right-6 bg-background/95 backdrop-blur-md rounded-xl p-6 border border-primary/20 animate-fade-in">
-                      <div className="flex items-start gap-4">
-                        <img 
-                          src={hoveredProject.image} 
-                          alt={hoveredProject.title}
-                          className="w-24 h-24 object-cover rounded-lg"
-                        />
-                        <div className="flex-1">
-                          <Badge variant="outline" className="mb-2">
-                            {hoveredProject.category}
-                          </Badge>
-                          <h3 className="font-heading font-bold text-xl mb-2 text-foreground">
-                            {hoveredProject.title}
-                          </h3>
-                          <p className="text-sm text-muted-foreground">
-                            {hoveredProject.details}
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  )}
-                </div>
-                
-                <div className="p-6 text-center text-sm text-muted-foreground bg-secondary/30">
-                  <p>💡 Drag to rotate • Scroll to zoom • Hover over cards for details</p>
-                </div>
-              </CardContent>
-            </Card>
           </div>
         </section>
 
