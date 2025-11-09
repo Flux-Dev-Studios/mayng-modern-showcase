@@ -30,25 +30,8 @@ const Navigation = () => {
     { name: "Contact", path: "/contact" },
   ];
 
-  const getNavGradient = () => {
-    switch (location.pathname) {
-      case "/":
-        return "nav-gradient-home";
-      case "/about":
-        return "nav-gradient-about";
-      case "/services":
-        return "nav-gradient-services";
-      case "/portfolio":
-        return "nav-gradient-portfolio";
-      case "/contact":
-        return "nav-gradient-contact";
-      default:
-        return "nav-gradient-home";
-    }
-  };
-
   return (
-    <nav className={cn("fixed top-0 left-0 right-0 z-50 transition-all duration-500", getNavGradient())}>
+    <nav className="fixed top-0 left-0 right-0 z-50">
       <div className="container mx-auto px-6 lg:px-12">
         <div className="flex items-center justify-between h-20">
           <Link to="/" className="flex items-center hover:opacity-80 transition-opacity">

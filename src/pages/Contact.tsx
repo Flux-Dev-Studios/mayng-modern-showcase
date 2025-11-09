@@ -35,7 +35,7 @@ const Contact = () => {
         backgroundImage={heroContact}
       />
       
-      <main className="py-24 animated-bg">
+      <main className="py-24">
         <div className="container mx-auto px-6 lg:px-12">
           <div className="max-w-6xl mx-auto">
 

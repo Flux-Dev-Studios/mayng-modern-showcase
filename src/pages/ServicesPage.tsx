@@ -54,7 +54,7 @@ const ServicesPage = () => {
         backgroundImage={heroServices}
       />
       
-      <main className="py-24 animated-bg">
+      <main className="py-24">
         <div className="container mx-auto px-6 lg:px-12">
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10 mb-16">
