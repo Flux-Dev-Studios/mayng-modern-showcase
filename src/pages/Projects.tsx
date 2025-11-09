@@ -1,4 +1,5 @@
 import { useState } from "react";
+import ProjectDetailModal from "@/components/ProjectDetailModal";
 import Navigation from "@/components/Navigation";
 import PageHero from "@/components/PageHero";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
@@ -115,6 +116,18 @@ const categories = [
 
 const Projects = () => {
   const [activeCategory, setActiveCategory] = useState("living-room");
+  const [selectedProject, setSelectedProject] = useState<any>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleProjectClick = (project: any) => {
+    setSelectedProject(project);
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setTimeout(() => setSelectedProject(null), 300);
+  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -156,82 +169,45 @@ const Projects = () => {
                 </div>
 
                 <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                  {projectsByCategory[category.id as keyof typeof projectsByCategory].map((project, index) => {
-                    const isLivingRoom = category.id === 'living-room';
-                    
-                    return (
-                      <div
-                        key={project.id}
-                        className={`group relative overflow-hidden rounded-2xl shadow-[var(--shadow-elegant)] hover:shadow-[var(--shadow-hover)] transition-all duration-500 animate-scale-in ${
-                          isLivingRoom ? 'lg:col-span-1' : ''
-                        }`}
-                        style={{ animationDelay: `${index * 100}ms` }}
-                      >
-                        <div className={`${isLivingRoom ? 'aspect-[16/10]' : 'aspect-[4/5]'} overflow-hidden`}>
-                          <img
-                            src={project.image}
-                            alt={project.title}
-                            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                          />
-                        </div>
-                        
-                        {isLivingRoom ? (
-                          // Enhanced Living Room Card with Details
-                          <div className="absolute inset-0 bg-gradient-to-t from-foreground via-foreground/80 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500">
-                            <div className="absolute inset-0 p-6 flex flex-col justify-end text-background overflow-y-auto">
-                              <span className="inline-block w-fit px-3 py-1 mb-3 text-xs font-semibold bg-primary text-primary-foreground rounded-full">
-                                {category.label}
-                              </span>
-                              <h3 className="font-heading font-bold text-xl md:text-2xl mb-3">
-                                {project.title}
-                              </h3>
-                              <p className="text-sm text-background/95 mb-4 leading-relaxed">
-                                {project.description}
-                              </p>
-                              
-                              {project.highlights && (
-                                <div className="space-y-2 mt-2">
-                                  <h4 className="text-xs font-semibold uppercase tracking-wider text-background/80 mb-2">
-                                    Key Features
-                                  </h4>
-                                  {project.highlights.map((highlight, idx) => (
-                                    <div key={idx} className="flex items-start gap-2 text-xs text-background/90">
-                                      {highlight.icon === "Lightbulb" && <Lightbulb size={14} className="mt-0.5 flex-shrink-0" />}
-                                      {highlight.icon === "Sofa" && <Sofa size={14} className="mt-0.5 flex-shrink-0" />}
-                                      {highlight.icon === "Ruler" && <Ruler size={14} className="mt-0.5 flex-shrink-0" />}
-                                      <span>{highlight.text}</span>
-                                    </div>
-                                  ))}
-                                </div>
-                              )}
-                            </div>
-                          </div>
-                        ) : (
-                          // Standard Card for Other Categories
-                          <>
-                            <div className="absolute inset-0 bg-gradient-to-t from-foreground/95 via-foreground/60 to-transparent opacity-70 group-hover:opacity-90 transition-opacity" />
-                            <div className="absolute bottom-0 left-0 right-0 p-6 text-background">
-                              <span className="inline-block px-3 py-1 mb-3 text-xs font-semibold bg-primary text-primary-foreground rounded-full">
-                                {category.label}
-                              </span>
-                              <h3 className="font-heading font-bold text-xl md:text-2xl mb-2">
-                                {project.title}
-                              </h3>
-                              <p className="text-sm text-background/90 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                {project.description}
-                              </p>
-                            </div>
-                          </>
-                        )}
+                  {projectsByCategory[category.id as keyof typeof projectsByCategory].map((project, index) => (
+                    <div
+                      key={project.id}
+                      onClick={() => handleProjectClick(project)}
+                      className="group relative overflow-hidden rounded-2xl shadow-[var(--shadow-elegant)] hover:shadow-[var(--shadow-hover)] transition-all duration-500 animate-scale-in cursor-pointer"
+                      style={{ animationDelay: `${index * 100}ms` }}
+                    >
+                      <div className="aspect-[4/5] overflow-hidden">
+                        <img
+                          src={project.image}
+                          alt={project.title}
+                          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                        />
                       </div>
-                    );
-                  })}
+                      
+                      {/* Minimal hover overlay */}
+                      <div className="absolute inset-0 bg-gradient-to-t from-foreground/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                      
+                      {/* Simple title on hover */}
+                      <div className="absolute bottom-0 left-0 right-0 p-6 text-background opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <h3 className="font-heading font-bold text-xl">
+                          {project.title}
+                        </h3>
+                      </div>
+                    </div>
+                  ))}
                 </div>
               </TabsContent>
             ))}
           </Tabs>
         </div>
       </main>
+
+      <ProjectDetailModal
+        project={selectedProject}
+        category={categories.find(cat => cat.id === activeCategory)?.label || ""}
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+      />
     </div>
   );
 };
