@@ -6,6 +6,9 @@ import project1 from "@/assets/project-1.jpg";
 import project2 from "@/assets/project-2.jpg";
 import project3 from "@/assets/project-3.jpg";
 import heroPortfolio from "@/assets/hero-portfolio.jpg";
+import livingRoom1 from "@/assets/living-room-1.jpg";
+import livingRoom2 from "@/assets/living-room-2.jpg";
+import livingRoom3 from "@/assets/living-room-3.jpg";
 
 const projectsByCategory = {
   "living-room": [
@@ -13,24 +16,30 @@ const projectsByCategory = {
       id: 1,
       title: "Modern Minimalist Living",
       description: "Contemporary living space with clean lines and neutral tones.",
-      image: project1,
+      image: livingRoom1,
     },
     {
       id: 2,
       title: "Cozy Family Lounge",
       description: "Warm and inviting space perfect for family gatherings.",
-      image: project2,
+      image: livingRoom2,
+    },
+    {
+      id: 3,
+      title: "Open Concept Living",
+      description: "Integrated living and dining area with modern kitchen.",
+      image: livingRoom3,
     },
   ],
   bedroom: [
     {
-      id: 3,
+      id: 4,
       title: "Serene Master Bedroom",
       description: "Luxurious bedroom design with custom furniture and ambient lighting.",
       image: project3,
     },
     {
-      id: 4,
+      id: 5,
       title: "Contemporary Guest Suite",
       description: "Elegant guest bedroom with modern amenities.",
       image: project1,
@@ -38,13 +47,13 @@ const projectsByCategory = {
   ],
   bathroom: [
     {
-      id: 5,
+      id: 6,
       title: "Spa-Inspired Bathroom",
       description: "Tranquil bathroom featuring marble and premium fixtures.",
       image: project2,
     },
     {
-      id: 6,
+      id: 7,
       title: "Modern Powder Room",
       description: "Sophisticated powder room with artistic elements.",
       image: project3,
@@ -52,13 +61,13 @@ const projectsByCategory = {
   ],
   kitchen: [
     {
-      id: 7,
+      id: 8,
       title: "Gourmet Chef's Kitchen",
       description: "Functional and beautiful kitchen with custom cabinetry.",
       image: project1,
     },
     {
-      id: 8,
+      id: 9,
       title: "Open Concept Kitchen",
       description: "Modern kitchen seamlessly integrated with dining area.",
       image: project2,
@@ -66,13 +75,13 @@ const projectsByCategory = {
   ],
   office: [
     {
-      id: 9,
+      id: 10,
       title: "Executive Home Office",
       description: "Professional workspace with bespoke wooden furniture.",
       image: project3,
     },
     {
-      id: 10,
+      id: 11,
       title: "Creative Studio Space",
       description: "Inspiring office design for creative professionals.",
       image: project1,
