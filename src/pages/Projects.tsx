@@ -9,6 +9,9 @@ import heroPortfolio from "@/assets/hero-portfolio.jpg";
 import livingRoom1 from "@/assets/living-room-1.jpg";
 import livingRoom2 from "@/assets/living-room-2.jpg";
 import livingRoom3 from "@/assets/living-room-3.jpg";
+import bedroom1 from "@/assets/bedroom-1.jpg";
+import bedroom2 from "@/assets/bedroom-2.jpg";
+import bedroom3 from "@/assets/bedroom-3.jpg";
 
 const projectsByCategory = {
   "living-room": [
@@ -36,24 +39,30 @@ const projectsByCategory = {
       id: 4,
       title: "Serene Master Bedroom",
       description: "Luxurious bedroom design with custom furniture and ambient lighting.",
-      image: project3,
+      image: bedroom1,
     },
     {
       id: 5,
       title: "Contemporary Guest Suite",
       description: "Elegant guest bedroom with modern amenities.",
-      image: project1,
+      image: bedroom2,
+    },
+    {
+      id: 6,
+      title: "Modern Luxury Suite",
+      description: "Sophisticated bedroom with premium finishes and lighting.",
+      image: bedroom3,
     },
   ],
   bathroom: [
     {
-      id: 6,
+      id: 7,
       title: "Spa-Inspired Bathroom",
       description: "Tranquil bathroom featuring marble and premium fixtures.",
       image: project2,
     },
     {
-      id: 7,
+      id: 8,
       title: "Modern Powder Room",
       description: "Sophisticated powder room with artistic elements.",
       image: project3,
@@ -61,13 +70,13 @@ const projectsByCategory = {
   ],
   kitchen: [
     {
-      id: 8,
+      id: 9,
       title: "Gourmet Chef's Kitchen",
       description: "Functional and beautiful kitchen with custom cabinetry.",
       image: project1,
     },
     {
-      id: 9,
+      id: 10,
       title: "Open Concept Kitchen",
       description: "Modern kitchen seamlessly integrated with dining area.",
       image: project2,
@@ -75,13 +84,13 @@ const projectsByCategory = {
   ],
   office: [
     {
-      id: 10,
+      id: 11,
       title: "Executive Home Office",
       description: "Professional workspace with bespoke wooden furniture.",
       image: project3,
     },
     {
-      id: 11,
+      id: 12,
       title: "Creative Studio Space",
       description: "Inspiring office design for creative professionals.",
       image: project1,
