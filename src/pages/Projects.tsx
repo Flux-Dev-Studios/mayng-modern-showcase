@@ -1,51 +1,25 @@
 import { useState } from "react";
-import ProjectDetailModal from "@/components/ProjectDetailModal";
 import Navigation from "@/components/Navigation";
 import PageHero from "@/components/PageHero";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
-import { Lightbulb, Sofa, Ruler } from "lucide-react";
 import project1 from "@/assets/project-1.jpg";
 import project2 from "@/assets/project-2.jpg";
 import project3 from "@/assets/project-3.jpg";
-import livingRoom1 from "@/assets/living-room-1.jpg";
-import livingRoom2 from "@/assets/living-room-2.jpg";
-import livingRoom3 from "@/assets/living-room-3.jpg";
 import heroPortfolio from "@/assets/hero-portfolio.jpg";
 
 const projectsByCategory = {
   "living-room": [
     {
       id: 1,
-      title: "Sophisticated Urban Sanctuary",
-      description: "A masterfully designed living room featuring geometric black pendant lights that create dramatic focal points. Custom-built shelving with integrated LED strip lighting provides both functionality and ambiance. The neutral color palette of warm beiges and greys creates a serene atmosphere, while the luxurious brown leather sofa and marble coffee table add touches of elegance.",
-      image: livingRoom1,
-      highlights: [
-        { icon: "Lightbulb", text: "Custom LED lighting design with smart controls" },
-        { icon: "Sofa", text: "Premium Italian leather furnishings" },
-        { icon: "Ruler", text: "Bespoke built-in storage solutions" }
-      ]
+      title: "Modern Minimalist Living",
+      description: "Contemporary living space with clean lines and neutral tones.",
+      image: project1,
     },
     {
       id: 2,
-      title: "Contemporary Coastal Living",
-      description: "This open-concept living space beautifully combines kitchen and lounge areas with a sophisticated teal accent wall that anchors the design. Bubble pendant lights add playful elegance, while the grey sectional sofa with coral and patterned pillows brings warmth. Floor-to-ceiling windows with geometric patterned curtains maximize natural light and create a connection with the outdoors.",
-      image: livingRoom2,
-      highlights: [
-        { icon: "Lightbulb", text: "Statement bubble chandelier lighting" },
-        { icon: "Sofa", text: "Custom upholstered sectional with designer fabrics" },
-        { icon: "Ruler", text: "Open-plan layout maximizing space flow" }
-      ]
-    },
-    {
-      id: 3,
-      title: "Modern European Elegance",
-      description: "An airy, light-filled living and dining area showcasing seamless integration of spaces. The sleek white galley kitchen with under-cabinet lighting complements the contemporary dining set featuring bold houndstooth pattern chairs. Golden curtains frame expansive windows, while black geometric pendant lights add architectural interest. The neutral grey sofa and glass coffee table maintain the sophisticated, minimalist aesthetic.",
-      image: livingRoom3,
-      highlights: [
-        { icon: "Lightbulb", text: "Layered lighting with pendant and recessed fixtures" },
-        { icon: "Sofa", text: "Designer furniture with statement patterns" },
-        { icon: "Ruler", text: "Seamless kitchen-living integration" }
-      ]
+      title: "Cozy Family Lounge",
+      description: "Warm and inviting space perfect for family gatherings.",
+      image: project2,
     },
   ],
   bedroom: [
@@ -116,18 +90,6 @@ const categories = [
 
 const Projects = () => {
   const [activeCategory, setActiveCategory] = useState("living-room");
-  const [selectedProject, setSelectedProject] = useState<any>(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const handleProjectClick = (project: any) => {
-    setSelectedProject(project);
-    setIsModalOpen(true);
-  };
-
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-    setTimeout(() => setSelectedProject(null), 300);
-  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -141,7 +103,7 @@ const Projects = () => {
       <main className="py-24">
         <div className="container mx-auto px-6 lg:px-12">
           <Tabs defaultValue="living-room" className="w-full" onValueChange={setActiveCategory}>
-            <TabsList className="w-full max-w-4xl mx-auto mb-16 h-auto flex-wrap gap-2 bg-muted/50 p-2 justify-center">
+            <TabsList className="w-full max-w-4xl mx-auto mb-16 h-auto flex-wrap gap-2 bg-muted/50 p-2">
               {categories.map((category) => (
                 <TabsTrigger 
                   key={category.id} 
@@ -172,7 +134,6 @@ const Projects = () => {
                   {projectsByCategory[category.id as keyof typeof projectsByCategory].map((project, index) => (
                     <div
                       key={project.id}
-                      onClick={() => handleProjectClick(project)}
                       className="group relative overflow-hidden rounded-2xl shadow-[var(--shadow-elegant)] hover:shadow-[var(--shadow-hover)] transition-all duration-500 animate-scale-in cursor-pointer"
                       style={{ animationDelay: `${index * 100}ms` }}
                     >
@@ -183,15 +144,17 @@ const Projects = () => {
                           className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                         />
                       </div>
-                      
-                      {/* Minimal hover overlay */}
-                      <div className="absolute inset-0 bg-gradient-to-t from-foreground/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                      
-                      {/* Simple title on hover */}
-                      <div className="absolute bottom-0 left-0 right-0 p-6 text-background opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                        <h3 className="font-heading font-bold text-xl">
+                      <div className="absolute inset-0 bg-gradient-to-t from-foreground/95 via-foreground/60 to-transparent opacity-70 group-hover:opacity-90 transition-opacity" />
+                      <div className="absolute bottom-0 left-0 right-0 p-6 text-background">
+                        <span className="inline-block px-3 py-1 mb-3 text-xs font-semibold bg-primary text-primary-foreground rounded-full">
+                          {category.label}
+                        </span>
+                        <h3 className="font-heading font-bold text-xl md:text-2xl mb-2">
                           {project.title}
                         </h3>
+                        <p className="text-sm text-background/90 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                          {project.description}
+                        </p>
                       </div>
                     </div>
                   ))}
@@ -201,13 +164,6 @@ const Projects = () => {
           </Tabs>
         </div>
       </main>
-
-      <ProjectDetailModal
-        project={selectedProject}
-        category={categories.find(cat => cat.id === activeCategory)?.label || ""}
-        isOpen={isModalOpen}
-        onClose={handleCloseModal}
-      />
     </div>
   );
 };
