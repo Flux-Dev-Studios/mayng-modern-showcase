@@ -84,19 +84,19 @@ const projectsByCategory = {
       id: 9,
       title: "Gourmet Chef's Kitchen",
       description: "Functional and beautiful kitchen with custom cabinetry.",
-      image: kitchen 1,
+      image: kitchen1,
     },
     {
       id: 10,
       title: "Open Concept Kitchen",
       description: "Modern kitchen seamlessly integrated with dining area.",
-      image: kitchen 2,
+      image: kitchen2,
     },
     {
       id: 16,
       title: "Rustic Farmhouse Kitchen",
       description: "A warm, inviting kitchen with natural wood and stone.",
-      image: kitchen 3, 
+      image: kitchen3, 
     }
   ],
   office: [
