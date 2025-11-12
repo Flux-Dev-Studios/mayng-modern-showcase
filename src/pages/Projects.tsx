@@ -61,13 +61,19 @@ const projectsByCategory = {
       id: 7,
       title: "Spa-Inspired Bathroom",
       description: "Tranquil bathroom featuring marble and premium fixtures.",
-      image: project2,
+      image: bathroom1,
     },
     {
       id: 8,
       title: "Modern Powder Room",
       description: "Sophisticated powder room with artistic elements.",
-      image: project3,
+      image: bathroom2,
+    },
+    {
+      id: 13, // Make sure this ID is unique
+      title: "Minimalist Wet Room",
+      description: "A sleek, modern wet room design.",
+      image: bathroom3,
     },
   ],
   kitchen: [
