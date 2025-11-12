@@ -9,6 +9,15 @@ export default defineConfig(({ mode }) => ({
     host: "::",
     port: 8080,
   },
+
+  // VVV ADD THIS ENTIRE BLOCK VVV
+  preview: {
+    host: true, // Listens on all public IPs
+    port: 8080, // Make sure this matches your Render port
+    allowedHosts: ["mayng-modern-showcase.onrender.com"],
+  },
+  // ^^^ END OF NEW BLOCK ^^^
+
   plugins: [react(), mode === "development" && componentTagger()].filter(Boolean),
   resolve: {
     alias: {
