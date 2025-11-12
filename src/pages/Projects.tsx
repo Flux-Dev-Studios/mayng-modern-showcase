@@ -15,6 +15,9 @@ import bedroom3 from "@/assets/bedroom-3.jpg";
 import bathroom1 from "@/assets/bathroom 1.jpg";
 import bathroom2 from "@/assets/bathroom 2.jpg";
 import bathroom3 from "@/assets/bathroom 3.jpg";
+import kitchen1 from "@/assets/kitchen 1.jpg";
+import kitchen2 from "@/assets/kitchen 2.jpg";
+import kitchen3 from "@/assets/kitchen 3.jpg";
 const projectsByCategory = {
   "living-room": [
     {
@@ -81,13 +84,19 @@ const projectsByCategory = {
       id: 9,
       title: "Gourmet Chef's Kitchen",
       description: "Functional and beautiful kitchen with custom cabinetry.",
-      image: project1,
+      image: kitchen 1,
     },
     {
       id: 10,
       title: "Open Concept Kitchen",
       description: "Modern kitchen seamlessly integrated with dining area.",
-      image: project2,
+      image: kitchen 2,
+    },
+   {
+      id: 14,
+      title: "Gourmet Chef's Kitchen",
+      description: "Functional and beautiful kitchen with custom cabinetry.",
+      image: kitche 3, 
     },
   ],
   office: [
