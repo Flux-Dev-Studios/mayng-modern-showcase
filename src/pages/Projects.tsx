@@ -12,12 +12,12 @@ import livingRoom3 from "@/assets/living-room-3.jpg";
 import bedroom1 from "@/assets/bedroom-1.jpg";
 import bedroom2 from "@/assets/bedroom-2.jpg";
 import bedroom3 from "@/assets/bedroom-3.jpg";
-import bathroom1 from "@/assets/bathroom 1.jpg";
-import bathroom2 from "@/assets/bathroom 2.jpg";
-import bathroom3 from "@/assets/bathroom 3.jpg";
-import kitchen1 from "@/assets/kitchen 1.jpg";
-import kitchen2 from "@/assets/kitchen 2.jpg";
-import kitchen3 from "@/assets/kitchen 3.jpg";
+import bathroom1 from "@/assets/bathroom1.jpg";
+import bathroom2 from "@/assets/bathroom2.jpg";
+import bathroom3 from "@/assets/bathroom3.jpg";
+import kitchen1 from "@/assets/kitchen1.jpg";
+import kitchen2 from "@/assets/kitchen2.jpg";
+import kitchen3 from "@/assets/kitchen3.jpg";
 const projectsByCategory = {
   "living-room": [
     {
