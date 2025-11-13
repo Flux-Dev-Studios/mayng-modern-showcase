@@ -92,7 +92,7 @@ const projectsByCategory = {
       description: "Modern kitchen seamlessly integrated with dining area.",
       image: kitchen2,
     },
-    {
+   {
       id: 16,
       title: "Rustic Farmhouse Kitchen",
       description: "A warm, inviting kitchen with natural wood and stone.",
