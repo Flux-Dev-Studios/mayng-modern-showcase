@@ -136,7 +136,7 @@ const Projects = () => {
       />
       
       <main className="py-24">
-        <div className="container mx-auto px-6 lg:px-12 justify-cente">
+        <div className="container mx-auto px-6 lg:px-12 justify-center">
           <Tabs defaultValue="living-room" className="w-full" onValueChange={setActiveCategory}>
            <TabsList className="w-full max-w-4xl mx-auto mb-16 h-auto flex-wrap gap-2 bg-muted/50 p-2 justify-center">
               {categories.map((category) => (
