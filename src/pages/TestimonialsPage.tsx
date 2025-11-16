@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
-// import { Link } from "react-router-dom"; // Uncomment this in your real app
+// import { Link } from "react-router-dom";
 
 // --- Testimonial Data ---
 const testimonials = [
   {
     id: 1,
+    category: "Living Room",
     name: "Tunde & Aisha Bello",
     title: "Private Residence, Ikoyi",
     quote: "Working with Designs by May was a dream. They saw our vision and elevated it beyond our wildest expectations. Our home is now our sanctuary.",
@@ -12,15 +13,8 @@ const testimonials = [
     imageAlt: "Portrait of Tunde Bello"
   },
   {
-    id: 2,
-    name: "Femi Adebayo",
-    title: "Corporate Office, Victoria Island",
-    quote: "The professionalism was outstanding. They handled our entire office redesign on time and on budget. The new space has transformed our company culture.",
-    avatar: "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D",
-    imageAlt: "Portrait of Femi Adebayo"
-  },
-  {
     id: 3,
+    category: "Living Room",
     name: "Sarah Egbuna",
     title: "Private Residence, Lekki",
     quote: "Every detail was perfect. From the custom furniture to the color palette, it just feels... right. I cannot recommend them highly enough.",
@@ -29,6 +23,7 @@ const testimonials = [
   },
   {
     id: 4,
+    category: "Hotel/Hospitality",
     name: "Chioma Okonkwo",
     title: "Boutique Hotel, VI",
     quote: "Their design for our lounge area is constantly complimented by our guests. Elegant, modern, and uniquely Nigerian. A true partner.",
@@ -37,6 +32,7 @@ const testimonials = [
   },
   {
     id: 5,
+    category: "Restaurant",
     name: "Emeka Obi",
     title: "Restaurant Design, VI",
     quote: "From concept to completion, Mayng exceeded our expectations. The design process was collaborative, and the final outcome is breathtaking.",
@@ -45,53 +41,30 @@ const testimonials = [
   },
 ];
 
-// --- CSS Animations ---
-const styles = `
-  @keyframes blob {
-    0% { transform: translate(0px, 0px) scale(1); }
-    33% { transform: translate(30px, -50px) scale(1.1); }
-    66% { transform: translate(-20px, 20px) scale(0.9); }
-    100% { transform: translate(0px, 0px) scale(1); }
-  }
-  .animate-blob {
-    animation: blob 7s infinite ease-in-out;
-  }
-
-  @keyframes cardEntry {
-    from { opacity: 0; transform: translateY(30px) scale(0.98); }
-    to { opacity: 1; transform: translateY(0) scale(1); }
-  }
-  .animate-card-entry {
-    animation: cardEntry 0.6s cubic-bezier(0.215, 0.610, 0.355, 1.000) forwards;
-  }
-`;
-
 // --- Single Testimonial Card Component ---
 const TestimonialCard = ({ testimonial, isVisible }: { testimonial: typeof testimonials[0], isVisible: boolean }) => (
   <div 
-    className={`bg-white p-8 rounded-xl shadow-lg border border-gray-100 ${isVisible ? 'animate-card-entry' : 'opacity-0'}`}
+    className={`bg-white p-8 rounded-xl shadow-lg border border-gray-100 flex flex-col h-full ${isVisible ? 'animate-card-entry' : 'opacity-0'}`}
     style={{ 
-      animationDelay: `${(testimonial.id % 5) * 100}ms`,
-      willChange: 'opacity, transform'
+      willChange: 'opacity, transform',
+      animationDelay: `${(testimonial.id % 4) * 100}ms` // Simple staggered delay
     }}
   >
     <div className="flex items-center mb-6">
       <img
         src={testimonial.avatar}
         alt={testimonial.imageAlt}
-        // Custom Orange Border
-        className="w-16 h-16 rounded-full object-cover border-4 border-[#E0683D] mr-5"
+        className="w-16 h-16 rounded-full object-cover border-4 border-[#E0683D] mr-5 flex-shrink-0"
         onError={(e) => {
           (e.target as HTMLImageElement).src = 'https://placehold.co/100x100/333/FFF?text=Client';
         }}
       />
       <div>
         <h3 className="text-xl font-bold text-gray-900">{testimonial.name}</h3>
-        {/* Custom Orange Text */}
         <p className="text-sm text-[#E0683D] font-medium">{testimonial.title}</p>
       </div>
     </div>
-    <div className="relative">
+    <div className="relative flex-grow">
       <svg
         className="absolute -top-4 -left-4 w-10 h-10 text-gray-100 opacity-90"
         fill="currentColor"
@@ -99,7 +72,7 @@ const TestimonialCard = ({ testimonial, isVisible }: { testimonial: typeof testi
       >
         <path d="M6 17h3l2-4V7H5v6h3l-2 4zm8 0h3l2-4V7h-6v6h3l-2 4z" />
       </svg>
-      <p className="text-lg italic text-gray-700 relative z-10">
+      <p className="text-lg italic text-gray-700 relative z-10 leading-relaxed">
         "{testimonial.quote}"
       </p>
     </div>
@@ -111,89 +84,92 @@ const TestimonialsPage = () => {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsVisible(true);
-    }, 100); 
+    // Animation trigger
+    const timer = setTimeout(() => setIsVisible(true), 100); 
     return () => clearTimeout(timer);
   }, []);
 
   return (
-    // Changed background to bg-white as requested
-    <div className="relative min-h-screen bg-white text-gray-900 overflow-hidden py-24 sm:py-32">
-      {/* Animated background shapes (Adjusted to match white theme + orange accents) */}
-      <div
-        className="absolute top-0 left-1/4 w-96 h-96 bg-orange-100 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob"
-        style={{ animationDelay: '0s' }}
-      ></div>
-      <div
-        className="absolute top-0 right-1/4 w-96 h-96 bg-[#E0683D]/20 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob"
-        style={{ animationDelay: '2s' }}
-      ></div>
-      <div
-        className="absolute bottom-0 left-1/2 w-96 h-96 bg-orange-50 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob"
-        style={{ animationDelay: '4s' }}
-      ></div>
-
-      {/* Main Content */}
-      <div className="container mx-auto px-6 lg:px-8 relative z-10">
-        <div className="lg:grid lg:grid-cols-12 lg:gap-16">
-          
-          {/* --- LEFT "STICKY" COLUMN --- */}
-          <div className="lg:col-span-5 lg:sticky lg:top-24 h-fit">
-            <div 
-              className={`transition-all duration-1000 ease-out ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-10'}`}
-            >
-              {/* Custom Orange Text */}
-              <p className="text-lg font-semibold leading-7 text-[#E0683D]">Our Clients</p>
-              <h2 className="mt-2 text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
-                Hear From Those Who Trust Us
-              </h2>
-              <p className="mt-6 text-xl leading-8 text-gray-700">
-                Our commitment to exceptional design and client satisfaction is reflected in every project.
-              </p>
-            </div>
-            
-            {/* CTA */}
-            <div 
-              className={`mt-12 p-8 bg-white rounded-2xl shadow-xl border border-gray-100 transition-all duration-1000 ease-out ${isVisible ? 'opacity-100' : 'opacity-0'}`}
-              style={{ transitionDelay: '300ms' }}
-            >
-              <h2 className="text-2xl font-extrabold text-gray-900 sm:text-3xl">
-                <span className="block">Ready to transform your space?</span>
-              </h2>
-              <p className="mt-4 text-lg leading-6 text-gray-700">
-                Let's collaborate to create a design that's uniquely you.
-              </p>
-              
-              {/* BUTTON COLOR UPDATED HERE to #E0683D with White Text */}
-              <a
-                href="/contact"
-                onClick={(e) => e.preventDefault()} 
-                className="mt-8 inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-lg text-white bg-[#E0683D] shadow-sm hover:bg-[#c25730] transition-colors duration-300"
-              >
-                Get a Free Consultation
-              </a>
-            </div>
-          </div>
-
-          {/* --- RIGHT "SCROLLING" COLUMN --- */}
-          <div className="lg:col-span-7 mt-16 lg:mt-0">
-            <div className="flex flex-col gap-8">
-              {testimonials.map((testimonial) => (
-                <TestimonialCard
-                  key={testimonial.id}
-                  testimonial={testimonial}
-                  isVisible={isVisible}
-                />
-              ))}
-            </div>
-          </div>
-          
+    <div className="min-h-screen bg-white text-gray-900 font-sans">
+      
+      {/* --- HERO SECTION --- */}
+      <div className="relative h-[50vh] min-h-[400px] w-full overflow-hidden">
+        {/* Background Image */}
+        <div 
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat transform scale-105 transition-transform duration-[20s] ease-linear hover:scale-110"
+          style={{ backgroundImage: 'url("https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?q=80&w=2874&auto=format&fit=crop")' }}
+        ></div>
+        {/* Dark Overlay */}
+        <div className="absolute inset-0 bg-black/40"></div>
+        
+        {/* Hero Content */}
+        <div className="absolute inset-0 flex flex-col justify-center items-center text-center px-4">
+          <p className={`text-[#E0683D] font-bold tracking-wider uppercase mb-4 transition-all duration-700 delay-300 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+            Client Stories
+          </p>
+          <h1 className={`text-4xl md:text-6xl font-bold text-white mb-6 max-w-4xl leading-tight transition-all duration-700 delay-500 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+            Transforming Spaces, <br/> Exceeding Expectations
+          </h1>
         </div>
       </div>
 
-      {/* Inject Styles */}
-      <style>{styles}</style>
+      {/* --- MAIN CONTENT AREA --- */}
+      <div className="container mx-auto px-4 py-16 lg:px-8">
+        
+        {/* --- TESTIMONIALS GRID --- */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 min-h-[400px]">
+          {testimonials.map((testimonial) => (
+            <TestimonialCard key={testimonial.id} testimonial={testimonial} isVisible={isVisible} />
+          ))}
+        </div>
+
+        {/* --- CTA SECTION --- */}
+        <div className="mt-24">
+          <div className="bg-stone-50 rounded-3xl overflow-hidden shadow-xl border border-stone-100">
+            <div className="flex flex-col md:flex-row items-center">
+              {/* Image Side */}
+              <div className="w-full md:w-1/2 h-64 md:h-96 relative">
+                <img 
+                  src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?q=80&w=2000&auto=format&fit=crop" 
+                  alt="Luxury Interior" 
+                  className="absolute inset-0 w-full h-full object-cover"
+                />
+              </div>
+              
+              {/* Text Side */}
+              <div className="w-full md:w-1/2 p-10 md:p-16 text-center md:text-left">
+                <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                  Ready to start your journey?
+                </h2>
+                <p className="text-lg text-gray-600 mb-8">
+                  Whether it's a single room or a complete renovation, we are ready to bring your vision to life.
+                </p>
+                <a
+                  href="/contact"
+                  onClick={(e) => e.preventDefault()}
+                  className="inline-block px-8 py-4 bg-[#E0683D] text-white font-bold rounded-lg shadow-lg hover:bg-[#c25730] transition-colors transform hover:-translate-y-1"
+                >
+                  Get a Free Consultation
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      {/* --- STYLES --- */}
+      <style>
+        {`
+          @keyframes cardEntry {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+          }
+          .animate-card-entry {
+            animation: cardEntry 0.5s ease-out forwards;
+          }
+        `}
+      </style>
     </div>
   );
 };
