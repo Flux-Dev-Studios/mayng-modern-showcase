@@ -38,6 +38,28 @@ const testimonials = [
     quote: "From concept to completion, Mayng exceeded our expectations. The design process was collaborative, and the final outcome is breathtaking.",
     avatar: "https://images.unsplash.com/photo-1540569014015-fa786d35d259?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=144&h=144&q=80",
     imageAlt: "Portrait of Emeka Obi",
+    // Emeka's project image
+    projectImage: "https://images.unsplash.com/photo-1550547648-fb220025796c?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D" 
+  },
+  // --- NEW TESTIMONIAL 1 ---
+  {
+    id: 6,
+    category: "Kitchen & Dining",
+    name: "Zainab & Ahmed Musa",
+    title: "Modern Duplex, Abuja",
+    quote: "The kitchen renovation is simply spectacular. It's become the heart of our home where we love to entertain. Functional, stylish, and built to last.",
+    avatar: "https://images.unsplash.com/photo-1531123897727-8f129e1688ce?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D",
+    imageAlt: "Portrait of Zainab Musa"
+  },
+  // --- NEW TESTIMONIAL 2 ---
+  {
+    id: 7,
+    category: "Commercial Office",
+    name: "David Okafor",
+    title: "Tech Hub, Yaba",
+    quote: "We needed a space that fostered creativity and collaboration. Designs by May delivered a workspace that has boosted our team's morale and productivity.",
+    avatar: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D",
+    imageAlt: "Portrait of David Okafor"
   },
 ];
 
@@ -50,6 +72,17 @@ const TestimonialCard = ({ testimonial, isVisible }: { testimonial: typeof testi
       animationDelay: `${(testimonial.id % 4) * 100}ms` // Simple staggered delay
     }}
   >
+    {/* Conditionally render image if projectImage exists */}
+    {testimonial.projectImage && (
+      <div className="mb-6 rounded-lg overflow-hidden border border-gray-100">
+        <img 
+          src={testimonial.projectImage} 
+          alt={`Project for ${testimonial.name}`} 
+          className="w-full h-48 object-cover"
+        />
+      </div>
+    )}
+
     <div className="flex items-center mb-6">
       <img
         src={testimonial.avatar}
