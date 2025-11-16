@@ -1,14 +1,62 @@
-import Navigation from "@/components/Navigation";
-import PageHero from "@/components/PageHero";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
+import { useState, useEffect } from "react";
 import { Mail, Phone, MapPin } from "lucide-react";
-import { useState } from "react";
 import { toast } from "sonner";
-import heroContact from "@/assets/hero-contact.jpg";
+
+// ==========================================
+// 1. REAL IMPORTS (Uncomment these in your project)
+// ==========================================
+// import Navigation from "@/components/Navigation";
+// import { Button } from "@/components/ui/button";
+// import { Input } from "@/components/ui/input";
+// import { Textarea } from "@/components/ui/textarea";
+
+// ==========================================
+// 2. MOCK COMPONENTS (Delete these in your project)
+//    These allow the preview to run without your local files.
+// ==========================================
+const Navigation = () => (
+  <nav className="py-4 px-6 border-b flex justify-between items-center bg-white">
+    <span className="font-bold text-xl">DesignsByMay</span>
+    <div className="hidden md:flex gap-4 text-sm font-medium">
+      <a href="#" className="text-gray-600">Home</a>
+      <a href="#" className="text-gray-600">About</a>
+      <a href="#" className="text-[#E0683D]">Contact</a>
+    </div>
+  </nav>
+);
+
+const Button = ({ className, variant, size, ...props }: any) => (
+  <button 
+    className={`inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none disabled:opacity-50 disabled:pointer-events-none ring-offset-background bg-[#E0683D] text-white hover:bg-[#c25730] h-11 px-8 ${className}`} 
+    {...props} 
+  />
+);
+
+const Input = ({ className, ...props }: any) => (
+  <input 
+    className={`flex h-12 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E0683D] disabled:cursor-not-allowed disabled:opacity-50 ${className}`} 
+    {...props} 
+  />
+);
+
+const Textarea = ({ className, ...props }: any) => (
+  <textarea 
+    className={`flex min-h-[150px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E0683D] disabled:cursor-not-allowed disabled:opacity-50 ${className}`} 
+    {...props} 
+  />
+);
+// ==========================================
+
 
 const Contact = () => {
+  // Added state for hero animation
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setIsVisible(true), 100); 
+    return () => clearTimeout(timer);
+  }, []);
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -27,13 +75,32 @@ const Contact = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-white text-gray-900 font-sans">
       <Navigation />
-      <PageHero 
-        title="Let's Talk" 
-        subtitle="Ready to transform your space? Get in touch and let's start creating something extraordinary together."
-        backgroundImage={heroContact}
-      />
+
+      {/* --- NEW HERO BANNER WITH UPDATED IMAGE --- */}
+      <div className="relative h-[50vh] min-h-[400px] w-full overflow-hidden">
+        {/* Background Image - UPDATED IMAGE URL */}
+        <div 
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat transform scale-105 transition-transform duration-[20s] ease-linear hover:scale-110"
+          style={{ backgroundImage: 'url("https://images.unsplash.com/photo-1599694295412-a8955d7f13cf?q=80&w=2070&auto=format&fit=crop")' }}
+        ></div>
+        {/* Dark Overlay */}
+        <div className="absolute inset-0 bg-black/40"></div>
+        
+        {/* Hero Content */}
+        <div className="absolute inset-0 flex flex-col justify-center items-center text-center px-4">
+          <p className={`text-[#E0683D] font-bold tracking-wider uppercase mb-4 transition-all duration-700 delay-300 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+            Get In Touch
+          </p>
+          <h1 className={`text-4xl md:text-6xl font-bold text-white mb-6 max-w-4xl leading-tight transition-all duration-700 delay-500 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+            Let's Start Your <br/> Design Journey
+          </h1>
+          <p className={`text-lg md:text-xl text-gray-200 max-w-2xl mx-auto transition-all duration-700 delay-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+            Ready to transform your space? Let's create something extraordinary together.
+          </p>
+        </div>
+      </div>
       
       <main className="py-24">
         <div className="container mx-auto px-6 lg:px-12">
@@ -44,7 +111,7 @@ const Contact = () => {
               <div className="animate-scale-in">
                 <form onSubmit={handleSubmit} className="space-y-6">
                   <div>
-                    <label htmlFor="name" className="block text-sm font-medium mb-2 text-foreground">
+                    <label htmlFor="name" className="block text-sm font-medium mb-2 text-gray-700">
                       Your Name
                     </label>
                     <Input
@@ -55,12 +122,12 @@ const Contact = () => {
                       value={formData.name}
                       onChange={handleChange}
                       placeholder="John Doe"
-                      className="h-12"
+                      className="h-12 border-gray-200" 
                     />
                   </div>
 
                   <div>
-                    <label htmlFor="email" className="block text-sm font-medium mb-2 text-foreground">
+                    <label htmlFor="email" className="block text-sm font-medium mb-2 text-gray-700">
                       Email Address
                     </label>
                     <Input
@@ -71,12 +138,12 @@ const Contact = () => {
                       value={formData.email}
                       onChange={handleChange}
                       placeholder="john@example.com"
-                      className="h-12"
+                      className="h-12 border-gray-200"
                     />
                   </div>
 
                   <div>
-                    <label htmlFor="phone" className="block text-sm font-medium mb-2 text-foreground">
+                    <label htmlFor="phone" className="block text-sm font-medium mb-2 text-gray-700">
                       Phone Number
                     </label>
                     <Input
@@ -86,12 +153,12 @@ const Contact = () => {
                       value={formData.phone}
                       onChange={handleChange}
                       placeholder="+234 xxx xxx xxxx"
-                      className="h-12"
+                      className="h-12 border-gray-200"
                     />
                   </div>
 
                   <div>
-                    <label htmlFor="message" className="block text-sm font-medium mb-2 text-foreground">
+                    <label htmlFor="message" className="block text-sm font-medium mb-2 text-gray-700">
                       Tell Us About Your Project
                     </label>
                     <Textarea
@@ -101,53 +168,57 @@ const Contact = () => {
                       value={formData.message}
                       onChange={handleChange}
                       placeholder="Describe your project, space, or design vision..."
-                      className="min-h-[150px]"
+                      className="min-h-[150px] border-gray-200"
                     />
                   </div>
 
-                  <Button type="submit" variant="hero" size="lg" className="w-full">
+                  <Button 
+                    type="submit" 
+                    size="lg" 
+                    className="w-full"
+                  >
                     Send Message
                   </Button>
                 </form>
               </div>
 
               {/* Contact Information */}
-              <div className="space-y-8 animate-fade-in" style={{ animationDelay: "200ms" }}>
-                <div className="bg-card p-8 rounded-2xl shadow-[var(--shadow-elegant)]">
-                  <h2 className="font-heading font-bold text-2xl mb-6 text-foreground">Get In Touch</h2>
+              <div className="space-y-8" style={{ animationDelay: "200ms" }}>
+                <div className="bg-white p-8 rounded-2xl shadow-lg border border-gray-100">
+                  <h2 className="font-bold text-2xl mb-6 text-gray-900">Get In Touch</h2>
                   
                   <div className="space-y-6">
                     <div className="flex items-start gap-4">
-                      <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
-                        <Mail className="w-5 h-5 text-primary" />
+                      <div className="w-12 h-12 rounded-lg bg-[#E0683D]/10 flex items-center justify-center flex-shrink-0">
+                        <Mail className="w-5 h-5 text-[#E0683D]" />
                       </div>
                       <div>
-                        <p className="font-medium text-foreground mb-1">Email</p>
-                        <a href="mailto:info@designsbymay.com" className="text-muted-foreground hover:text-primary transition-colors">
+                        <p className="font-medium text-gray-900 mb-1">Email</p>
+                        <a href="mailto:info@designsbymay.com" className="text-gray-500 hover:text-[#E0683D] transition-colors">
                           info@designsbymay.com
                         </a>
                       </div>
                     </div>
 
                     <div className="flex items-start gap-4">
-                      <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
-                        <Phone className="w-5 h-5 text-primary" />
+                      <div className="w-12 h-12 rounded-lg bg-[#E0683D]/10 flex items-center justify-center flex-shrink-0">
+                        <Phone className="w-5 h-5 text-[#E0683D]" />
                       </div>
                       <div>
-                        <p className="font-medium text-foreground mb-1">Phone</p>
-                        <a href="tel:+2341234567890" className="text-muted-foreground hover:text-primary transition-colors">
+                        <p className="font-medium text-gray-900 mb-1">Phone</p>
+                        <a href="tel:+2341234567890" className="text-gray-500 hover:text-[#E0683D] transition-colors">
                           +234 123 456 7890
                         </a>
                       </div>
                     </div>
 
                     <div className="flex items-start gap-4">
-                      <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
-                        <MapPin className="w-5 h-5 text-primary" />
+                      <div className="w-12 h-12 rounded-lg bg-[#E0683D]/10 flex items-center justify-center flex-shrink-0">
+                        <MapPin className="w-5 h-5 text-[#E0683D]" />
                       </div>
                       <div>
-                        <p className="font-medium text-foreground mb-1">Location</p>
-                        <p className="text-muted-foreground">
+                        <p className="font-medium text-gray-900 mb-1">Location</p>
+                        <p className="text-gray-500">
                           Lagos, Nigeria
                         </p>
                       </div>
@@ -155,20 +226,20 @@ const Contact = () => {
                   </div>
                 </div>
 
-                <div className="bg-secondary/30 p-8 rounded-2xl">
-                  <h3 className="font-heading font-bold text-xl mb-4 text-foreground">Business Hours</h3>
-                  <div className="space-y-2 text-muted-foreground">
+                <div className="bg-gray-50 p-8 rounded-2xl border border-gray-100">
+                  <h3 className="font-bold text-xl mb-4 text-gray-900">Business Hours</h3>
+                  <div className="space-y-2 text-gray-500">
                     <p className="flex justify-between">
                       <span>Monday - Friday:</span>
-                      <span className="font-medium text-foreground">9:00 AM - 6:00 PM</span>
+                      <span className="font-medium text-gray-900">9:00 AM - 6:00 PM</span>
                     </p>
                     <p className="flex justify-between">
                       <span>Saturday:</span>
-                      <span className="font-medium text-foreground">10:00 AM - 4:00 PM</span>
+                      <span className="font-medium text-gray-900">10:00 AM - 4:00 PM</span>
                     </p>
                     <p className="flex justify-between">
                       <span>Sunday:</span>
-                      <span className="font-medium text-foreground">Closed</span>
+                      <span className="font-medium text-gray-900">Closed</span>
                     </p>
                   </div>
                 </div>
