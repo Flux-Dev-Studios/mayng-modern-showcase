@@ -9,7 +9,7 @@ const testimonials = [
     name: "Tunde & Aisha Bello",
     title: "Private Residence, Ikoyi",
     quote: "Working with Designs by May was a dream. They saw our vision and elevated it beyond our wildest expectations. Our home is now our sanctuary.",
-    avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1974&auto-format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D",
+    avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D",
     imageAlt: "Portrait of Tunde Bello"
   },
   {
@@ -36,9 +36,9 @@ const testimonials = [
     name: "Emeka Obi",
     title: "Restaurant Design, VI",
     quote: "From concept to completion, Mayng exceeded our expectations. The design process was collaborative, and the final outcome is breathtaking.",
-    avatar: "https://images.unsplash.com/photo-1540569014015-fa786d35d259?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=144&h=144&q=80",
+    // --- FIX: Updated Emeka's avatar URL to a working image ---
+    avatar: "https://images.unsplash.com/photo-1564564321837-a921d65d2928?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D",
     imageAlt: "Portrait of Emeka Obi",
-    // Note: The projectImage is no longer used in this new design, as it focuses on avatars.
   },
   {
     id: 6,
@@ -90,7 +90,6 @@ const TestimonialsPage = () => {
           <p className={`text-[#E0683D] font-bold tracking-wider uppercase mb-4 transition-all duration-700 delay-300 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
             Client Stories
           </p>
-          {/* --- FIX: Changed <hh1> to <h1> --- */}
           <h1 className={`text-4xl md:text-6xl font-bold text-white mb-6 max-w-4xl leading-tight transition-all duration-700 delay-500 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
             Transforming Spaces, <br/> Exceeding Expectations
           </h1>
@@ -123,6 +122,7 @@ const TestimonialsPage = () => {
                   alt={testimonial.imageAlt} 
                   className="w-full h-96 object-cover"
                   onError={(e) => {
+                    // Fallback in case image fails, though the URL is now fixed
                     (e.target as HTMLImageElement).src = 'https://placehold.co/600x800/333/FFF?text=Client';
                   }}
                 />
