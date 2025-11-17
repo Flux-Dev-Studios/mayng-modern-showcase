@@ -9,7 +9,7 @@ const testimonials = [
     name: "Tunde & Aisha Bello",
     title: "Private Residence, Ikoyi",
     quote: "Working with Designs by May was a dream. They saw our vision and elevated it beyond our wildest expectations. Our home is now our sanctuary.",
-    avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D",
+    avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1974&auto-format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D",
     imageAlt: "Portrait of Tunde Bello"
   },
   {
@@ -38,10 +38,8 @@ const testimonials = [
     quote: "From concept to completion, Mayng exceeded our expectations. The design process was collaborative, and the final outcome is breathtaking.",
     avatar: "https://images.unsplash.com/photo-1540569014015-fa786d35d259?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=144&h=144&q=80",
     imageAlt: "Portrait of Emeka Obi",
-    // Emeka's project image
-    projectImage: "https://images.unsplash.com/photo-1550547648-fb220025796c?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D" 
+    // Note: The projectImage is no longer used in this new design, as it focuses on avatars.
   },
-  // --- NEW TESTIMONIAL 1 ---
   {
     id: 6,
     category: "Kitchen & Dining",
@@ -51,7 +49,6 @@ const testimonials = [
     avatar: "https://images.unsplash.com/photo-1531123897727-8f129e1688ce?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D",
     imageAlt: "Portrait of Zainab Musa"
   },
-  // --- NEW TESTIMONIAL 2 ---
   {
     id: 7,
     category: "Commercial Office",
@@ -63,54 +60,7 @@ const testimonials = [
   },
 ];
 
-// --- Single Testimonial Card Component ---
-const TestimonialCard = ({ testimonial, isVisible }: { testimonial: typeof testimonials[0], isVisible: boolean }) => (
-  <div 
-    className={`bg-white p-8 rounded-xl shadow-lg border border-gray-100 flex flex-col h-full ${isVisible ? 'animate-card-entry' : 'opacity-0'}`}
-    style={{ 
-      willChange: 'opacity, transform',
-      animationDelay: `${(testimonial.id % 4) * 100}ms` // Simple staggered delay
-    }}
-  >
-    {/* Conditionally render image if projectImage exists */}
-    {testimonial.projectImage && (
-      <div className="mb-6 rounded-lg overflow-hidden border border-gray-100">
-        <img 
-          src={testimonial.projectImage} 
-          alt={`Project for ${testimonial.name}`} 
-          className="w-full h-48 object-cover"
-        />
-      </div>
-    )}
-
-    <div className="flex items-center mb-6">
-      <img
-        src={testimonial.avatar}
-        alt={testimonial.imageAlt}
-        className="w-16 h-16 rounded-full object-cover border-4 border-[#E0683D] mr-5 flex-shrink-0"
-        onError={(e) => {
-          (e.target as HTMLImageElement).src = 'https://placehold.co/100x100/333/FFF?text=Client';
-        }}
-      />
-      <div>
-        <h3 className="text-xl font-bold text-gray-900">{testimonial.name}</h3>
-        <p className="text-sm text-[#E0683D] font-medium">{testimonial.title}</p>
-      </div>
-    </div>
-    <div className="relative flex-grow">
-      <svg
-        className="absolute -top-4 -left-4 w-10 h-10 text-gray-100 opacity-90"
-        fill="currentColor"
-        viewBox="0 0 24 24"
-      >
-        <path d="M6 17h3l2-4V7H5v6h3l-2 4zm8 0h3l2-4V7h-6v6h3l-2 4z" />
-      </svg>
-      <p className="text-lg italic text-gray-700 relative z-10 leading-relaxed">
-        "{testimonial.quote}"
-      </p>
-    </div>
-  </div>
-);
+// --- TestimonialCard component is removed, as we're building the layout directly ---
 
 // --- Main Testimonials Page Component ---
 const TestimonialsPage = () => {
@@ -125,7 +75,7 @@ const TestimonialsPage = () => {
   return (
     <div className="min-h-screen bg-white text-gray-900 font-sans">
       
-      {/* --- HERO SECTION --- */}
+      {/* --- HERO SECTION (Unchanged) --- */}
       <div className="relative h-[50vh] min-h-[400px] w-full overflow-hidden">
         {/* Background Image */}
         <div 
@@ -140,24 +90,72 @@ const TestimonialsPage = () => {
           <p className={`text-[#E0683D] font-bold tracking-wider uppercase mb-4 transition-all duration-700 delay-300 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
             Client Stories
           </p>
+          {/* --- FIX: Changed <hh1> to <h1> --- */}
           <h1 className={`text-4xl md:text-6xl font-bold text-white mb-6 max-w-4xl leading-tight transition-all duration-700 delay-500 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
             Transforming Spaces, <br/> Exceeding Expectations
           </h1>
         </div>
       </div>
 
-      {/* --- MAIN CONTENT AREA --- */}
-      <div className="container mx-auto px-4 py-16 lg:px-8">
+      {/* --- MAIN CONTENT AREA (New Alternating Layout) --- */}
+      <div className="container mx-auto px-4 py-24 lg:px-8">
         
-        {/* --- TESTIMONIALS GRID --- */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 min-h-[400px]">
-          {testimonials.map((testimonial) => (
-            <TestimonialCard key={testimonial.id} testimonial={testimonial} isVisible={isVisible} />
+        <h2 className="text-3xl md:text-5xl font-bold text-gray-900 text-center mb-20">
+          What Our Clients Say
+        </h2>
+
+        {/* --- TESTIMONIALS LIST --- */}
+        <div className="space-y-24">
+          {testimonials.map((testimonial, index) => (
+            <div
+              key={testimonial.id}
+              className={`grid grid-cols-1 lg:grid-cols-12 items-center gap-8 lg:gap-16 animate-fade-in ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}
+              style={{ transitionDelay: `${index * 150}ms` }}
+            >
+              {/* Image Side */}
+              <div 
+                className={`lg:col-span-5 rounded-xl overflow-hidden shadow-2xl ${
+                  index % 2 === 0 ? 'lg:order-1' : 'lg:order-2' // Alternates order
+                }`}
+              >
+                <img 
+                  src={testimonial.avatar} 
+                  alt={testimonial.imageAlt} 
+                  className="w-full h-96 object-cover"
+                  onError={(e) => {
+                    (e.target as HTMLImageElement).src = 'https://placehold.co/600x800/333/FFF?text=Client';
+                  }}
+                />
+              </div>
+
+              {/* Text Side */}
+              <div 
+                className={`lg:col-span-7 relative ${
+                  index % 2 === 0 ? 'lg:order-2' : 'lg:order-1' // Alternates order
+                }`}
+              >
+                <svg
+                  className="absolute -top-12 -left-8 w-24 h-24 text-gray-100 -z-10"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M6 17h3l2-4V7H5v6h3l-2 4zm8 0h3l2-4V7h-6v6h3l-2 4z" />
+                </svg>
+                <blockquote className="text-2xl xl:text-3xl font-light text-gray-700 leading-snug relative z-10">
+                  "{testimonial.quote}"
+                </blockquote>
+                <div className="mt-8">
+                  <h3 className="text-xl font-bold text-gray-900">{testimonial.name}</h3>
+                  <p className="text-lg text-[#E0683D] font-medium">{testimonial.title}</p>
+                </div>
+              </div>
+            </div>
           ))}
         </div>
 
-        {/* --- CTA SECTION --- */}
-        <div className="mt-24">
+
+        {/* --- CTA SECTION (Unchanged) --- */}
+        <div className="mt-32">
           <div className="bg-stone-50 rounded-3xl overflow-hidden shadow-xl border border-stone-100">
             <div className="flex flex-col md:flex-row items-center">
               {/* Image Side */}
@@ -194,12 +192,12 @@ const TestimonialsPage = () => {
       {/* --- STYLES --- */}
       <style>
         {`
-          @keyframes cardEntry {
-            from { opacity: 0; transform: translateY(20px); }
+          @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
             to { opacity: 1; transform: translateY(0); }
           }
-          .animate-card-entry {
-            animation: cardEntry 0.5s ease-out forwards;
+          .animate-fade-in {
+            animation: fadeIn 0.8s ease-out forwards;
           }
         `}
       </style>
