@@ -31,16 +31,6 @@ const testimonials = [
     imageAlt: "Portrait of Chioma Okonkwo"
   },
   {
-    id: 5,
-    category: "Restaurant",
-    name: "Emeka Obi",
-    title: "Restaurant Design, VI",
-    quote: "From concept to completion, Mayng exceeded our expectations. The design process was collaborative, and the final outcome is breathtaking.",
-    // --- FIX: Updated Emeka's avatar URL to a working image ---
-    avatar: "https://images.unsplash.com/photo-1564564321837-a921d65d2928?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D",
-    imageAlt: "Portrait of Emeka Obi",
-  },
-  {
     id: 6,
     category: "Kitchen & Dining",
     name: "Zainab & Ahmed Musa",
@@ -60,8 +50,6 @@ const testimonials = [
   },
 ];
 
-// --- TestimonialCard component is removed, as we're building the layout directly ---
-
 // --- Main Testimonials Page Component ---
 const TestimonialsPage = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -75,7 +63,7 @@ const TestimonialsPage = () => {
   return (
     <div className="min-h-screen bg-white text-gray-900 font-sans">
       
-      {/* --- HERO SECTION (Unchanged) --- */}
+      {/* --- HERO SECTION --- */}
       <div className="relative h-[50vh] min-h-[400px] w-full overflow-hidden">
         {/* Background Image */}
         <div 
@@ -96,7 +84,7 @@ const TestimonialsPage = () => {
         </div>
       </div>
 
-      {/* --- MAIN CONTENT AREA (New Alternating Layout) --- */}
+      {/* --- MAIN CONTENT AREA --- */}
       <div className="container mx-auto px-4 py-24 lg:px-8">
         
         <h2 className="text-3xl md:text-5xl font-bold text-gray-900 text-center mb-20">
@@ -111,27 +99,31 @@ const TestimonialsPage = () => {
               className={`grid grid-cols-1 lg:grid-cols-12 items-center gap-8 lg:gap-16 animate-fade-in ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}
               style={{ transitionDelay: `${index * 150}ms` }}
             >
-              {/* Image Side */}
+              {/* Image Side - Now with 3D-like effects */}
               <div 
-                className={`lg:col-span-5 rounded-xl overflow-hidden shadow-2xl ${
-                  index % 2 === 0 ? 'lg:order-1' : 'lg:order-2' // Alternates order
+                className={`lg:col-span-5 rounded-xl overflow-hidden shadow-2xl relative group ${
+                  index % 2 === 0 ? 'lg:order-1' : 'lg:order-2'
                 }`}
+                style={{ perspective: '1000px' }} // Establish perspective for 3D effect
               >
                 <img 
                   src={testimonial.avatar} 
                   alt={testimonial.imageAlt} 
-                  className="w-full h-96 object-cover"
+                  className="w-full h-96 object-cover rounded-xl transition-all duration-500
+                             transform group-hover:scale-[1.05] group-hover:rotate-y-2 group-hover:shadow-3d" // Bouncier hover
+                  style={{ transitionTimingFunction: 'cubic-bezier(0.68, -0.55, 0.27, 1.55)' }} // Bouncy transition
                   onError={(e) => {
-                    // Fallback in case image fails, though the URL is now fixed
                     (e.target as HTMLImageElement).src = 'https://placehold.co/600x800/333/FFF?text=Client';
                   }}
                 />
+                 {/* Overlay for subtle darkening/interaction */}
+                <div className="absolute inset-0 bg-black/10 group-hover:bg-black/0 transition-colors duration-300"></div>
               </div>
 
               {/* Text Side */}
               <div 
                 className={`lg:col-span-7 relative ${
-                  index % 2 === 0 ? 'lg:order-2' : 'lg:order-1' // Alternates order
+                  index % 2 === 0 ? 'lg:order-2' : 'lg:order-1'
                 }`}
               >
                 <svg
@@ -154,7 +146,7 @@ const TestimonialsPage = () => {
         </div>
 
 
-        {/* --- CTA SECTION (Unchanged) --- */}
+        {/* --- CTA SECTION --- */}
         <div className="mt-32">
           <div className="bg-stone-50 rounded-3xl overflow-hidden shadow-xl border border-stone-100">
             <div className="flex flex-col md:flex-row items-center">
@@ -178,7 +170,8 @@ const TestimonialsPage = () => {
                 <a
                   href="/contact"
                   onClick={(e) => e.preventDefault()}
-                  className="inline-block px-8 py-4 bg-[#E0683D] text-white font-bold rounded-lg shadow-lg hover:bg-[#c25730] transition-colors transform hover:-translate-y-1"
+                  className="inline-block px-8 py-4 bg-[#E0683D] text-white font-bold rounded-lg shadow-lg hover:bg-[#c25730] transition-all duration-300 hover:-translate-y-1.5 hover:scale-105" // Bouncier hover
+                  style={{ transitionTimingFunction: 'cubic-bezier(0.68, -0.55, 0.27, 1.55)' }} // Bouncy transition
                 >
                   Get a Free Consultation
                 </a>
@@ -198,6 +191,11 @@ const TestimonialsPage = () => {
           }
           .animate-fade-in {
             animation: fadeIn 0.8s ease-out forwards;
+          }
+          .shadow-3d {
+            box-shadow: 
+              0 25px 50px -12px rgba(0, 0, 0, 0.25), 
+              0 10px 10px -5px rgba(0, 0, 0, 0.1);
           }
         `}
       </style>
