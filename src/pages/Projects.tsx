@@ -18,6 +18,7 @@ import bathroom3 from "@/assets/bathroom3.jpg";
 import kitchen1 from "@/assets/kitchen1.jpg";
 import kitchen2 from "@/assets/kitchen2.jpg";
 import kitchen3 from "@/assets/kitchen3.jpg";
+
 const projectsByCategory = {
   "living-room": [
     {
@@ -73,7 +74,7 @@ const projectsByCategory = {
       image: bathroom2,
     },
     {
-      id: 13, // Make sure this ID is unique
+      id: 13,
       title: "Minimalist Wet Room",
       description: "A sleek, modern wet room design.",
       image: bathroom3,
@@ -92,7 +93,7 @@ const projectsByCategory = {
       description: "Modern kitchen seamlessly integrated with dining area.",
       image: kitchen2,
     },
-   {
+    {
       id: 16,
       title: "Rustic Farmhouse Kitchen",
       description: "A warm, inviting kitchen with natural wood and stone.",
@@ -136,9 +137,10 @@ const Projects = () => {
       />
       
       <main className="py-24">
-        <div className="container mx-auto px-6 lg:px-12 justify-center">
+        {/* UPDATED CONTAINER: Added flex flex-col items-center to ensure children center */}
+        <div className="container mx-auto px-6 lg:px-12 flex flex-col items-center">
           <Tabs defaultValue="living-room" className="w-full" onValueChange={setActiveCategory}>
-           <TabsList className="w-full max-w-4xl mx-auto mb-16 h-auto flex-wrap gap-2 bg-muted/50 p-2 justify-center">
+            <TabsList className="w-full max-w-4xl mx-auto mb-16 h-auto flex-wrap gap-2 bg-muted/50 p-2 justify-center">
               {categories.map((category) => (
                 <TabsTrigger 
                   key={category.id} 
@@ -154,7 +156,7 @@ const Projects = () => {
               <TabsContent 
                 key={category.id} 
                 value={category.id}
-                className="animate-fade-in"
+                className="animate-fade-in w-full" 
               >
                 <div className="mb-8 text-center">
                   <h2 className="font-heading font-bold text-3xl md:text-4xl mb-3 text-foreground">
@@ -165,7 +167,8 @@ const Projects = () => {
                   </p>
                 </div>
 
-                <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                {/* UPDATED GRID: Added mx-auto and max-w-7xl to center the grid itself */}
+                <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8 mx-auto max-w-7xl justify-center">
                   {projectsByCategory[category.id as keyof typeof projectsByCategory].map((project, index) => (
                     <div
                       key={project.id}
