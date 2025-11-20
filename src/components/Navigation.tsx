@@ -3,6 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import logoImage from "@/assets/logo-dm-transparent.png";
+import blackLogo from "@/assets/black.png"; // Import the new black logo
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -74,11 +75,11 @@ const Navigation = () => {
           {/* --- 1. LOGO --- */}
           <Link to="/" className="flex items-center hover:opacity-80 transition-opacity z-20">
             <img 
-              src={logoImage} 
+              src={isScrolled ? blackLogo : logoImage} // Use blackLogo when scrolled, otherwise logoImage
               alt="Logo" 
               className={cn(
                 "transition-all duration-500 w-auto",
-                isScrolled ? "h-10 invert" : "h-16" 
+                isScrolled ? "h-10" : "h-16" 
               )} 
             />
           </Link>
