@@ -11,9 +11,9 @@ const Navigation = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      const windowHeight = typeof window !== "undefined" ? window.innerHeight : 800;
-      // Trigger slightly before the hero ends for a seamless feel
-      setIsScrolled(window.scrollY > windowHeight - 150);
+      // Trigger the switch when passing the hero threshold
+      const threshold = window.innerHeight - 150;
+      setIsScrolled(window.scrollY > threshold);
     };
 
     window.addEventListener("scroll", handleScroll);
@@ -33,27 +33,26 @@ const Navigation = () => {
     { name: "Contact", path: "/contact" },
   ];
 
-  // Helper component to avoid duplicating code
-  // We render this twice: once for the "Hero" spot (Right) and once for "Scrolled" (Center)
-  const NavLinksGroup = ({ isScrolledMode }: { isScrolledMode: boolean }) => (
+  // Helper for the links. 
+  // We pass 'isDarkText' to switch colors based on the container they are in.
+  const NavLinksList = ({ isDarkText }: { isDarkText: boolean }) => (
     <>
       {navLinks.map((link) => (
         <Link
           key={link.path}
           to={link.path}
           className={cn(
-            "text-sm font-medium transition-all duration-300 relative py-1",
-            location.pathname === link.path
-              ? "text-primary font-semibold"
-              : "text-white/90 hover:text-white",
-              
-            // Minor tweak: Make text slightly larger when centered for impact
-            isScrolledMode ? "text-base" : "text-sm"
+            "text-sm font-medium transition-all duration-300 relative py-1 hover:opacity-70",
+            isDarkText ? "text-foreground" : "text-white", 
+            location.pathname === link.path && (isDarkText ? "font-bold" : "font-semibold")
           )}
         >
           {link.name}
           {location.pathname === link.path && (
-            <span className="absolute -bottom-1 left-0 w-full h-0.5 bg-primary rounded-full animate-fade-in" />
+            <span className={cn(
+              "absolute -bottom-1 left-0 w-full h-0.5 rounded-full animate-fade-in",
+              isDarkText ? "bg-foreground" : "bg-white"
+            )} />
           )}
         </Link>
       ))}
@@ -64,8 +63,11 @@ const Navigation = () => {
     <nav
       className={cn(
         "fixed top-0 left-0 right-0 z-50 transition-all duration-700 cubic-bezier(0.4, 0, 0.2, 1)",
+        // BACKGROUND SWITCH:
+        // Hero: Transparent
+        // Scrolled: White/Light Background (creates the contrast switch)
         isScrolled 
-          ? "bg-black/90 backdrop-blur-xl py-4 shadow-2xl border-b border-white/5" 
+          ? "bg-background/95 backdrop-blur-md shadow-sm py-4 border-b border-border/10" 
           : "bg-transparent py-6"
       )}
     >
@@ -73,47 +75,47 @@ const Navigation = () => {
         <div className="flex items-center justify-between h-full relative">
           
           {/* --- LOGO --- */}
+          {/* Note: If your logo is white text, you might need a CSS filter to turn it black on scroll */}
           <Link to="/" className="flex items-center hover:opacity-80 transition-opacity z-20">
             <img 
               src={logoImage} 
               alt="Design by Mays Logo" 
               className={cn(
-                "transition-all duration-700 ease-in-out w-auto",
-                isScrolled ? "h-10" : "h-16"
+                "transition-all duration-700 w-auto",
+                isScrolled ? "h-10 invert" : "h-16" // Added 'invert' class if you need to swap logo color
               )} 
             />
           </Link>
 
-          {/* --- TRANSITION CONTAINER --- */}
-          {/* We keep both sets of links in the DOM but fade between them using Opacity & Scale.
-              This prevents the "Jump" effect of changing position:absolute. */}
-
-          {/* 1. HERO STATE LINKS (Right Aligned Pill) */}
+          {/* --- GROUP 1: HERO LINKS (Right Side, White Text) --- */}
           <div className={cn(
-            "hidden md:flex items-center gap-8 bg-black/20 backdrop-blur-sm border border-white/10 rounded-full px-8 py-2 absolute right-0 transition-all duration-700 ease-in-out origin-right",
-            // If scrolled: Fade out, Scale down, move slightly right
+            "hidden md:flex items-center gap-8 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-8 py-2 absolute right-0 transition-all duration-700 ease-in-out origin-right",
+            // Logic: When scrolled, this group fades OUT and scales DOWN
             isScrolled 
               ? "opacity-0 scale-90 translate-x-10 pointer-events-none" 
               : "opacity-100 scale-100 translate-x-0"
           )}>
-            <NavLinksGroup isScrolledMode={false} />
+            <NavLinksList isDarkText={false} />
           </div>
 
-          {/* 2. SCROLLED STATE LINKS (Center Aligned Clean) */}
+          {/* --- GROUP 2: SCROLLED LINKS (Center, Dark Text) --- */}
           <div className={cn(
-            "hidden md:flex items-center gap-8 absolute left-1/2 -translate-x-1/2 transition-all duration-700 ease-in-out",
-            // If scrolled: Fade in, Scale up from bottom
+            "hidden md:flex items-center gap-8 absolute left-1/2 -translate-x-1/2 transition-all duration-700 ease-in-out origin-bottom",
+            // Logic: When scrolled, this group fades IN and floats UP
             isScrolled 
-              ? "opacity-100 scale-100 translate-y-0 delay-100" // Added delay for smoother sequence
-              : "opacity-0 scale-95 translate-y-4 pointer-events-none"
+              ? "opacity-100 scale-100 translate-y-0 delay-100" 
+              : "opacity-0 scale-95 translate-y-8 pointer-events-none"
           )}>
-             <NavLinksGroup isScrolledMode={true} />
+             <NavLinksList isDarkText={true} />
           </div>
 
           {/* --- MOBILE MENU TOGGLE --- */}
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="md:hidden p-2 text-white hover:text-primary transition-colors z-20"
+            className={cn(
+              "md:hidden p-2 transition-colors z-20",
+              isScrolled ? "text-foreground" : "text-white hover:text-primary"
+            )}
             aria-label="Toggle menu"
           >
             {isOpen ? <X size={24} /> : <Menu size={24} />}
@@ -125,7 +127,7 @@ const Navigation = () => {
             "md:hidden overflow-hidden transition-all duration-500 ease-in-out",
             isOpen ? "max-h-[500px] opacity-100 mt-4" : "max-h-0 opacity-0"
         )}>
-          <div className="bg-zinc-950/95 backdrop-blur-xl rounded-2xl border border-white/10 p-4 shadow-2xl flex flex-col gap-2">
+          <div className="bg-background/95 backdrop-blur-xl rounded-2xl border border-border/10 p-4 shadow-2xl flex flex-col gap-2">
             {navLinks.map((link) => (
               <Link
                 key={link.path}
@@ -134,8 +136,8 @@ const Navigation = () => {
                 className={cn(
                   "text-base font-medium py-3 px-4 rounded-lg transition-all duration-300",
                   location.pathname === link.path
-                    ? "bg-primary/20 text-primary"
-                    : "text-white/90 hover:bg-white/10 hover:text-white"
+                    ? "bg-primary/10 text-primary"
+                    : "text-foreground hover:bg-muted"
                 )}
               >
                 {link.name}
