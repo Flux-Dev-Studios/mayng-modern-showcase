@@ -43,10 +43,8 @@ const Navigation = () => {
           to={link.path}
           className={cn(
             "text-sm font-medium transition-colors duration-300 relative py-1",
-            
             // Desktop Text Colors
             isDark ? "text-foreground" : "text-white",
-            
             "hover:text-primary",
             location.pathname === link.path && "font-semibold"
           )}
@@ -104,21 +102,32 @@ const Navigation = () => {
             <NavLinksList isDark={false} spacingClass="gap-8" />
           </div>
 
-          {/* --- MOBILE MENU TOGGLE (Fixed: No Overlap) --- */}
+          {/* --- MOBILE MENU TOGGLE (FIXED: HARD SWAP) --- */}
           <button
             onClick={() => setIsOpen(!isOpen)}
             className={cn(
-              "md:hidden p-2 transition-colors z-50 relative",
-              // COLOR: Primary on Hero, Dark on Scroll
+              "md:hidden p-2 transition-colors z-50 relative flex items-center justify-center",
+              // Color Logic
               isScrolled ? "text-foreground" : "text-primary"
             )}
             aria-label="Toggle menu"
           >
-             {/* LOGIC: We render EITHER the X OR the Menu. Never both. */}
+            {/* LOGIC EXPLANATION:
+              We use a strict conditional check. 
+              If `isOpen` is true, ONLY render X. 
+              If `isOpen` is false, ONLY render Menu.
+              No `absolute` positioning is used on the icons, so they CANNOT stack.
+            */}
             {isOpen ? (
-              <X size={28} className="animate-in fade-in zoom-in duration-300" />
+              <X 
+                size={28} 
+                className="transition-transform duration-300 rotate-90 animate-in fade-in" 
+              />
             ) : (
-              <Menu size={28} className="animate-in fade-in zoom-in duration-300" />
+              <Menu 
+                size={28} 
+                className="transition-transform duration-300 rotate-0 animate-in fade-in" 
+              />
             )}
           </button>
         </div>
