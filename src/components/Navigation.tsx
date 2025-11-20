@@ -101,36 +101,45 @@ const Navigation = () => {
             <NavLinksList isDark={false} spacingClass="gap-8" />
           </div>
 
-         {/* --- MOBILE MENU TOGGLE --- */}
+     {/* --- MOBILE MENU TOGGLE (Architectural Design) --- */}
           <button
             onClick={() => setIsOpen(!isOpen)}
             className={cn(
-              "md:hidden p-2 transition-colors z-50 relative",
-              // COLOR: Primary on Hero, Dark on Scroll
+              "md:hidden relative z-50 p-2 group",
+              // COLOR LOGIC:
+              // Hero: Primary (Brand Color)
+              // Scrolled: Foreground (Black/Dark)
               isScrolled ? "text-foreground" : "text-primary"
             )}
             aria-label="Toggle menu"
           >
-            <div className="relative w-6 h-6 flex items-center justify-center">
-              {/* MENU ICON (Hamburger) - Visible when CLOSED */}
-              <Menu 
-                size={28}
+            {/* Container for the lines */}
+            <div className="w-8 h-8 flex flex-col justify-center items-end gap-1.5">
+              
+              {/* Line 1: Top (Always full width, rotates 45deg when open) */}
+              <span 
                 className={cn(
-                  "absolute transition-all duration-500 ease-in-out transform origin-center",
-                  // Logic: If Open -> Fade Out, Rotate, Scale to 0 (Vanish)
-                  isOpen ? "opacity-0 rotate-90 scale-0" : "opacity-100 rotate-0 scale-100"
-                )}
+                  "h-[2px] bg-current rounded-full transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] origin-center",
+                  isOpen 
+                    ? "w-6 translate-y-[4px] rotate-45" // Moves down and rotates
+                    : "w-6 translate-y-0 rotate-0" // Default state
+                )} 
               />
               
-              {/* X ICON (Close) - Visible when OPEN */}
-              <X 
-                size={28}
+              {/* Line 2: Bottom (Starts short/right-aligned, becomes X when open) */}
+              <span 
                 className={cn(
-                  "absolute transition-all duration-500 ease-in-out transform origin-center",
-                  // Logic: If Open -> Fade In, Rotate to 0, Scale to 1 (Appear)
-                  isOpen ? "opacity-100 rotate-0 scale-100" : "opacity-0 -rotate-90 scale-0"
-                )}
+                  "h-[2px] bg-current rounded-full transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] origin-center",
+                  // LOGIC:
+                  // Open: Full width, moves up, rotates -45deg (Forms X)
+                  // Closed: Short width (w-4), right aligned
+                  // Hover (Group): Extends to full width (w-6)
+                  isOpen 
+                    ? "w-6 -translate-y-[4px] -rotate-45" 
+                    : "w-4 group-hover:w-6" 
+                )} 
               />
+              
             </div>
           </button>
         </div>
