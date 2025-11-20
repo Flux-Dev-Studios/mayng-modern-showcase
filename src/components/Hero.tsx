@@ -2,10 +2,12 @@ import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
-import heroImage from "@/assets/hero-interior.jpg";
-import project1 from "@/assets/project-1.jpg";
-import project2 from "@/assets/project-2.jpg";
-import project3 from "@/assets/project-3.jpg";
+
+// IMPORTING ONE IMAGE FROM EACH CATEGORY
+import livingRoom1 from "@/assets/living-room-1.jpg";
+import bedroom1 from "@/assets/bedroom-1.jpg";
+import bathroom1 from "@/assets/bathroom1.jpg";
+import kitchen1 from "@/assets/kitchen1.jpg";
 
 const Hero = () => {
   const [rotation, setRotation] = useState(0);
@@ -13,7 +15,8 @@ const Hero = () => {
   
   const { ref, isVisible } = useScrollAnimation({ threshold: 0.2 });
   
-  const images = [heroImage, project1, project2, project3];
+  // UPDATED IMAGES ARRAY: 4 Distinct Room Types
+  const images = [livingRoom1, bedroom1, bathroom1, kitchen1];
   
   useEffect(() => {
     const handleResize = () => {
@@ -32,8 +35,7 @@ const Hero = () => {
     const interval = setInterval(() => {
       setRotation(prev => {
         // SPEED LOGIC:
-        // Unified speed for BOTH Mobile and Desktop
-        // 0.15 is the faster speed you requested (1.5x of original base)
+        // Unified speed for BOTH Mobile and Desktop (0.15)
         return prev + 0.15; 
       });
     }, 16); // ~60fps
