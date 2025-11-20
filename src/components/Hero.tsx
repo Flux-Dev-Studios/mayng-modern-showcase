@@ -14,14 +14,34 @@ const Hero = () => {
   const images = [heroImage, project1, project2, project3];
   
   useEffect(() => {
-    // 1. Determine screen size on mount
     const isMobile = window.innerWidth < 768;
 
-    // 2. Set speed: 0.4 for mobile (faster), 0.1 for desktop (slower)
-    const rotationSpeed = isMobile ? 0.4 : 0.1;
+    // SETTINGS: Adjust these to tweak the feel
+    // "Dwell" Speed: How fast it moves when showing an image (Very slow)
+    const slowSpeed = isMobile ? 0.1 : 0.05; 
+    // "Swap" Speed: How fast it moves between images (Fast)
+    const fastSpeed = isMobile ? 1.2 : 0.8;
+    // "Zone": How many degrees around the center counts as "showing the image"
+    // 90 degrees total per side. 20 degrees means +/- 10 degrees from center.
+    const viewZone = 30; 
 
     const interval = setInterval(() => {
-      setRotation(prev => prev + rotationSpeed);
+      setRotation(prev => {
+        // 1. Calculate where we are in the 90-degree sector
+        // The images are at 0, 90, 180, 270.
+        const normalizedAngle = Math.abs(prev % 90);
+
+        // 2. Calculate distance to the nearest "Center" (0 or 90)
+        // If angle is 10, distance is 10. If angle is 80, distance is 10 (from 90).
+        const distanceToCenter = Math.min(normalizedAngle, 90 - normalizedAngle);
+
+        // 3. Determine Speed
+        // If we are close to the center (within viewZone/2), go SLOW.
+        // Otherwise (we are transitioning), go FAST.
+        const currentSpeed = distanceToCenter < (viewZone / 2) ? slowSpeed : fastSpeed;
+
+        return prev + currentSpeed;
+      });
     }, 16); // ~60fps
     
     return () => clearInterval(interval);
@@ -45,8 +65,6 @@ const Hero = () => {
                 key={index}
                 className="absolute inset-0 w-full h-full"
                 style={{
-                  // Optional: You might want to reduce translateZ for mobile if images look too "zoomed in"
-                  // e.g., translateZ(${window.innerWidth < 768 ? 300 : 600}px)
                   transform: `rotateY(${angle}deg) translateZ(600px)`,
                   backfaceVisibility: "hidden",
                 }}
