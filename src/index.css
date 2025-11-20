@@ -7,80 +7,53 @@ All colors MUST be HSL.
 */
 
 @layer base {
+@layer base {
   :root {
-    --background: 38 30% 97%;
-    --foreground: 20 15% 15%;
+    /* --- BACKGROUND: Deep Blue (#182B3A) --- */
+    --background: 206 41% 16%;
+    
+    /* --- TEXT: White (for readability on dark blue) --- */
+    --foreground: 0 0% 100%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 20 15% 15%;
-
-    --popover: 0 0% 100%;
-    --popover-foreground: 20 15% 15%;
-
-    --primary: 15 75% 55%;
-    --primary-foreground: 38 30% 97%;
-
-    --secondary: 25 25% 90%;
-    --secondary-foreground: 20 15% 15%;
-
-    --muted: 25 20% 92%;
-    --muted-foreground: 20 10% 45%;
-
-    --accent: 15 75% 55%;
-    --accent-foreground: 38 30% 97%;
-
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 38 30% 97%;
-
-    --border: 25 15% 88%;
-    --input: 25 15% 88%;
-    --ring: 15 75% 55%;
-
-    --radius: 0.75rem;
-
-    /* Custom design tokens */
-    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    --shadow-elegant: 0 10px 40px -10px hsl(15 75% 55% / 0.15);
-    --shadow-hover: 0 20px 60px -15px hsl(15 75% 55% / 0.25);
-    --glass-gradient: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
-  }
-
-  .dark {
-    --background: 20 20% 8%;
-    --foreground: 38 30% 95%;
-
-    --card: 20 18% 12%;
-    --card-foreground: 38 30% 95%;
-
-    --popover: 20 18% 12%;
-    --popover-foreground: 38 30% 95%;
-
-    --primary: 15 75% 55%;
-    --primary-foreground: 38 30% 97%;
-
-    --secondary: 20 15% 18%;
-    --secondary-foreground: 38 30% 95%;
-
-    --muted: 20 15% 18%;
-    --muted-foreground: 25 10% 60%;
-
-    --accent: 15 75% 55%;
-    --accent-foreground: 38 30% 97%;
-
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 38 30% 97%;
-
-    --border: 20 15% 22%;
-    --input: 20 15% 22%;
-    --ring: 15 75% 55%;
+    /* --- CARD/CONTAINERS: Slightly lighter/darker blue for depth --- */
+    --card: 206 41% 14%;
+    --card-foreground: 0 0% 100%;
+ 
+    --popover: 206 41% 16%;
+    --popover-foreground: 0 0% 100%;
+ 
+    /* --- PRIMARY BRAND COLOR: Gold (#E2BC63) --- */
+    --primary: 42 68% 64%;
+    /* Text inside a Gold button should be the Deep Blue */
+    --primary-foreground: 206 41% 16%;
+ 
+    /* --- SECONDARY ACCENTS --- */
+    --secondary: 206 30% 25%;
+    --secondary-foreground: 0 0% 100%;
+ 
+    /* --- MUTED ELEMENTS (Subtle text/backgrounds) --- */
+    --muted: 206 30% 25%;
+    --muted-foreground: 206 20% 70%;
+ 
+    /* --- HOVER STATES --- */
+    --accent: 206 30% 25%;
+    --accent-foreground: 0 0% 100%;
+ 
+    /* --- BORDERS & INPUTS --- */
+    --border: 206 30% 30%;
+    --input: 206 30% 30%;
+    
+    /* --- FOCUS RING (Gold) --- */
+    --ring: 42 68% 64%;
+ 
+    --radius: 0.5rem;
   }
 }
-
+ 
 @layer base {
   * {
     @apply border-border;
   }
-
   body {
     @apply bg-background text-foreground;
   }
