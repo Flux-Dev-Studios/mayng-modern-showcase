@@ -4,35 +4,35 @@ import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import logoImage from "@/assets/logo-dm-transparent.png";
 
-const Navigation = () => {
+// Define props interface
+interface NavigationProps {
+  forceScrolled?: boolean;
+}
+
+const Navigation = ({ forceScrolled = false }: NavigationProps) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
+  const [scrollState, setScrollState] = useState(false);
   const location = useLocation();
+
+  // Determine effective state: 
+  // If forceScrolled is passed (e.g. Case Study page), use it. Otherwise use scroll listener.
+  const isScrolled = forceScrolled || scrollState;
 
   // --- SCROLL DETECTION ---
   useEffect(() => {
     const handleScroll = () => {
-      // CHECK ROUTE: Is this the Home page ("/")?
       const isHomePage = location.pathname === "/";
-      
-      // DEFINE THRESHOLD:
-      // Home Page: Wait for full screen (minus buffer) because the Hero is massive.
-      // Internal Pages: Trigger much earlier (e.g., 300px) because headers are shorter.
       const heroHeight = isHomePage ? window.innerHeight : 300;
-      
-      // Buffer to ensure smooth transition
       const buffer = 100;
       const threshold = Math.max(50, heroHeight - buffer);
 
-      setIsScrolled(window.scrollY > threshold);
+      setScrollState(window.scrollY > threshold);
     };
 
-    // Trigger once on mount to set initial state (in case user reloads scrolled down)
     handleScroll();
-
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [location.pathname]); // Dependency on location ensures this resets when changing pages
+  }, [location.pathname]);
 
   // --- ROUTE CHANGE HANDLING ---
   useEffect(() => {
@@ -76,9 +76,10 @@ const Navigation = () => {
     <nav
       className={cn(
         "fixed top-0 left-0 right-0 z-50 transition-all duration-700 ease-[cubic-bezier(0.4,0,0.2,1)] border-b",
+        // NAVBAR BACKGROUND TRANSITION
         isScrolled 
-          ? "bg-background/95 backdrop-blur-md shadow-sm py-4 border-border/10" 
-          : "bg-transparent py-6 border-transparent"
+          ? "bg-background/95 backdrop-blur-md shadow-sm py-4 border-border/10" // Scrolled: Glassy White/Dark
+          : "bg-transparent py-6 border-transparent" // Hero: Transparent
       )}
     >
       <div className="container mx-auto px-6 lg:px-12 relative h-full">
