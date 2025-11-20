@@ -43,10 +43,7 @@ const Navigation = () => {
           to={link.path}
           className={cn(
             "text-sm font-medium transition-colors duration-300 relative py-1",
-            
-            // Desktop Text Colors
             isDark ? "text-foreground" : "text-white",
-            
             "hover:text-primary",
             location.pathname === link.path && "font-semibold"
           )}
@@ -76,7 +73,7 @@ const Navigation = () => {
           <Link to="/" className="flex items-center hover:opacity-80 transition-opacity z-20">
             <img 
               src={logoImage} 
-              alt="Design by Mays Logo" 
+              alt="Logo" 
               className={cn(
                 "transition-all duration-500 w-auto",
                 isScrolled ? "h-10 invert" : "h-16" 
@@ -104,36 +101,34 @@ const Navigation = () => {
             <NavLinksList isDark={false} spacingClass="gap-8" />
           </div>
 
-          {/* --- MOBILE MENU TOGGLE (ICON VERSION) --- */}
+          {/* --- MOBILE MENU TOGGLE --- */}
           <button
             onClick={() => setIsOpen(!isOpen)}
             className={cn(
               "md:hidden p-2 transition-colors z-50 relative",
-              // VISIBILITY LOGIC:
-              // Hero: Uses Primary Color (to act as the "Button" color against backgrounds)
-              // Scrolled: Uses Foreground (Black/Dark)
+              // COLOR: Primary on Hero, Dark on Scroll
               isScrolled ? "text-foreground" : "text-primary"
             )}
             aria-label="Toggle menu"
           >
             <div className="relative w-6 h-6 flex items-center justify-center">
               
-              {/* MENU ICON (Visible when Closed) */}
+              {/* HAMBURGER ICON (Visible when CLOSED) */}
               <Menu 
                 size={28}
                 className={cn(
                   "absolute transition-all duration-500 ease-in-out transform origin-center",
-                  // Scale goes to 0 to completely vanish
+                  // Logic: If Open -> Fade Out, Rotate, Scale to 0 (Vanish)
                   isOpen ? "opacity-0 rotate-90 scale-0" : "opacity-100 rotate-0 scale-100"
                 )}
               />
               
-              {/* CLOSE ICON (Visible when Open) */}
+              {/* X ICON (Visible when OPEN) */}
               <X 
                 size={28}
                 className={cn(
                   "absolute transition-all duration-500 ease-in-out transform origin-center",
-                  // Scale goes to 0 when hidden
+                  // Logic: If Open -> Fade In, Rotate to 0, Scale to 1 (Appear)
                   isOpen ? "opacity-100 rotate-0 scale-100" : "opacity-0 -rotate-90 scale-0"
                 )}
               />
