@@ -7,12 +7,13 @@ import Index from "./pages/Index";
 import Projects from "./pages/Projects";
 import About from "./pages/About";
 import TestimonialsPage from './pages/TestimonialsPage';
-import ServicesPage from "./pages/ServicesPage"; // Corrected path
+import ServicesPage from "./pages/ServicesPage";
 import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
-// Added the missing import for your Navigation component
-// Adjust this path if it's different (e.g., "@/components/Navigation")
-import Navigation from "./components/Navigation"; 
+import Navigation from "./components/Navigation";
+
+// 1. Import the Footer component
+import Footer from "@/components/Footer"; 
 
 const queryClient = new QueryClient();
 
@@ -22,21 +23,28 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
-         {/* This component now has its import */}
-         <Navigation /> 
-        <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/projects" element={<Projects />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/services" element={<ServicesPage />} />
-          <Route path="/contact" element={<Contact />} />
+        {/* Layout Wrapper to ensure Footer pushes to bottom if content is short */}
+        <div className="flex flex-col min-h-screen">
           
-          {/* This is the line I fixed. It was missing "/>" at the end. */}
-          <Route path="/testimonials" element={<TestimonialsPage />} />
+          <Navigation />
+          
+          {/* Flex-grow ensures this section takes up remaining space */}
+          <div className="flex-grow">
+            <Routes>
+              <Route path="/" element={<Index />} />
+              <Route path="/projects" element={<Projects />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/services" element={<ServicesPage />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="/testimonials" element={<TestimonialsPage />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </div>
 
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-          <Route path="*" element={<NotFound />} />
-        </Routes>
+          {/* 2. Add Footer here */}
+          <Footer />
+          
+        </div>
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>
