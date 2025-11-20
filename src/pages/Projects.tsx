@@ -8,7 +8,7 @@ import { ArrowUpRight, ArrowLeft, MapPin, Calendar, User, ArrowRight } from "luc
 import heroPortfolio from "@/assets/hero-portfolio.jpg";
 
 // Import Data from the local file
-import { projects } from "./projectdata";
+import { projects } from "./Projectdata";
 
 const categories = [
   { id: "living-room", label: "Living Room" },
