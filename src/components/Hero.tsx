@@ -14,8 +14,14 @@ const Hero = () => {
   const images = [heroImage, project1, project2, project3];
   
   useEffect(() => {
+    // 1. Determine screen size on mount
+    const isMobile = window.innerWidth < 768;
+
+    // 2. Set speed: 0.4 for mobile (faster), 0.1 for desktop (slower)
+    const rotationSpeed = isMobile ? 0.4 : 0.1;
+
     const interval = setInterval(() => {
-      setRotation(prev => prev + 0.1);
+      setRotation(prev => prev + rotationSpeed);
     }, 16); // ~60fps
     
     return () => clearInterval(interval);
@@ -39,6 +45,8 @@ const Hero = () => {
                 key={index}
                 className="absolute inset-0 w-full h-full"
                 style={{
+                  // Optional: You might want to reduce translateZ for mobile if images look too "zoomed in"
+                  // e.g., translateZ(${window.innerWidth < 768 ? 300 : 600}px)
                   transform: `rotateY(${angle}deg) translateZ(600px)`,
                   backfaceVisibility: "hidden",
                 }}
