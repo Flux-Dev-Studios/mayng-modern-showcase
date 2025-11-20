@@ -10,7 +10,7 @@ import heroPortfolio from "@/assets/hero-portfolio.jpg";
 // --- FIX: IMPORT FROM THE NEW LOCAL FILE ---
 // Old: import { projects } from "@/data/projects";  <-- This is causing the error
 // New:
-import { projects } from "./projectdata"; 
+import { projects } from "./Projectdata"; 
 
 const categories = [
   { id: "living-room", label: "Living Room" },
