@@ -11,7 +11,7 @@ const Navigation = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      // Trigger transition after hero section
+      // Transition triggers after passing the hero section
       const threshold = window.innerHeight - 150;
       setIsScrolled(window.scrollY > threshold);
     };
@@ -33,7 +33,7 @@ const Navigation = () => {
     { name: "Contact", path: "/contact" },
   ];
 
-  // Helper Component for Links
+  // --- HELPER COMPONENT FOR LINKS ---
   const NavLinksList = ({ isDark, spacingClass }: { isDark: boolean, spacingClass: string }) => (
     <div className={cn("flex items-center", spacingClass)}>
       {navLinks.map((link) => (
@@ -41,16 +41,29 @@ const Navigation = () => {
           key={link.path}
           to={link.path}
           className={cn(
-            "text-sm font-medium transition-all duration-300 relative py-1 hover:opacity-60",
+            "text-sm font-medium transition-colors duration-300 relative py-1",
+            // BASE COLOR:
+            // If Scrolled (Dark/Light Mode): Use Foreground (Black)
+            // If Hero: Use White
             isDark ? "text-foreground" : "text-white",
+            
+            // HOVER EFFECT:
+            // Forces the text to turn into your Primary (Button) Color
+            "hover:text-primary",
+
+            // ACTIVE STATE FONT WEIGHT
             location.pathname === link.path && "font-semibold"
           )}
         >
           {link.name}
+          
+          {/* UNDERLINE ANIMATION */}
           {location.pathname === link.path && (
             <span className={cn(
               "absolute -bottom-1 left-0 w-full h-0.5 rounded-full animate-fade-in",
-              isDark ? "bg-foreground" : "bg-white"
+              // UNDERLINE COLOR:
+              // Now always uses 'bg-primary' to match your buttons
+              "bg-primary" 
             )} />
           )}
         </Link>
@@ -62,7 +75,6 @@ const Navigation = () => {
     <nav
       className={cn(
         "fixed top-0 left-0 right-0 z-50 transition-all duration-700 ease-[cubic-bezier(0.4,0,0.2,1)] border-b",
-        // Background Transition
         isScrolled 
           ? "bg-background/95 backdrop-blur-md shadow-sm py-4 border-border/10" 
           : "bg-transparent py-6 border-transparent"
@@ -71,7 +83,7 @@ const Navigation = () => {
       <div className="container mx-auto px-6 lg:px-12 relative h-full">
         <div className="flex items-center justify-between h-full relative">
           
-          {/* --- 1. LOGO (Always Left) --- */}
+          {/* --- LOGO --- */}
           <Link to="/" className="flex items-center hover:opacity-80 transition-opacity z-20">
             <img 
               src={logoImage} 
@@ -83,25 +95,22 @@ const Navigation = () => {
             />
           </Link>
 
-          {/* --- 2. CENTER LINKS (Scrolled State) --- */}
-          {/* We use 'absolute left-1/2' to ensure TRUE center relative to viewport */}
+          {/* --- CENTER LINKS (Scrolled State) --- */}
           <div className={cn(
             "hidden md:block absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transition-all duration-700 delay-100 ease-out",
             isScrolled 
-              ? "opacity-100 scale-100 pointer-events-auto" // Visible when scrolled
-              : "opacity-0 scale-95 pointer-events-none translate-y-4" // Hidden on Hero
+              ? "opacity-100 scale-100 pointer-events-auto"
+              : "opacity-0 scale-95 pointer-events-none translate-y-4"
           )}>
-            {/* Increased spacing to gap-12 for the 'spaced' look */}
             <NavLinksList isDark={true} spacingClass="gap-12" />
           </div>
 
-          {/* --- 3. RIGHT LINKS (Hero State) --- */}
-          {/* We keep this relative (flex) so it pushes nicely against the right edge */}
+          {/* --- RIGHT LINKS (Hero State) --- */}
           <div className={cn(
             "hidden md:flex items-center bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-8 py-2 transition-all duration-500 ease-in-out origin-right",
             isScrolled 
-              ? "opacity-0 scale-90 translate-x-8 pointer-events-none" // Fades out when scrolled
-              : "opacity-100 scale-100 translate-x-0 pointer-events-auto" // Visible on Hero
+              ? "opacity-0 scale-90 translate-x-8 pointer-events-none"
+              : "opacity-100 scale-100 translate-x-0 pointer-events-auto"
           )}>
             <NavLinksList isDark={false} spacingClass="gap-8" />
           </div>
@@ -132,9 +141,10 @@ const Navigation = () => {
                 onClick={() => setIsOpen(false)}
                 className={cn(
                   "text-base font-medium py-3 px-4 rounded-lg transition-all duration-300",
+                  // Mobile Active/Hover states also updated to use Primary
                   location.pathname === link.path
                     ? "bg-primary/10 text-primary"
-                    : "text-foreground hover:bg-muted"
+                    : "text-foreground hover:text-primary hover:bg-muted"
                 )}
               >
                 {link.name}
