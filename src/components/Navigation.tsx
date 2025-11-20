@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import logoImage from "@/assets/logo-dm-transparent.png";
 
@@ -102,33 +101,44 @@ const Navigation = () => {
             <NavLinksList isDark={false} spacingClass="gap-8" />
           </div>
 
-          {/* --- MOBILE MENU TOGGLE (FIXED: HARD SWAP) --- */}
+          {/* --- MOBILE MENU TOGGLE (TEXT CAPSULE - NO ICONS) --- */}
           <button
             onClick={() => setIsOpen(!isOpen)}
             className={cn(
-              "md:hidden p-2 transition-colors z-50 relative flex items-center justify-center",
-              // Color Logic
-              isScrolled ? "text-foreground" : "text-primary"
+              "md:hidden z-50 relative group overflow-hidden rounded-full transition-all duration-300 ease-out",
+              // SIZE & SHAPE
+              "px-5 py-2.5 border backdrop-blur-md",
+              
+              // COLORS & BORDERS
+              isScrolled 
+                ? "bg-foreground/5 border-foreground/10 text-foreground hover:bg-foreground/10" 
+                : "bg-white/10 border-white/20 text-white hover:bg-white/20"
             )}
             aria-label="Toggle menu"
           >
-            {/* LOGIC EXPLANATION:
-              We use a strict conditional check. 
-              If `isOpen` is true, ONLY render X. 
-              If `isOpen` is false, ONLY render Menu.
-              No `absolute` positioning is used on the icons, so they CANNOT stack.
-            */}
-            {isOpen ? (
-              <X 
-                size={28} 
-                className="transition-transform duration-300 rotate-90 animate-in fade-in" 
-              />
-            ) : (
-              <Menu 
-                size={28} 
-                className="transition-transform duration-300 rotate-0 animate-in fade-in" 
-              />
-            )}
+            <div className="relative w-[40px] h-[14px] flex items-center justify-center overflow-hidden">
+              
+              {/* TEXT: MENU (Visible when CLOSED) */}
+              <span className={cn(
+                "absolute text-[10px] font-bold tracking-[0.2em] uppercase transition-all duration-500 ease-out",
+                isOpen 
+                  ? "translate-y-8 opacity-0" // Slides down when open
+                  : "translate-y-0 opacity-100" // Visible when closed
+              )}>
+                Menu
+              </span>
+
+              {/* TEXT: CLOSE (Visible when OPEN) */}
+              <span className={cn(
+                "absolute text-[10px] font-bold tracking-[0.2em] uppercase transition-all duration-500 ease-out",
+                isOpen 
+                  ? "translate-y-0 opacity-100 text-primary" // Visible when open (Primary Color)
+                  : "-translate-y-8 opacity-0" // Hidden above when closed
+              )}>
+                Close
+              </span>
+              
+            </div>
           </button>
         </div>
 
