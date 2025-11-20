@@ -9,7 +9,6 @@ import project3 from "@/assets/project-3.jpg";
 
 const Hero = () => {
   const [rotation, setRotation] = useState(0);
-  // State to track the radius (translateZ) based on screen width
   const [radius, setRadius] = useState(600); 
   
   const { ref, isVisible } = useScrollAnimation({ threshold: 0.2 });
@@ -18,26 +17,24 @@ const Hero = () => {
   
   useEffect(() => {
     const handleResize = () => {
-      const isMobile = window.innerWidth < 768;
-      // CLOSING THE GAPS:
-      // Mobile radius needs to be much smaller (~180px) to make images touch.
-      // Desktop radius stays larger (600px).
-      setRadius(isMobile ? 180 : 600);
+      const isMobileView = window.innerWidth < 768;
+      
+      // GAP REMOVAL LOGIC:
+      // Mobile: 180px radius (Tight circle for narrow screens)
+      // Desktop: 600px radius (Wider circle for wide screens)
+      setRadius(isMobileView ? 180 : 600);
     };
 
     // Initial check
     handleResize();
-
-    // Listen for window resize
     window.addEventListener('resize', handleResize);
     
-    // ANIMATION LOOP
     const interval = setInterval(() => {
       setRotation(prev => {
-        // CONSTANT SLOW SPEED:
-        // We removed the "Fast Swap" logic. 
-        // Now it just adds 0.1 degree every frame for a smooth, slow cinematic pan.
-        return prev + 0.1; 
+        // SPEED LOGIC:
+        // Unified speed for BOTH Mobile and Desktop
+        // 0.15 is the faster speed you requested (1.5x of original base)
+        return prev + 0.15; 
       });
     }, 16); // ~60fps
     
@@ -65,7 +62,7 @@ const Hero = () => {
                 key={index}
                 className="absolute inset-0 w-full h-full"
                 style={{
-                  // Use the dynamic 'radius' state here
+                  // The radius state ensures edges touch on all screen sizes
                   transform: `rotateY(${angle}deg) translateZ(${radius}px)`,
                   backfaceVisibility: "hidden",
                 }}
@@ -73,7 +70,7 @@ const Hero = () => {
                 <img
                   src={img}
                   alt={`Interior design showcase ${index + 1}`}
-                  className="w-full h-full object-cover brightness-[0.6]" // Added slight darkening for text readability
+                  className="w-full h-full object-cover brightness-[0.65]" 
                 />
               </div>
             );
