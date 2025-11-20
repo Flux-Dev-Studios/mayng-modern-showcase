@@ -11,12 +11,11 @@ const Navigation = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      // LOGIC CHANGE: Trigger only after scrolling past the Hero section (viewport height)
-      // We subtract 100px so the transition starts just slightly before the hero ends
-      const heroHeight = window.innerHeight - 100;
-      setIsScrolled(window.scrollY > heroHeight);
+      const windowHeight = typeof window !== "undefined" ? window.innerHeight : 800;
+      // Trigger slightly before the hero ends for a seamless feel
+      setIsScrolled(window.scrollY > windowHeight - 150);
     };
-    
+
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
@@ -34,68 +33,84 @@ const Navigation = () => {
     { name: "Contact", path: "/contact" },
   ];
 
+  // Helper component to avoid duplicating code
+  // We render this twice: once for the "Hero" spot (Right) and once for "Scrolled" (Center)
+  const NavLinksGroup = ({ isScrolledMode }: { isScrolledMode: boolean }) => (
+    <>
+      {navLinks.map((link) => (
+        <Link
+          key={link.path}
+          to={link.path}
+          className={cn(
+            "text-sm font-medium transition-all duration-300 relative py-1",
+            location.pathname === link.path
+              ? "text-primary font-semibold"
+              : "text-white/90 hover:text-white",
+              
+            // Minor tweak: Make text slightly larger when centered for impact
+            isScrolledMode ? "text-base" : "text-sm"
+          )}
+        >
+          {link.name}
+          {location.pathname === link.path && (
+            <span className="absolute -bottom-1 left-0 w-full h-0.5 bg-primary rounded-full animate-fade-in" />
+          )}
+        </Link>
+      ))}
+    </>
+  );
+
   return (
     <nav
       className={cn(
-        "fixed top-0 left-0 right-0 z-50 transition-all duration-700 ease-in-out border-b border-transparent",
-        // NAV BACKGROUND LOGIC:
+        "fixed top-0 left-0 right-0 z-50 transition-all duration-700 cubic-bezier(0.4, 0, 0.2, 1)",
         isScrolled 
-          ? "bg-black/90 backdrop-blur-lg py-4 shadow-xl border-white/5" // Dark, sleek, centered state
-          : "bg-transparent py-6" // Transparent Hero state
+          ? "bg-black/90 backdrop-blur-xl py-4 shadow-2xl border-b border-white/5" 
+          : "bg-transparent py-6"
       )}
     >
-      {/* Container needs 'relative' so the absolute positioning of centered links works */}
-      <div className="container mx-auto px-6 lg:px-12 relative">
-        <div className="flex items-center justify-between">
+      <div className="container mx-auto px-6 lg:px-12 relative h-full">
+        <div className="flex items-center justify-between h-full relative">
           
-          {/* Logo: Stays on the left always */}
+          {/* --- LOGO --- */}
           <Link to="/" className="flex items-center hover:opacity-80 transition-opacity z-20">
             <img 
               src={logoImage} 
               alt="Design by Mays Logo" 
               className={cn(
-                "transition-all duration-500 w-auto",
+                "transition-all duration-700 ease-in-out w-auto",
                 isScrolled ? "h-10" : "h-16"
               )} 
             />
           </Link>
 
-          {/* Desktop Navigation Links */}
+          {/* --- TRANSITION CONTAINER --- */}
+          {/* We keep both sets of links in the DOM but fade between them using Opacity & Scale.
+              This prevents the "Jump" effect of changing position:absolute. */}
+
+          {/* 1. HERO STATE LINKS (Right Aligned Pill) */}
           <div className={cn(
-            "hidden md:flex items-center gap-8 transition-all duration-700 ease-in-out z-10",
-            
-            // ALIGNMENT LOGIC:
+            "hidden md:flex items-center gap-8 bg-black/20 backdrop-blur-sm border border-white/10 rounded-full px-8 py-2 absolute right-0 transition-all duration-700 ease-in-out origin-right",
+            // If scrolled: Fade out, Scale down, move slightly right
             isScrolled 
-              // STATE 1: SCROLLED (Center of Screen)
-              // We use absolute positioning to force it to the exact center, 
-              // ignoring the logo on the left.
-              ? "absolute left-1/2 top-1/2 -translate-y-1/2 -translate-x-1/2" 
-              
-              // STATE 2: HERO (Right Side / Natural Flex)
-              // We keep the 'Pill' design here
-              : "bg-black/20 backdrop-blur-sm border border-white/10 rounded-full px-8 py-2"
+              ? "opacity-0 scale-90 translate-x-10 pointer-events-none" 
+              : "opacity-100 scale-100 translate-x-0"
           )}>
-            {navLinks.map((link) => (
-              <Link
-                key={link.path}
-                to={link.path}
-                className={cn(
-                  "text-sm font-medium transition-all duration-300 relative py-1",
-                  location.pathname === link.path
-                    ? "text-primary font-semibold"
-                    : "text-white/80 hover:text-white"
-                )}
-              >
-                {link.name}
-                {/* Animated Underline */}
-                {location.pathname === link.path && (
-                  <span className="absolute -bottom-1 left-0 w-full h-0.5 bg-primary rounded-full animate-fade-in" />
-                )}
-              </Link>
-            ))}
+            <NavLinksGroup isScrolledMode={false} />
           </div>
 
-          {/* Mobile Menu Button (Right side) */}
+          {/* 2. SCROLLED STATE LINKS (Center Aligned Clean) */}
+          <div className={cn(
+            "hidden md:flex items-center gap-8 absolute left-1/2 -translate-x-1/2 transition-all duration-700 ease-in-out",
+            // If scrolled: Fade in, Scale up from bottom
+            isScrolled 
+              ? "opacity-100 scale-100 translate-y-0 delay-100" // Added delay for smoother sequence
+              : "opacity-0 scale-95 translate-y-4 pointer-events-none"
+          )}>
+             <NavLinksGroup isScrolledMode={true} />
+          </div>
+
+          {/* --- MOBILE MENU TOGGLE --- */}
           <button
             onClick={() => setIsOpen(!isOpen)}
             className="md:hidden p-2 text-white hover:text-primary transition-colors z-20"
@@ -105,10 +120,10 @@ const Navigation = () => {
           </button>
         </div>
 
-        {/* Mobile Navigation Dropdown */}
+        {/* --- MOBILE DROPDOWN --- */}
         <div className={cn(
             "md:hidden overflow-hidden transition-all duration-500 ease-in-out",
-            isOpen ? "max-h-96 opacity-100 mt-4" : "max-h-0 opacity-0"
+            isOpen ? "max-h-[500px] opacity-100 mt-4" : "max-h-0 opacity-0"
         )}>
           <div className="bg-zinc-950/95 backdrop-blur-xl rounded-2xl border border-white/10 p-4 shadow-2xl flex flex-col gap-2">
             {navLinks.map((link) => (
