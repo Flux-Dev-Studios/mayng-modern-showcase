@@ -9,10 +9,11 @@ const Navigation = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
 
-  // Handle Scroll Detection
+  // --- SCROLL DETECTION ---
   useEffect(() => {
     const handleScroll = () => {
-      // Transition triggers after passing the hero section (Viewport Height - 150px buffer)
+      // Transition triggers when the user scrolls past the Hero section
+      // (Viewport Height minus 150px buffer for a smoother feel)
       const threshold = window.innerHeight - 150;
       setIsScrolled(window.scrollY > threshold);
     };
@@ -21,8 +22,9 @@ const Navigation = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Close mobile menu when route changes
+  // --- ROUTE CHANGE HANDLING ---
   useEffect(() => {
+    // Close mobile menu automatically when a link is clicked
     setIsOpen(false);
   }, [location]);
 
@@ -36,6 +38,7 @@ const Navigation = () => {
   ];
 
   // --- HELPER COMPONENT FOR LINKS ---
+  // This handles the color switching and hover effects for both desktop views
   const NavLinksList = ({ isDark, spacingClass }: { isDark: boolean, spacingClass: string }) => (
     <div className={cn("flex items-center", spacingClass)}>
       {navLinks.map((link) => (
@@ -45,16 +48,16 @@ const Navigation = () => {
           className={cn(
             "text-sm font-medium transition-colors duration-300 relative py-1",
             
-            // --- COLOR LOGIC ---
+            // COLOR LOGIC:
             // Hero State (isDark=false): Solid White
             // Scrolled State (isDark=true): Theme Foreground (Black/Dark)
             isDark ? "text-foreground" : "text-white",
             
-            // --- HOVER LOGIC ---
+            // HOVER LOGIC:
             // Always turns to your Primary Brand Color
             "hover:text-primary",
 
-            // --- ACTIVE STATE LOGIC ---
+            // ACTIVE STATE LOGIC:
             location.pathname === link.path && "font-semibold"
           )}
         >
@@ -75,8 +78,8 @@ const Navigation = () => {
         "fixed top-0 left-0 right-0 z-50 transition-all duration-700 ease-[cubic-bezier(0.4,0,0.2,1)] border-b",
         // NAVBAR BACKGROUND TRANSITION
         isScrolled 
-          ? "bg-background/95 backdrop-blur-md shadow-sm py-4 border-border/10" 
-          : "bg-transparent py-6 border-transparent"
+          ? "bg-background/95 backdrop-blur-md shadow-sm py-4 border-border/10" // Scrolled: Glassy White/Dark
+          : "bg-transparent py-6 border-transparent" // Hero: Transparent
       )}
     >
       <div className="container mx-auto px-6 lg:px-12 relative h-full">
@@ -89,29 +92,33 @@ const Navigation = () => {
               alt="Design by Mays Logo" 
               className={cn(
                 "transition-all duration-500 w-auto",
-                // Inverts logo color on scroll (optional, for white logos)
+                // Optional: Inverts logo color on scroll (remove 'invert' if your logo handles this naturally)
                 isScrolled ? "h-10 invert" : "h-16" 
               )} 
             />
           </Link>
 
           {/* --- 2. CENTER LINKS (Visible Only When Scrolled) --- */}
+          {/* Positioned Absolute Center relative to screen width */}
           <div className={cn(
             "hidden md:block absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transition-all duration-700 delay-100 ease-out",
             isScrolled 
               ? "opacity-100 scale-100 pointer-events-auto" // Fade In
               : "opacity-0 scale-95 pointer-events-none translate-y-4" // Fade Out & Drop Down
           )}>
+            {/* Wide spacing for elegant look */}
             <NavLinksList isDark={true} spacingClass="gap-12" />
           </div>
 
           {/* --- 3. RIGHT LINKS (Visible Only on Hero) --- */}
+          {/* Positioned relative to flex container (Right side) */}
           <div className={cn(
             "hidden md:flex items-center bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-8 py-2 transition-all duration-500 ease-in-out origin-right",
             isScrolled 
               ? "opacity-0 scale-90 translate-x-8 pointer-events-none" // Fade Out & Slide Right
               : "opacity-100 scale-100 translate-x-0 pointer-events-auto" // Visible
           )}>
+            {/* Compact spacing for Pill look */}
             <NavLinksList isDark={false} spacingClass="gap-8" />
           </div>
 
@@ -120,27 +127,28 @@ const Navigation = () => {
             onClick={() => setIsOpen(!isOpen)}
             className={cn(
               "md:hidden p-2 transition-colors z-50 relative",
+              // Text color changes based on background
               isScrolled ? "text-foreground" : "text-white hover:text-primary"
             )}
             aria-label="Toggle menu"
           >
-            <div className="relative w-6 h-6">
+            <div className="relative w-6 h-6 flex items-center justify-center">
               {/* MENU ICON: Visible when Closed */}
               <Menu 
                 size={24}
                 className={cn(
-                  "absolute inset-0 transition-all duration-500 ease-out",
-                  // If Open: Rotate 90deg, Scale Down, Fade Out (Vanish)
-                  isOpen ? "opacity-0 rotate-90 scale-50" : "opacity-100 rotate-0 scale-100"
+                  "absolute transition-all duration-500 ease-in-out transform origin-center",
+                  // If Open: Rotate 90deg, SCALE TO 0 (Disappear), Fade Out
+                  isOpen ? "opacity-0 rotate-90 scale-0" : "opacity-100 rotate-0 scale-100"
                 )}
               />
               {/* CLOSE ICON: Visible when Open */}
               <X 
                 size={24}
                 className={cn(
-                  "absolute inset-0 transition-all duration-500 ease-out",
-                  // If Open: Rotate to 0, Scale Up, Fade In (Appear)
-                  isOpen ? "opacity-100 rotate-0 scale-100" : "opacity-0 -rotate-90 scale-50"
+                  "absolute transition-all duration-500 ease-in-out transform origin-center",
+                  // If Open: Rotate to 0, Scale Up, Fade In
+                  isOpen ? "opacity-100 rotate-0 scale-100" : "opacity-0 -rotate-90 scale-0"
                 )}
               />
             </div>
