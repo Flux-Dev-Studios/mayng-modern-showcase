@@ -7,7 +7,6 @@ All colors MUST be HSL.
 */
 
 @layer base {
-@layer base {
   :root {
     /* --- BACKGROUND: Deep Blue (#182B3A) --- */
     --background: 206 41% 16%;
