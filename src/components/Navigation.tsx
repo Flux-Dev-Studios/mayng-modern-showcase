@@ -83,3 +83,96 @@ const Navigation = () => {
         <div className="flex items-center justify-between h-full relative">
           
           {/* --- 1. LOGO (Always Left) --- */}
+          <Link to="/" className="flex items-center hover:opacity-80 transition-opacity z-20">
+            <img 
+              src={logoImage} 
+              alt="Design by Mays Logo" 
+              className={cn(
+                "transition-all duration-500 w-auto",
+                // Inverts logo color on scroll (optional, for white logos)
+                isScrolled ? "h-10 invert" : "h-16" 
+              )} 
+            />
+          </Link>
+
+          {/* --- 2. CENTER LINKS (Visible Only When Scrolled) --- */}
+          <div className={cn(
+            "hidden md:block absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transition-all duration-700 delay-100 ease-out",
+            isScrolled 
+              ? "opacity-100 scale-100 pointer-events-auto" // Fade In
+              : "opacity-0 scale-95 pointer-events-none translate-y-4" // Fade Out & Drop Down
+          )}>
+            <NavLinksList isDark={true} spacingClass="gap-12" />
+          </div>
+
+          {/* --- 3. RIGHT LINKS (Visible Only on Hero) --- */}
+          <div className={cn(
+            "hidden md:flex items-center bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-8 py-2 transition-all duration-500 ease-in-out origin-right",
+            isScrolled 
+              ? "opacity-0 scale-90 translate-x-8 pointer-events-none" // Fade Out & Slide Right
+              : "opacity-100 scale-100 translate-x-0 pointer-events-auto" // Visible
+          )}>
+            <NavLinksList isDark={false} spacingClass="gap-8" />
+          </div>
+
+          {/* --- MOBILE MENU TOGGLE (Animated Morph) --- */}
+          <button
+            onClick={() => setIsOpen(!isOpen)}
+            className={cn(
+              "md:hidden p-2 transition-colors z-50 relative",
+              isScrolled ? "text-foreground" : "text-white hover:text-primary"
+            )}
+            aria-label="Toggle menu"
+          >
+            <div className="relative w-6 h-6">
+              {/* MENU ICON: Visible when Closed */}
+              <Menu 
+                size={24}
+                className={cn(
+                  "absolute inset-0 transition-all duration-500 ease-out",
+                  // If Open: Rotate 90deg, Scale Down, Fade Out (Vanish)
+                  isOpen ? "opacity-0 rotate-90 scale-50" : "opacity-100 rotate-0 scale-100"
+                )}
+              />
+              {/* CLOSE ICON: Visible when Open */}
+              <X 
+                size={24}
+                className={cn(
+                  "absolute inset-0 transition-all duration-500 ease-out",
+                  // If Open: Rotate to 0, Scale Up, Fade In (Appear)
+                  isOpen ? "opacity-100 rotate-0 scale-100" : "opacity-0 -rotate-90 scale-50"
+                )}
+              />
+            </div>
+          </button>
+        </div>
+
+        {/* --- MOBILE DROPDOWN MENU --- */}
+        <div className={cn(
+            "md:hidden overflow-hidden transition-all duration-500 ease-in-out",
+            isOpen ? "max-h-[500px] opacity-100 mt-4" : "max-h-0 opacity-0"
+        )}>
+          <div className="bg-background/95 backdrop-blur-xl rounded-2xl border border-border/10 p-4 shadow-2xl flex flex-col gap-2">
+            {navLinks.map((link) => (
+              <Link
+                key={link.path}
+                to={link.path}
+                onClick={() => setIsOpen(false)}
+                className={cn(
+                  "text-base font-medium py-3 px-4 rounded-lg transition-all duration-300",
+                  location.pathname === link.path
+                    ? "bg-primary/10 text-primary"
+                    : "text-foreground hover:text-primary hover:bg-muted"
+                )}
+              >
+                {link.name}
+              </Link>
+            ))}
+          </div>
+        </div>
+      </div>
+    </nav>
+  );
+};
+
+export default Navigation;
