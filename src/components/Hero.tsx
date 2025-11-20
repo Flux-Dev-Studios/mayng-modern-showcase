@@ -9,44 +9,42 @@ import project3 from "@/assets/project-3.jpg";
 
 const Hero = () => {
   const [rotation, setRotation] = useState(0);
+  // State to track the radius (translateZ) based on screen width
+  const [radius, setRadius] = useState(600); 
+  
   const { ref, isVisible } = useScrollAnimation({ threshold: 0.2 });
   
   const images = [heroImage, project1, project2, project3];
   
   useEffect(() => {
-    const isMobile = window.innerWidth < 768;
+    const handleResize = () => {
+      const isMobile = window.innerWidth < 768;
+      // CLOSING THE GAPS:
+      // Mobile radius needs to be much smaller (~180px) to make images touch.
+      // Desktop radius stays larger (600px).
+      setRadius(isMobile ? 180 : 600);
+    };
 
-    // CONFIGURATION
-    // ---------------------------------------------------------
-    // 1. Base Speed: The slow "viewing" speed for everyone.
-    const baseSpeed = 0.05; 
+    // Initial check
+    handleResize();
 
-    // 2. Transition Speed: How fast we move BETWEEN images.
-    //    Mobile: 1.5 (Fast swap to keep them engaged)
-    //    Desktop: 0.05 (Same as baseSpeed = Constant smooth rotation, no speeding up)
-    const transitionSpeed = isMobile ? 1.5 : 0.05;
+    // Listen for window resize
+    window.addEventListener('resize', handleResize);
     
-    // 3. View Zone: The area (in degrees) where we use the Slow Speed.
-    const viewZone = 30; 
-    // ---------------------------------------------------------
-
+    // ANIMATION LOOP
     const interval = setInterval(() => {
       setRotation(prev => {
-        // Calculate position in the 90-degree sector (0, 90, 180, 270)
-        const normalizedAngle = Math.abs(prev % 90);
-        const distanceToCenter = Math.min(normalizedAngle, 90 - normalizedAngle);
-
-        // Determine current speed based on position
-        // If we are in the "View Zone" (center of image), go SLOW (baseSpeed).
-        // If we are in the "Gap" (between images), go FAST (transitionSpeed).
-        // On Desktop, since transitionSpeed == baseSpeed, it never changes.
-        const currentSpeed = distanceToCenter < (viewZone / 2) ? baseSpeed : transitionSpeed;
-
-        return prev + currentSpeed;
+        // CONSTANT SLOW SPEED:
+        // We removed the "Fast Swap" logic. 
+        // Now it just adds 0.1 degree every frame for a smooth, slow cinematic pan.
+        return prev + 0.1; 
       });
     }, 16); // ~60fps
     
-    return () => clearInterval(interval);
+    return () => {
+      clearInterval(interval);
+      window.removeEventListener('resize', handleResize);
+    };
   }, []);
 
   return (
@@ -67,14 +65,15 @@ const Hero = () => {
                 key={index}
                 className="absolute inset-0 w-full h-full"
                 style={{
-                  transform: `rotateY(${angle}deg) translateZ(600px)`,
+                  // Use the dynamic 'radius' state here
+                  transform: `rotateY(${angle}deg) translateZ(${radius}px)`,
                   backfaceVisibility: "hidden",
                 }}
               >
                 <img
                   src={img}
                   alt={`Interior design showcase ${index + 1}`}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover brightness-[0.6]" // Added slight darkening for text readability
                 />
               </div>
             );
@@ -92,19 +91,19 @@ const Hero = () => {
           isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
         }`}
       >
-        <h1 className="font-heading font-bold text-5xl md:text-7xl lg:text-8xl mb-6 text-white">
+        <h1 className="font-heading font-bold text-5xl md:text-7xl lg:text-8xl mb-6 text-white drop-shadow-lg">
           Transforming Spaces
           <br />
           <span className="text-primary">in Nigeria</span>
         </h1>
-        <p className="text-lg md:text-xl text-white max-w-2xl mx-auto mb-10 leading-relaxed">
+        <p className="text-lg md:text-xl text-white max-w-2xl mx-auto mb-10 leading-relaxed drop-shadow-md">
           Premium interior design, bespoke furniture, and curated art that reflect your unique vision and elevate your living experience.
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-          <Button variant="hero" size="lg" asChild className="shadow-none">
+          <Button variant="hero" size="lg" asChild className="shadow-xl">
             <Link to="/portfolio">View Our Work</Link>
           </Button>
-          <Button variant="outline" size="lg" asChild className="shadow-none">
+          <Button variant="outline" size="lg" asChild className="shadow-xl bg-black/20 border-white/40 hover:bg-white hover:text-black text-white backdrop-blur-sm">
             <Link to="/contact">Get Started</Link>
           </Button>
         </div>
