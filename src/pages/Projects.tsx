@@ -2,9 +2,9 @@ import { useState } from "react";
 import Navigation from "@/components/Navigation";
 import PageHero from "@/components/PageHero";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
-import { ArrowUpRight } from "lucide-react"; // Ensure you have lucide-react or remove this icon if not
+import { ArrowUpRight } from "lucide-react"; 
 
-// Import your images (Keep your existing imports)
+// Import your images
 import project1 from "@/assets/project-1.jpg";
 import project2 from "@/assets/project-2.jpg";
 import project3 from "@/assets/project-3.jpg";
@@ -81,9 +81,9 @@ const Projects = () => {
                   key={category.id} 
                   value={category.id}
                   className="
-                    px-6 py-2.5 rounded-full text-sm font-medium border border-border/50 bg-background/50 backdrop-blur-sm
-                    data-[state=active]:bg-foreground data-[state=active]:text-background data-[state=active]:border-foreground
-                    hover:border-foreground/50 transition-all duration-300
+                    px-6 py-2.5 rounded-full text-sm font-medium border border-border/50 bg-background/50 backdrop-blur-sm text-muted-foreground
+                    data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:border-primary
+                    hover:border-primary/50 hover:text-foreground transition-all duration-300
                   "
                 >
                   {category.label}
@@ -97,7 +97,6 @@ const Projects = () => {
                 value={category.id}
                 className="w-full animate-in fade-in slide-in-from-bottom-4 duration-700" 
               >
-                {/* Category Header - Removed for a cleaner look, or keep if preferred */}
                 
                 {/* REDESIGNED GRID: Gallery Style */}
                 <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-16 mx-auto max-w-7xl">
@@ -115,12 +114,11 @@ const Projects = () => {
                           className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                         />
                         {/* Hover Overlay - Subtle darkness */}
-                        <div className="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                        <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                         
-                        {/* Floating Action Button (Optional: Requires Lucide-React) */}
-                        <div className="absolute top-4 right-4 bg-white/90 p-2 rounded-full opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500 shadow-sm">
-                           {/* If you don't have lucide-react, replace <ArrowUpRight /> with <span>↗</span> */}
-                           <ArrowUpRight className="w-5 h-5 text-black" /> 
+                        {/* Floating Action Button - UPDATED TO GOLD THEME */}
+                        <div className="absolute top-4 right-4 bg-primary p-2.5 rounded-full opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500 shadow-lg shadow-black/20">
+                           <ArrowUpRight className="w-5 h-5 text-primary-foreground" /> 
                         </div>
                       </div>
 
