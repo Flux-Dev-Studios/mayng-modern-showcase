@@ -11,7 +11,6 @@ const Navigation = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      // Transition triggers after passing the hero section
       const threshold = window.innerHeight - 150;
       setIsScrolled(window.scrollY > threshold);
     };
@@ -33,7 +32,7 @@ const Navigation = () => {
     { name: "Contact", path: "/contact" },
   ];
 
-  // --- HELPER COMPONENT FOR LINKS ---
+  // --- HELPER COMPONENT ---
   const NavLinksList = ({ isDark, spacingClass }: { isDark: boolean, spacingClass: string }) => (
     <div className={cn("flex items-center", spacingClass)}>
       {navLinks.map((link) => (
@@ -42,29 +41,24 @@ const Navigation = () => {
           to={link.path}
           className={cn(
             "text-sm font-medium transition-colors duration-300 relative py-1",
-            // BASE COLOR:
-            // If Scrolled (Dark/Light Mode): Use Foreground (Black)
-            // If Hero: Use White
-            isDark ? "text-foreground" : "text-white",
             
-            // HOVER EFFECT:
-            // Forces the text to turn into your Primary (Button) Color
+            // --- COLOR LOGIC ---
+            // If Scrolled (Dark Text Mode): Use standard black/dark text
+            // If Hero (Light Text Mode): Use 'text-white/70' (Softer, not bright white)
+            isDark ? "text-foreground" : "text-white/70",
+            
+            // Hover always turns to Primary Color
             "hover:text-primary",
 
-            // ACTIVE STATE FONT WEIGHT
-            location.pathname === link.path && "font-semibold"
+            // Active link is fully opaque
+            location.pathname === link.path && (isDark ? "text-foreground font-semibold" : "text-white font-semibold")
           )}
         >
           {link.name}
           
           {/* UNDERLINE ANIMATION */}
           {location.pathname === link.path && (
-            <span className={cn(
-              "absolute -bottom-1 left-0 w-full h-0.5 rounded-full animate-fade-in",
-              // UNDERLINE COLOR:
-              // Now always uses 'bg-primary' to match your buttons
-              "bg-primary" 
-            )} />
+            <span className="absolute -bottom-1 left-0 w-full h-0.5 rounded-full animate-fade-in bg-primary" />
           )}
         </Link>
       ))}
@@ -107,7 +101,7 @@ const Navigation = () => {
 
           {/* --- RIGHT LINKS (Hero State) --- */}
           <div className={cn(
-            "hidden md:flex items-center bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-8 py-2 transition-all duration-500 ease-in-out origin-right",
+            "hidden md:flex items-center bg-white/5 backdrop-blur-[2px] border border-white/10 rounded-full px-8 py-2 transition-all duration-500 ease-in-out origin-right",
             isScrolled 
               ? "opacity-0 scale-90 translate-x-8 pointer-events-none"
               : "opacity-100 scale-100 translate-x-0 pointer-events-auto"
@@ -120,7 +114,7 @@ const Navigation = () => {
             onClick={() => setIsOpen(!isOpen)}
             className={cn(
               "md:hidden p-2 transition-colors z-20",
-              isScrolled ? "text-foreground" : "text-white hover:text-primary"
+              isScrolled ? "text-foreground" : "text-white/80 hover:text-primary"
             )}
             aria-label="Toggle menu"
           >
@@ -141,7 +135,6 @@ const Navigation = () => {
                 onClick={() => setIsOpen(false)}
                 className={cn(
                   "text-base font-medium py-3 px-4 rounded-lg transition-all duration-300",
-                  // Mobile Active/Hover states also updated to use Primary
                   location.pathname === link.path
                     ? "bg-primary/10 text-primary"
                     : "text-foreground hover:text-primary hover:bg-muted"
