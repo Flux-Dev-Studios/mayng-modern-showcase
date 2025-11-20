@@ -7,8 +7,8 @@ import { Button } from "@/components/ui/button";
 import { ArrowUpRight, ArrowLeft, MapPin, Calendar, User, ArrowRight } from "lucide-react"; 
 import heroPortfolio from "@/assets/hero-portfolio.jpg";
 
-// Import Data from your central file
-import { projects } from "@/data/projects";
+// Import Data from your local file
+import { projects } from "./Projectdata";
 
 const categories = [
   { id: "living-room", label: "Living Room" },
@@ -20,6 +20,7 @@ const categories = [
 
 const Projects = () => {
   const [activeCategory, setActiveCategory] = useState("living-room");
+  // STATE: Track which project is clicked. If null, show list. If string, show detail.
   const [selectedProjectId, setSelectedProjectId] = useState<string | null>(null);
 
   // Scroll to top when switching views
@@ -27,15 +28,17 @@ const Projects = () => {
     window.scrollTo(0, 0);
   }, [selectedProjectId]);
 
-  // --- VIEW 1: PROJECT DETAIL (Case Study) ---
+  // --- VIEW 1: PROJECT DETAIL (The "Case Study" Interface) ---
   if (selectedProjectId) {
     const project = projects.find((p) => p.id === selectedProjectId);
     
+    // Safety check if ID is invalid
     if (!project) {
         setSelectedProjectId(null); 
         return null; 
     }
 
+    // Calculate next project for the "Next" button
     const currentIndex = projects.findIndex(p => p.id === selectedProjectId);
     const nextProject = projects[(currentIndex + 1) % projects.length];
 
@@ -44,6 +47,7 @@ const Projects = () => {
         <Navigation />
         
         <main>
+          {/* HERO IMAGE SECTION */}
           <div className="relative w-full h-[70vh] md:h-[85vh] overflow-hidden">
             <img 
               src={project.image} 
@@ -52,10 +56,11 @@ const Projects = () => {
             />
             <div className="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-transparent opacity-90" />
             
+            {/* Back Button & Title */}
             <div className="absolute bottom-0 left-0 w-full p-6 md:p-12 lg:p-20">
               <div className="container mx-auto">
                 <button 
-                  onClick={() => setSelectedProjectId(null)} 
+                  onClick={() => setSelectedProjectId(null)} // Go back to list
                   className="inline-flex items-center text-white/80 hover:text-primary mb-6 transition-colors text-sm uppercase tracking-widest font-medium"
                 >
                   <ArrowLeft className="w-4 h-4 mr-2" /> Back to Projects
@@ -70,6 +75,7 @@ const Projects = () => {
             </div>
           </div>
 
+          {/* SPECS GRID */}
           <div className="border-b border-border/40">
             <div className="container mx-auto px-6 lg:px-12 py-12">
               <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
@@ -93,6 +99,7 @@ const Projects = () => {
             </div>
           </div>
 
+          {/* WRITE UP */}
           <div className="container mx-auto px-6 lg:px-12 py-20 md:py-32">
             <div className="grid md:grid-cols-12 gap-12 lg:gap-24">
               <div className="md:col-span-4 lg:col-span-3">
@@ -118,6 +125,7 @@ const Projects = () => {
             </div>
           </div>
 
+          {/* NEXT PROJECT CTA */}
           <div className="bg-secondary/10 py-20 border-t border-border/50">
             <div className="container mx-auto px-6 lg:px-12 text-center">
               <p className="text-muted-foreground mb-4 uppercase tracking-widest text-sm">Next Project</p>
@@ -134,7 +142,7 @@ const Projects = () => {
     );
   }
 
-  // --- VIEW 2: PROJECTS LIST ---
+  // --- VIEW 2: PROJECTS LIST (Tabs & Grid) ---
   const filteredProjects = projects.filter(p => p.category === activeCategory);
 
   return (
@@ -168,6 +176,7 @@ const Projects = () => {
                   {filteredProjects.map((project, index) => (
                     <div 
                       key={project.id} 
+                      // CLICK HANDLER: Set the state to this project's ID
                       onClick={() => setSelectedProjectId(project.id)}
                       className="group flex flex-col gap-4 cursor-pointer"
                       style={{ animationDelay: `${index * 100}ms` }}
