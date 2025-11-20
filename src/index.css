@@ -6,43 +6,52 @@
 All colors MUST be HSL.
 */
 
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+ 
 @layer base {
   :root {
-    /* --- BACKGROUND: Deep Blue (#182B3A) --- */
-    --background: 206 41% 16%;
+    /* --- BACKGROUND: White (Light Mode) --- */
+    --background: 0 0% 100%;
     
-    /* --- TEXT: White (for readability on dark blue) --- */
-    --foreground: 0 0% 100%;
-
-    /* --- CARD/CONTAINERS: Slightly lighter/darker blue for depth --- */
-    --card: 206 41% 14%;
-    --card-foreground: 0 0% 100%;
+    /* --- TEXT: Deep Blue (#182B3A) --- */
+    /* This makes all standard text your brand's deep blue instead of black */
+    --foreground: 206 41% 16%;
  
-    --popover: 206 41% 16%;
-    --popover-foreground: 0 0% 100%;
+    /* --- CARDS: White or very light gray --- */
+    --card: 0 0% 100%;
+    --card-foreground: 206 41% 16%;
+ 
+    --popover: 0 0% 100%;
+    --popover-foreground: 206 41% 16%;
  
     /* --- PRIMARY BRAND COLOR: Gold (#E2BC63) --- */
     --primary: 42 68% 64%;
-    /* Text inside a Gold button should be the Deep Blue */
+    /* Text inside Gold buttons should be Deep Blue */
     --primary-foreground: 206 41% 16%;
  
-    /* --- SECONDARY ACCENTS --- */
-    --secondary: 206 30% 25%;
+    /* --- SECONDARY: Deep Blue (For dark sections/buttons) --- */
+    --secondary: 206 41% 16%;
     --secondary-foreground: 0 0% 100%;
  
-    /* --- MUTED ELEMENTS (Subtle text/backgrounds) --- */
-    --muted: 206 30% 25%;
-    --muted-foreground: 206 20% 70%;
+    /* --- MUTED: Light Gray --- */
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
  
-    /* --- HOVER STATES --- */
-    --accent: 206 30% 25%;
-    --accent-foreground: 0 0% 100%;
+    /* --- ACCENT: Very light Gold/Blue mix --- */
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 206 41% 16%;
  
-    /* --- BORDERS & INPUTS --- */
-    --border: 206 30% 30%;
-    --input: 206 30% 30%;
+    /* --- DESTRUCTIVE --- */
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+ 
+    /* --- BORDERS --- */
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
     
-    /* --- FOCUS RING (Gold) --- */
+    /* --- RING: Gold --- */
     --ring: 42 68% 64%;
  
     --radius: 0.5rem;
