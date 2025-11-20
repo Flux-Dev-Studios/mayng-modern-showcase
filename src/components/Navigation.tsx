@@ -101,7 +101,7 @@ const Navigation = () => {
             <NavLinksList isDark={false} spacingClass="gap-8" />
           </div>
 
-          {/* --- MOBILE MENU TOGGLE --- */}
+         {/* --- MOBILE MENU TOGGLE --- */}
           <button
             onClick={() => setIsOpen(!isOpen)}
             className={cn(
@@ -110,9 +110,19 @@ const Navigation = () => {
               isScrolled ? "text-foreground" : "text-primary"
             )}
             aria-label="Toggle menu"
-          > 
+          >
+            <div className="relative w-6 h-6 flex items-center justify-center">
+              {/* MENU ICON (Hamburger) - Visible when CLOSED */}
+              <Menu 
+                size={28}
+                className={cn(
+                  "absolute transition-all duration-500 ease-in-out transform origin-center",
+                  // Logic: If Open -> Fade Out, Rotate, Scale to 0 (Vanish)
+                  isOpen ? "opacity-0 rotate-90 scale-0" : "opacity-100 rotate-0 scale-100"
+                )}
+              />
               
-              {/* X ICON (Visible when OPEN) */}
+              {/* X ICON (Close) - Visible when OPEN */}
               <X 
                 size={28}
                 className={cn(
