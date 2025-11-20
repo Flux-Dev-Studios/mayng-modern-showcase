@@ -76,7 +76,8 @@ const Projects = () => {
                 <TabsTrigger 
                   key={category.id} 
                   value={category.id}
-                  className="px-6 py-2.5 rounded-full text-sm font-medium border border-border/50 bg-background/50 backdrop-blur-sm text-muted-foreground data-[state=active]:bg-primary data-[state=active]:text-white data-[state=active]:border-primary hover:border-primary/50 hover:text-foreground transition-all duration-300"
+                  // REVERTED: Changed 'text-white' back to 'text-primary-foreground' (Deep Blue)
+                  className="px-6 py-2.5 rounded-full text-sm font-medium border border-border/50 bg-background/50 backdrop-blur-sm text-muted-foreground data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:border-primary hover:border-primary/50 hover:text-foreground transition-all duration-300"
                 >
                   {category.label}
                 </TabsTrigger>
