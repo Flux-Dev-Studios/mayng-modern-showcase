@@ -16,29 +16,31 @@ const Hero = () => {
   useEffect(() => {
     const isMobile = window.innerWidth < 768;
 
-    // SETTINGS: Adjust these to tweak the feel
-    // "Dwell" Speed: How fast it moves when showing an image (Very slow)
-    const slowSpeed = isMobile ? 0.1 : 0.05; 
-    // "Swap" Speed: How fast it moves between images (Fast)
-    const fastSpeed = isMobile ? 1.2 : 0.8;
-    // "Zone": How many degrees around the center counts as "showing the image"
-    // 90 degrees total per side. 20 degrees means +/- 10 degrees from center.
+    // CONFIGURATION
+    // ---------------------------------------------------------
+    // 1. Base Speed: The slow "viewing" speed for everyone.
+    const baseSpeed = 0.05; 
+
+    // 2. Transition Speed: How fast we move BETWEEN images.
+    //    Mobile: 1.5 (Fast swap to keep them engaged)
+    //    Desktop: 0.05 (Same as baseSpeed = Constant smooth rotation, no speeding up)
+    const transitionSpeed = isMobile ? 1.5 : 0.05;
+    
+    // 3. View Zone: The area (in degrees) where we use the Slow Speed.
     const viewZone = 30; 
+    // ---------------------------------------------------------
 
     const interval = setInterval(() => {
       setRotation(prev => {
-        // 1. Calculate where we are in the 90-degree sector
-        // The images are at 0, 90, 180, 270.
+        // Calculate position in the 90-degree sector (0, 90, 180, 270)
         const normalizedAngle = Math.abs(prev % 90);
-
-        // 2. Calculate distance to the nearest "Center" (0 or 90)
-        // If angle is 10, distance is 10. If angle is 80, distance is 10 (from 90).
         const distanceToCenter = Math.min(normalizedAngle, 90 - normalizedAngle);
 
-        // 3. Determine Speed
-        // If we are close to the center (within viewZone/2), go SLOW.
-        // Otherwise (we are transitioning), go FAST.
-        const currentSpeed = distanceToCenter < (viewZone / 2) ? slowSpeed : fastSpeed;
+        // Determine current speed based on position
+        // If we are in the "View Zone" (center of image), go SLOW (baseSpeed).
+        // If we are in the "Gap" (between images), go FAST (transitionSpeed).
+        // On Desktop, since transitionSpeed == baseSpeed, it never changes.
+        const currentSpeed = distanceToCenter < (viewZone / 2) ? baseSpeed : transitionSpeed;
 
         return prev + currentSpeed;
       });
