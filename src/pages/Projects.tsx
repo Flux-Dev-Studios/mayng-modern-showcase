@@ -7,10 +7,8 @@ import { Button } from "@/components/ui/button";
 import { ArrowUpRight, ArrowLeft, MapPin, Calendar, User, ArrowRight } from "lucide-react"; 
 import heroPortfolio from "@/assets/hero-portfolio.jpg";
 
-// --- FIX: IMPORT FROM THE NEW LOCAL FILE ---
-// Old: import { projects } from "@/data/projects";  <-- This is causing the error
-// New:
-import { projects } from "./Projectdata"; 
+// Import Data from the local file
+import { projects } from "./projectdata";
 
 const categories = [
   { id: "living-room", label: "Living Room" },
@@ -28,10 +26,11 @@ const Projects = () => {
     window.scrollTo(0, 0);
   }, [selectedProjectId]);
 
-  // --- VIEW 1: PROJECT DETAIL ---
+  // --- VIEW 1: PROJECT DETAIL (Case Study) ---
   if (selectedProjectId) {
     const project = projects.find((p) => p.id === selectedProjectId);
     
+    // Safety check
     if (!project) {
         setSelectedProjectId(null); 
         return null; 
@@ -42,10 +41,11 @@ const Projects = () => {
 
     return (
       <div className="min-h-screen bg-background animate-in fade-in duration-500">
-        <Navigation />
+        {/* Force Navbar to solid state for readability */}
+        <Navigation forceScrolled={true} />
         
-        <main className="pt-28 md:pt-32">
-          
+        <main className="pt-20">
+          {/* HERO IMAGE */}
           <div className="container mx-auto px-6 lg:px-12 mb-12">
             <div className="mb-8">
               <button 
@@ -71,114 +71,8 @@ const Projects = () => {
             </div>
           </div>
 
-          <div className="border-y border-border/40 bg-secondary/5">
-            <div className="container mx-auto px-6 lg:px-12 py-12">
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-                <div className="space-y-2">
-                  <div className="flex items-center text-primary mb-1"><User className="w-4 h-4 mr-2" /><span className="text-xs uppercase font-bold">Client</span></div>
-                  <p className="text-foreground font-medium">{project.client}</p>
-                </div>
-                <div className="space-y-2">
-                  <div className="flex items-center text-primary mb-1"><MapPin className="w-4 h-4 mr-2" /><span className="text-xs uppercase font-bold">Location</span></div>
-                  <p className="text-foreground font-medium">{project.location}</p>
-                </div>
-                <div className="space-y-2">
-                  <div className="flex items-center text-primary mb-1"><Calendar className="w-4 h-4 mr-2" /><span className="text-xs uppercase font-bold">Year</span></div>
-                  <p className="text-foreground font-medium">{project.year}</p>
-                </div>
-                <div className="space-y-2">
-                  <div className="flex items-center text-primary mb-1"><span className="text-xs uppercase font-bold">Category</span></div>
-                  <p className="text-foreground font-medium capitalize">{project.category.replace('-', ' ')}</p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="container mx-auto px-6 lg:px-12 py-20 md:py-32">
-            <div className="grid md:grid-cols-12 gap-12 lg:gap-24">
-              <div className="md:col-span-4 lg:col-span-3">
-                <div className="sticky top-32">
-import { useState, useEffect } from "react";
-import Navigation from "@/components/Navigation";
-import PageHero from "@/components/PageHero";
-import Footer from "@/components/Footer";
-import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
-import { Button } from "@/components/ui/button";
-import { ArrowUpRight, ArrowLeft, MapPin, Calendar, User, ArrowRight } from "lucide-react"; 
-import heroPortfolio from "@/assets/hero-portfolio.jpg";
-
-// Import Data from your local file
-import { projects } from "./projectdata";
-
-const categories = [
-  { id: "living-room", label: "Living Room" },
-  { id: "bedroom", label: "Bedroom" },
-  { id: "bathroom", label: "Bathroom" },
-  { id: "kitchen", label: "Kitchen" },
-  { id: "office", label: "Office" },
-];
-
-const Projects = () => {
-  const [activeCategory, setActiveCategory] = useState("living-room");
-  // STATE: Track which project is clicked. If null, show list. If string, show detail.
-  const [selectedProjectId, setSelectedProjectId] = useState<string | null>(null);
-
-  // Scroll to top when switching views
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [selectedProjectId]);
-
-  // --- VIEW 1: PROJECT DETAIL (The "Case Study" Interface) ---
-  if (selectedProjectId) {
-    const project = projects.find((p) => p.id === selectedProjectId);
-    
-    // Safety check if ID is invalid
-    if (!project) {
-        setSelectedProjectId(null); 
-        return null; 
-    }
-
-    const currentIndex = projects.findIndex(p => p.id === selectedProjectId);
-    const nextProject = projects[(currentIndex + 1) % projects.length];
-
-    return (
-      <div className="min-h-screen bg-background animate-in fade-in duration-500">
-        {/* FIX: Force Navbar to be solid/scrolled state */}
-        <Navigation forceScrolled={true} />
-        
-        {/* Added padding-top so content starts BELOW the solid navbar */}
-        <main className="pt-20"> 
-          
-          {/* HERO IMAGE SECTION */}
-          <div className="relative w-full h-[70vh] md:h-[85vh] overflow-hidden">
-            <img 
-              src={project.image} 
-              alt={project.title} 
-              className="absolute inset-0 w-full h-full object-cover"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-transparent opacity-90" />
-            
-            {/* Back Button & Title */}
-            <div className="absolute bottom-0 left-0 w-full p-6 md:p-12 lg:p-20">
-              <div className="container mx-auto">
-                <button 
-                  onClick={() => setSelectedProjectId(null)} // Go back to list
-                  className="inline-flex items-center text-white/80 hover:text-primary mb-6 transition-colors text-sm uppercase tracking-widest font-medium"
-                >
-                  <ArrowLeft className="w-4 h-4 mr-2" /> Back to Projects
-                </button>
-                <h1 className="font-heading font-bold text-4xl md:text-6xl lg:text-7xl text-white mb-4 leading-tight drop-shadow-lg">
-                  {project.title}
-                </h1>
-                <p className="text-white/90 text-lg md:text-xl max-w-2xl font-light leading-relaxed">
-                  {project.description}
-                </p>
-              </div>
-            </div>
-          </div>
-
           {/* SPECS GRID */}
-          <div className="border-b border-border/40">
+          <div className="border-y border-border/40 bg-secondary/5">
             <div className="container mx-auto px-6 lg:px-12 py-12">
               <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
                 <div className="space-y-2">
@@ -238,13 +132,12 @@ const Projects = () => {
             </div>
           </div>
         </main>
-        
         <Footer />
       </div>
     );
   }
 
-  // --- VIEW 2: PROJECTS LIST (Tabs & Grid) ---
+  // --- VIEW 2: PROJECTS LIST ---
   const filteredProjects = projects.filter(p => p.category === activeCategory);
 
   return (
@@ -265,7 +158,7 @@ const Projects = () => {
                 <TabsTrigger 
                   key={category.id} 
                   value={category.id}
-                  className="px-6 py-2.5 rounded-full text-sm font-medium border border-border/50 bg-background/50 backdrop-blur-sm text-muted-foreground data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:border-primary hover:border-primary/50 hover:text-foreground transition-all duration-300"
+                  className="px-6 py-2.5 rounded-full text-sm font-medium border border-border/50 bg-background/50 backdrop-blur-sm text-muted-foreground data-[state=active]:bg-primary data-[state=active]:text-white data-[state=active]:border-primary hover:border-primary/50 hover:text-foreground transition-all duration-300"
                 >
                   {category.label}
                 </TabsTrigger>
@@ -311,3 +204,6 @@ const Projects = () => {
 };
 
 export default Projects;
+
+
+  
