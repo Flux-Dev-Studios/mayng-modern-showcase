@@ -8,7 +8,7 @@ import { ArrowUpRight, ArrowLeft, MapPin, Calendar, User, ArrowRight } from "luc
 import heroPortfolio from "@/assets/hero-portfolio.jpg";
 
 // Import Data from your local file
-import { projects } from "./Projectdata";
+import { projects } from "./projectdata";
 
 const categories = [
   { id: "living-room", label: "Living Room" },
@@ -46,37 +46,39 @@ const Projects = () => {
       <div className="min-h-screen bg-background animate-in fade-in duration-500">
         <Navigation />
         
-        <main>
-          {/* HERO IMAGE SECTION */}
-          <div className="relative w-full h-[70vh] md:h-[85vh] overflow-hidden">
-            <img 
-              src={project.image} 
-              alt={project.title} 
-              className="absolute inset-0 w-full h-full object-cover"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-transparent opacity-90" />
-            
-            {/* Back Button & Title */}
-            <div className="absolute bottom-0 left-0 w-full p-6 md:p-12 lg:p-20">
-              <div className="container mx-auto">
-                <button 
-                  onClick={() => setSelectedProjectId(null)} // Go back to list
-                  className="inline-flex items-center text-white/80 hover:text-primary mb-6 transition-colors text-sm uppercase tracking-widest font-medium"
-                >
-                  <ArrowLeft className="w-4 h-4 mr-2" /> Back to Projects
-                </button>
-                <h1 className="font-heading font-bold text-4xl md:text-6xl lg:text-7xl text-white mb-4 leading-tight drop-shadow-lg">
-                  {project.title}
-                </h1>
-                <p className="text-white/90 text-lg md:text-xl max-w-2xl font-light leading-relaxed">
-                  {project.description}
-                </p>
-              </div>
+        {/* Add padding-top so content isn't stuck behind fixed nav */}
+        <main className="pt-28 md:pt-32">
+          
+          <div className="container mx-auto px-6 lg:px-12 mb-12">
+            {/* HEADER SECTION: Back Button, Title, Description (Now above image) */}
+            <div className="mb-8">
+              <button 
+                onClick={() => setSelectedProjectId(null)} // Go back to list
+                className="inline-flex items-center text-muted-foreground hover:text-primary mb-6 transition-colors text-sm uppercase tracking-widest font-medium"
+              >
+                <ArrowLeft className="w-4 h-4 mr-2" /> Back to Projects
+              </button>
+              <h1 className="font-heading font-bold text-4xl md:text-5xl lg:text-6xl text-foreground mb-4 leading-tight">
+                {project.title}
+              </h1>
+              <p className="text-muted-foreground text-lg md:text-xl max-w-2xl font-light leading-relaxed">
+                {project.description}
+              </p>
+            </div>
+
+            {/* IMAGE CONTAINER: Clear, full view with a nice frame */}
+            <div className="rounded-xl overflow-hidden shadow-xl border border-border/50">
+              <img 
+                src={project.image} 
+                alt={project.title} 
+                className="w-full h-auto max-h-[80vh] object-cover"
+              />
             </div>
           </div>
 
+
           {/* SPECS GRID */}
-          <div className="border-b border-border/40">
+          <div className="border-y border-border/40 bg-secondary/5">
             <div className="container mx-auto px-6 lg:px-12 py-12">
               <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
                 <div className="space-y-2">
