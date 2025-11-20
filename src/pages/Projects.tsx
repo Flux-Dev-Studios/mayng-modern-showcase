@@ -98,6 +98,114 @@ const Projects = () => {
             <div className="grid md:grid-cols-12 gap-12 lg:gap-24">
               <div className="md:col-span-4 lg:col-span-3">
                 <div className="sticky top-32">
+import { useState, useEffect } from "react";
+import Navigation from "@/components/Navigation";
+import PageHero from "@/components/PageHero";
+import Footer from "@/components/Footer";
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+import { Button } from "@/components/ui/button";
+import { ArrowUpRight, ArrowLeft, MapPin, Calendar, User, ArrowRight } from "lucide-react"; 
+import heroPortfolio from "@/assets/hero-portfolio.jpg";
+
+// Import Data from your local file
+import { projects } from "./projectdata";
+
+const categories = [
+  { id: "living-room", label: "Living Room" },
+  { id: "bedroom", label: "Bedroom" },
+  { id: "bathroom", label: "Bathroom" },
+  { id: "kitchen", label: "Kitchen" },
+  { id: "office", label: "Office" },
+];
+
+const Projects = () => {
+  const [activeCategory, setActiveCategory] = useState("living-room");
+  // STATE: Track which project is clicked. If null, show list. If string, show detail.
+  const [selectedProjectId, setSelectedProjectId] = useState<string | null>(null);
+
+  // Scroll to top when switching views
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [selectedProjectId]);
+
+  // --- VIEW 1: PROJECT DETAIL (The "Case Study" Interface) ---
+  if (selectedProjectId) {
+    const project = projects.find((p) => p.id === selectedProjectId);
+    
+    // Safety check if ID is invalid
+    if (!project) {
+        setSelectedProjectId(null); 
+        return null; 
+    }
+
+    const currentIndex = projects.findIndex(p => p.id === selectedProjectId);
+    const nextProject = projects[(currentIndex + 1) % projects.length];
+
+    return (
+      <div className="min-h-screen bg-background animate-in fade-in duration-500">
+        {/* FIX: Force Navbar to be solid/scrolled state */}
+        <Navigation forceScrolled={true} />
+        
+        {/* Added padding-top so content starts BELOW the solid navbar */}
+        <main className="pt-20"> 
+          
+          {/* HERO IMAGE SECTION */}
+          <div className="relative w-full h-[70vh] md:h-[85vh] overflow-hidden">
+            <img 
+              src={project.image} 
+              alt={project.title} 
+              className="absolute inset-0 w-full h-full object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-transparent opacity-90" />
+            
+            {/* Back Button & Title */}
+            <div className="absolute bottom-0 left-0 w-full p-6 md:p-12 lg:p-20">
+              <div className="container mx-auto">
+                <button 
+                  onClick={() => setSelectedProjectId(null)} // Go back to list
+                  className="inline-flex items-center text-white/80 hover:text-primary mb-6 transition-colors text-sm uppercase tracking-widest font-medium"
+                >
+                  <ArrowLeft className="w-4 h-4 mr-2" /> Back to Projects
+                </button>
+                <h1 className="font-heading font-bold text-4xl md:text-6xl lg:text-7xl text-white mb-4 leading-tight drop-shadow-lg">
+                  {project.title}
+                </h1>
+                <p className="text-white/90 text-lg md:text-xl max-w-2xl font-light leading-relaxed">
+                  {project.description}
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* SPECS GRID */}
+          <div className="border-b border-border/40">
+            <div className="container mx-auto px-6 lg:px-12 py-12">
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+                <div className="space-y-2">
+                  <div className="flex items-center text-primary mb-1"><User className="w-4 h-4 mr-2" /><span className="text-xs uppercase font-bold">Client</span></div>
+                  <p className="text-foreground font-medium">{project.client}</p>
+                </div>
+                <div className="space-y-2">
+                  <div className="flex items-center text-primary mb-1"><MapPin className="w-4 h-4 mr-2" /><span className="text-xs uppercase font-bold">Location</span></div>
+                  <p className="text-foreground font-medium">{project.location}</p>
+                </div>
+                <div className="space-y-2">
+                  <div className="flex items-center text-primary mb-1"><Calendar className="w-4 h-4 mr-2" /><span className="text-xs uppercase font-bold">Year</span></div>
+                  <p className="text-foreground font-medium">{project.year}</p>
+                </div>
+                <div className="space-y-2">
+                  <div className="flex items-center text-primary mb-1"><span className="text-xs uppercase font-bold">Category</span></div>
+                  <p className="text-foreground font-medium capitalize">{project.category.replace('-', ' ')}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* WRITE UP */}
+          <div className="container mx-auto px-6 lg:px-12 py-20 md:py-32">
+            <div className="grid md:grid-cols-12 gap-12 lg:gap-24">
+              <div className="md:col-span-4 lg:col-span-3">
+                <div className="sticky top-32">
                   <h3 className="font-heading text-2xl font-bold mb-6 text-primary">The Design Story</h3>
                   <p className="text-muted-foreground leading-relaxed mb-8">Every space tells a story. Here is how we brought this vision to life.</p>
                   <div className="h-1 w-16 bg-primary rounded-full" />
@@ -119,6 +227,7 @@ const Projects = () => {
             </div>
           </div>
 
+          {/* NEXT PROJECT CTA */}
           <div className="bg-secondary/10 py-20 border-t border-border/50">
             <div className="container mx-auto px-6 lg:px-12 text-center">
               <p className="text-muted-foreground mb-4 uppercase tracking-widest text-sm">Next Project</p>
@@ -135,7 +244,7 @@ const Projects = () => {
     );
   }
 
-  // --- VIEW 2: PROJECTS LIST ---
+  // --- VIEW 2: PROJECTS LIST (Tabs & Grid) ---
   const filteredProjects = projects.filter(p => p.category === activeCategory);
 
   return (
