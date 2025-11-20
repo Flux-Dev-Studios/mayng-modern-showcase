@@ -3,7 +3,8 @@ import { Link, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import logoImage from "@/assets/logo-dm-transparent.png";
-import blackLogo from "@/assets/black.png"; // Import the new black logo
+
+// REMOVED: import blackLogo from "@/assets/black.png"; 
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -13,7 +14,6 @@ const Navigation = () => {
   // --- SCROLL DETECTION ---
   useEffect(() => {
     const handleScroll = () => {
-      // Transition triggers after passing the hero section
       const threshold = window.innerHeight - 150;
       setIsScrolled(window.scrollY > threshold);
     };
@@ -75,11 +75,13 @@ const Navigation = () => {
           {/* --- 1. LOGO --- */}
           <Link to="/" className="flex items-center hover:opacity-80 transition-opacity z-20">
             <img 
-              src={isScrolled ? blackLogo : logoImage} // Use blackLogo when scrolled, otherwise logoImage
+              src={logoImage} 
               alt="Logo" 
               className={cn(
                 "transition-all duration-500 w-auto",
-                isScrolled ? "h-10" : "h-16" 
+                // CSS FIX: 'invert' turns white pixels black. 
+                // This simulates a black logo without needing a second file.
+                isScrolled ? "h-10 invert" : "h-16" 
               )} 
             />
           </Link>
@@ -114,11 +116,6 @@ const Navigation = () => {
             )}
             aria-label="Toggle menu"
           >
-            {/* Icon Switching Logic:
-               If Open: Show 'X'
-               If Closed: Show 'Menu'
-               Using 'absolute' and opacity to smooth the swap
-            */}
             <div className="relative w-8 h-8 flex items-center justify-center">
               <Menu 
                 size={28} 
