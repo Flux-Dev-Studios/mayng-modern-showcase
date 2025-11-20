@@ -43,7 +43,10 @@ const Navigation = () => {
           to={link.path}
           className={cn(
             "text-sm font-medium transition-colors duration-300 relative py-1",
+            
+            // Desktop Text Colors
             isDark ? "text-foreground" : "text-white",
+            
             "hover:text-primary",
             location.pathname === link.path && "font-semibold"
           )}
@@ -101,46 +104,22 @@ const Navigation = () => {
             <NavLinksList isDark={false} spacingClass="gap-8" />
           </div>
 
-     {/* --- MOBILE MENU TOGGLE (Architectural Design) --- */}
+          {/* --- MOBILE MENU TOGGLE (Fixed: No Overlap) --- */}
           <button
             onClick={() => setIsOpen(!isOpen)}
             className={cn(
-              "md:hidden relative z-50 p-2 group",
-              // COLOR LOGIC:
-              // Hero: Primary (Brand Color)
-              // Scrolled: Foreground (Black/Dark)
+              "md:hidden p-2 transition-colors z-50 relative",
+              // COLOR: Primary on Hero, Dark on Scroll
               isScrolled ? "text-foreground" : "text-primary"
             )}
             aria-label="Toggle menu"
           >
-            {/* Container for the lines */}
-            <div className="w-8 h-8 flex flex-col justify-center items-end gap-1.5">
-              
-              {/* Line 1: Top (Always full width, rotates 45deg when open) */}
-              <span 
-                className={cn(
-                  "h-[2px] bg-current rounded-full transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] origin-center",
-                  isOpen 
-                    ? "w-6 translate-y-[4px] rotate-45" // Moves down and rotates
-                    : "w-6 translate-y-0 rotate-0" // Default state
-                )} 
-              />
-              
-              {/* Line 2: Bottom (Starts short/right-aligned, becomes X when open) */}
-              <span 
-                className={cn(
-                  "h-[2px] bg-current rounded-full transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] origin-center",
-                  // LOGIC:
-                  // Open: Full width, moves up, rotates -45deg (Forms X)
-                  // Closed: Short width (w-4), right aligned
-                  // Hover (Group): Extends to full width (w-6)
-                  isOpen 
-                    ? "w-6 -translate-y-[4px] -rotate-45" 
-                    : "w-4 group-hover:w-6" 
-                )} 
-              />
-              
-            </div>
+             {/* LOGIC: We render EITHER the X OR the Menu. Never both. */}
+            {isOpen ? (
+              <X size={28} className="animate-in fade-in zoom-in duration-300" />
+            ) : (
+              <Menu size={28} className="animate-in fade-in zoom-in duration-300" />
+            )}
           </button>
         </div>
 
