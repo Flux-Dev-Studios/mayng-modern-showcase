@@ -4,8 +4,6 @@ import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import logoImage from "@/assets/logo-dm-transparent.png";
 
-// REMOVED: import blackLogo from "@/assets/black.png"; 
-
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -14,13 +12,27 @@ const Navigation = () => {
   // --- SCROLL DETECTION ---
   useEffect(() => {
     const handleScroll = () => {
-      const threshold = window.innerHeight - 150;
+      // CHECK ROUTE: Is this the Home page ("/")?
+      const isHomePage = location.pathname === "/";
+      
+      // DEFINE THRESHOLD:
+      // Home Page: Wait for full screen (minus buffer) because the Hero is massive.
+      // Internal Pages: Trigger much earlier (e.g., 300px) because headers are shorter.
+      const heroHeight = isHomePage ? window.innerHeight : 300;
+      
+      // Buffer to ensure smooth transition
+      const buffer = 100;
+      const threshold = Math.max(50, heroHeight - buffer);
+
       setIsScrolled(window.scrollY > threshold);
     };
 
+    // Trigger once on mount to set initial state (in case user reloads scrolled down)
+    handleScroll();
+
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [location.pathname]); // Dependency on location ensures this resets when changing pages
 
   // --- ROUTE CHANGE HANDLING ---
   useEffect(() => {
@@ -79,8 +91,6 @@ const Navigation = () => {
               alt="Logo" 
               className={cn(
                 "transition-all duration-500 w-auto",
-                // CSS FIX: 'invert' turns white pixels black. 
-                // This simulates a black logo without needing a second file.
                 isScrolled ? "h-10 invert" : "h-16" 
               )} 
             />
