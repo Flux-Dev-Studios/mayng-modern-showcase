@@ -1,6 +1,6 @@
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
+/* 1. IMPORT FONTS (Inter & Montserrat) */
+/* This is required for the font-sans and font-heading classes to work */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -12,10 +12,9 @@ All colors MUST be HSL.
     --background: 0 0% 100%;
     
     /* --- TEXT: Deep Blue (#182B3A) --- */
-    /* This makes all standard text your brand's deep blue instead of black */
     --foreground: 206 41% 16%;
  
-    /* --- CARDS: White or very light gray --- */
+    /* --- CARDS: White --- */
     --card: 0 0% 100%;
     --card-foreground: 206 41% 16%;
  
@@ -24,7 +23,7 @@ All colors MUST be HSL.
  
     /* --- PRIMARY BRAND COLOR: Gold (#E2BC63) --- */
     --primary: 42 68% 64%;
-    /* Text inside Gold buttons should be Deep Blue */
+    /* Text inside Gold buttons should be Deep Blue for contrast */
     --primary-foreground: 206 41% 16%;
  
     /* --- SECONDARY: Deep Blue (For dark sections/buttons) --- */
@@ -51,6 +50,17 @@ All colors MUST be HSL.
     --ring: 42 68% 64%;
  
     --radius: 0.5rem;
+
+    /* --- SIDEBAR VARIABLES (Required by your Tailwind Config) --- */
+    /* These map to the same light theme defaults */
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
   }
 }
  
@@ -59,6 +69,11 @@ All colors MUST be HSL.
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground;
+    /* Apply the background, text color, and INTER font globally */
+    @apply bg-background text-foreground font-sans;
+  }
+  /* Automatically apply MONTSERRAT font to all headings */
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-heading;
   }
 }
