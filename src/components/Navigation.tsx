@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import logoImage from "@/assets/logo-dm-transparent.png";
 
@@ -11,6 +12,7 @@ const Navigation = () => {
   // --- SCROLL DETECTION ---
   useEffect(() => {
     const handleScroll = () => {
+      // Transition triggers after passing the hero section
       const threshold = window.innerHeight - 150;
       setIsScrolled(window.scrollY > threshold);
     };
@@ -101,43 +103,36 @@ const Navigation = () => {
             <NavLinksList isDark={false} spacingClass="gap-8" />
           </div>
 
-          {/* --- MOBILE MENU TOGGLE (TEXT CAPSULE - NO ICONS) --- */}
+          {/* --- MOBILE MENU TOGGLE --- */}
           <button
             onClick={() => setIsOpen(!isOpen)}
             className={cn(
-              "md:hidden z-50 relative group overflow-hidden rounded-full transition-all duration-300 ease-out",
-              // SIZE & SHAPE
-              "px-5 py-2.5 border backdrop-blur-md",
-              
-              // COLORS & BORDERS
-              isScrolled 
-                ? "bg-foreground/5 border-foreground/10 text-foreground hover:bg-foreground/10" 
-                : "bg-white/10 border-white/20 text-white hover:bg-white/20"
+              "md:hidden p-2 transition-colors z-50 relative flex items-center justify-center",
+              // Color Logic
+              isScrolled ? "text-foreground" : "text-primary"
             )}
             aria-label="Toggle menu"
           >
-            <div className="relative w-[40px] h-[14px] flex items-center justify-center overflow-hidden">
-              
-              {/* TEXT: MENU (Visible when CLOSED) */}
-              <span className={cn(
-                "absolute text-[10px] font-bold tracking-[0.2em] uppercase transition-all duration-500 ease-out",
-                isOpen 
-                  ? "translate-y-8 opacity-0" // Slides down when open
-                  : "translate-y-0 opacity-100" // Visible when closed
-              )}>
-                Menu
-              </span>
-
-              {/* TEXT: CLOSE (Visible when OPEN) */}
-              <span className={cn(
-                "absolute text-[10px] font-bold tracking-[0.2em] uppercase transition-all duration-500 ease-out",
-                isOpen 
-                  ? "translate-y-0 opacity-100 text-primary" // Visible when open (Primary Color)
-                  : "-translate-y-8 opacity-0" // Hidden above when closed
-              )}>
-                Close
-              </span>
-              
+            {/* Icon Switching Logic:
+               If Open: Show 'X'
+               If Closed: Show 'Menu'
+               Using 'absolute' and opacity to smooth the swap
+            */}
+            <div className="relative w-8 h-8 flex items-center justify-center">
+              <Menu 
+                size={28} 
+                className={cn(
+                  "absolute transition-all duration-300 ease-in-out transform",
+                  isOpen ? "opacity-0 rotate-90 scale-0" : "opacity-100 rotate-0 scale-100"
+                )}
+              />
+              <X 
+                size={28} 
+                className={cn(
+                  "absolute transition-all duration-300 ease-in-out transform",
+                  isOpen ? "opacity-100 rotate-0 scale-100" : "opacity-0 -rotate-90 scale-0"
+                )}
+              />
             </div>
           </button>
         </div>
