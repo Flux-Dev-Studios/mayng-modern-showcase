@@ -11,6 +11,7 @@ const Navigation = () => {
 
   useEffect(() => {
     const handleScroll = () => {
+      // Trigger transition after hero section
       const threshold = window.innerHeight - 150;
       setIsScrolled(window.scrollY > threshold);
     };
@@ -32,49 +33,46 @@ const Navigation = () => {
     { name: "Contact", path: "/contact" },
   ];
 
-  // Reusable Link Component
-  const NavLinks = ({ isDark }: { isDark: boolean }) => (
-    <>
+  // Helper Component for Links
+  const NavLinksList = ({ isDark, spacingClass }: { isDark: boolean, spacingClass: string }) => (
+    <div className={cn("flex items-center", spacingClass)}>
       {navLinks.map((link) => (
         <Link
           key={link.path}
           to={link.path}
           className={cn(
-            "text-sm font-medium transition-colors duration-300 relative py-1 hover:opacity-70",
+            "text-sm font-medium transition-all duration-300 relative py-1 hover:opacity-60",
             isDark ? "text-foreground" : "text-white",
-            location.pathname === link.path && "font-bold"
+            location.pathname === link.path && "font-semibold"
           )}
         >
           {link.name}
           {location.pathname === link.path && (
-            <span 
-              className={cn(
-                "absolute -bottom-1 left-0 w-full h-0.5 rounded-full animate-fade-in",
-                isDark ? "bg-foreground" : "bg-white"
-              )} 
-            />
+            <span className={cn(
+              "absolute -bottom-1 left-0 w-full h-0.5 rounded-full animate-fade-in",
+              isDark ? "bg-foreground" : "bg-white"
+            )} />
           )}
         </Link>
       ))}
-    </>
+    </div>
   );
 
   return (
     <nav
       className={cn(
-        "fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-in-out border-b",
-        // BACKGROUND TRANSITION
+        "fixed top-0 left-0 right-0 z-50 transition-all duration-700 ease-[cubic-bezier(0.4,0,0.2,1)] border-b",
+        // Background Transition
         isScrolled 
           ? "bg-background/95 backdrop-blur-md shadow-sm py-4 border-border/10" 
           : "bg-transparent py-6 border-transparent"
       )}
     >
-      {/* GRID LAYOUT: [Logo] [Center-Links] [Right-Links/Menu] */}
-      <div className="container mx-auto px-6 lg:px-12 grid grid-cols-[auto_1fr_auto] items-center h-10">
-        
-        {/* 1. LEFT: LOGO (Always stays in the first column) */}
-        <div className="flex items-center">
-          <Link to="/" className="hover:opacity-80 transition-opacity">
+      <div className="container mx-auto px-6 lg:px-12 relative h-full">
+        <div className="flex items-center justify-between h-full relative">
+          
+          {/* --- 1. LOGO (Always Left) --- */}
+          <Link to="/" className="flex items-center hover:opacity-80 transition-opacity z-20">
             <img 
               src={logoImage} 
               alt="Logo" 
@@ -84,40 +82,35 @@ const Navigation = () => {
               )} 
             />
           </Link>
-        </div>
 
-        {/* 2. CENTER: SCROLLED LINKS (Fades In) */}
-        {/* This div occupies the middle column. Flex centers the content inside it. */}
-        <div className={cn(
-          "hidden md:flex justify-center items-center transition-all duration-500 ease-in-out",
-          isScrolled 
-            ? "opacity-100 pointer-events-auto translate-y-0" 
-            : "opacity-0 pointer-events-none -translate-y-2"
-        )}>
-          <div className="flex gap-8">
-            <NavLinks isDark={true} />
-          </div>
-        </div>
-
-        {/* 3. RIGHT: HERO LINKS (Fades Out) */}
-        {/* This occupies the last column. */}
-        <div className="flex justify-end items-center">
-          
-          {/* Desktop Hero Pill */}
+          {/* --- 2. CENTER LINKS (Scrolled State) --- */}
+          {/* We use 'absolute left-1/2' to ensure TRUE center relative to viewport */}
           <div className={cn(
-            "hidden md:flex items-center gap-8 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-8 py-2 transition-all duration-500 ease-in-out",
+            "hidden md:block absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transition-all duration-700 delay-100 ease-out",
             isScrolled 
-              ? "opacity-0 pointer-events-none translate-x-4" // Fades out to the right
-              : "opacity-100 pointer-events-auto translate-x-0"
+              ? "opacity-100 scale-100 pointer-events-auto" // Visible when scrolled
+              : "opacity-0 scale-95 pointer-events-none translate-y-4" // Hidden on Hero
           )}>
-            <NavLinks isDark={false} />
+            {/* Increased spacing to gap-12 for the 'spaced' look */}
+            <NavLinksList isDark={true} spacingClass="gap-12" />
           </div>
 
-          {/* Mobile Menu Toggle (Visible on small screens) */}
+          {/* --- 3. RIGHT LINKS (Hero State) --- */}
+          {/* We keep this relative (flex) so it pushes nicely against the right edge */}
+          <div className={cn(
+            "hidden md:flex items-center bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-8 py-2 transition-all duration-500 ease-in-out origin-right",
+            isScrolled 
+              ? "opacity-0 scale-90 translate-x-8 pointer-events-none" // Fades out when scrolled
+              : "opacity-100 scale-100 translate-x-0 pointer-events-auto" // Visible on Hero
+          )}>
+            <NavLinksList isDark={false} spacingClass="gap-8" />
+          </div>
+
+          {/* --- MOBILE TOGGLE --- */}
           <button
             onClick={() => setIsOpen(!isOpen)}
             className={cn(
-              "md:hidden p-2 transition-colors",
+              "md:hidden p-2 transition-colors z-20",
               isScrolled ? "text-foreground" : "text-white hover:text-primary"
             )}
             aria-label="Toggle menu"
@@ -126,14 +119,11 @@ const Navigation = () => {
           </button>
         </div>
 
-      </div>
-
-      {/* Mobile Navigation Dropdown */}
-      <div className={cn(
-          "md:hidden overflow-hidden transition-all duration-500 ease-in-out",
-          isOpen ? "max-h-[500px] opacity-100 mt-4" : "max-h-0 opacity-0"
-      )}>
-        <div className="container mx-auto px-6 lg:px-12">
+        {/* --- MOBILE DROPDOWN --- */}
+        <div className={cn(
+            "md:hidden overflow-hidden transition-all duration-500 ease-in-out",
+            isOpen ? "max-h-[500px] opacity-100 mt-4" : "max-h-0 opacity-0"
+        )}>
           <div className="bg-background/95 backdrop-blur-xl rounded-2xl border border-border/10 p-4 shadow-2xl flex flex-col gap-2">
             {navLinks.map((link) => (
               <Link
