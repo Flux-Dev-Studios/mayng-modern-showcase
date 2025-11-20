@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-// import { Link } from "react-router-dom";
+import Navigation from "@/components/Navigation"; // Ensure this is imported
 
 // --- Testimonial Data ---
 const testimonials = [
@@ -61,7 +61,8 @@ const TestimonialsPage = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-white text-gray-900 font-sans">
+    <div className="min-h-screen bg-background text-foreground font-sans">
+      <Navigation />
       
       {/* --- HERO SECTION --- */}
       <div className="relative h-[50vh] min-h-[400px] w-full overflow-hidden">
@@ -71,11 +72,11 @@ const TestimonialsPage = () => {
           style={{ backgroundImage: 'url("https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?q=80&w=2874&auto=format&fit=crop")' }}
         ></div>
         {/* Dark Overlay */}
-        <div className="absolute inset-0 bg-black/40"></div>
+        <div className="absolute inset-0 bg-black/50"></div>
         
         {/* Hero Content */}
         <div className="absolute inset-0 flex flex-col justify-center items-center text-center px-4">
-          <p className={`text-[#E0683D] font-bold tracking-wider uppercase mb-4 transition-all duration-700 delay-300 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+          <p className={`text-primary font-bold tracking-wider uppercase mb-4 transition-all duration-700 delay-300 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
             Client Stories
           </p>
           <h1 className={`text-4xl md:text-6xl font-bold text-white mb-6 max-w-4xl leading-tight transition-all duration-700 delay-500 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
@@ -87,7 +88,7 @@ const TestimonialsPage = () => {
       {/* --- MAIN CONTENT AREA --- */}
       <div className="container mx-auto px-4 py-24 lg:px-8">
         
-        <h2 className="text-3xl md:text-5xl font-bold text-gray-900 text-center mb-20">
+        <h2 className="text-3xl md:text-5xl font-bold text-foreground text-center mb-20 font-heading">
           What Our Clients Say
         </h2>
 
@@ -127,18 +128,18 @@ const TestimonialsPage = () => {
                 }`}
               >
                 <svg
-                  className="absolute -top-12 -left-8 w-24 h-24 text-gray-100 -z-10"
+                  className="absolute -top-12 -left-8 w-24 h-24 text-muted/20 -z-10"
                   fill="currentColor"
                   viewBox="0 0 24 24"
                 >
                   <path d="M6 17h3l2-4V7H5v6h3l-2 4zm8 0h3l2-4V7h-6v6h3l-2 4z" />
                 </svg>
-                <blockquote className="text-2xl xl:text-3xl font-light text-gray-700 leading-snug relative z-10">
+                <blockquote className="text-2xl xl:text-3xl font-light text-muted-foreground leading-snug relative z-10 font-heading">
                   "{testimonial.quote}"
                 </blockquote>
                 <div className="mt-8">
-                  <h3 className="text-xl font-bold text-gray-900">{testimonial.name}</h3>
-                  <p className="text-lg text-[#E0683D] font-medium">{testimonial.title}</p>
+                  <h3 className="text-xl font-bold text-foreground">{testimonial.name}</h3>
+                  <p className="text-lg text-primary font-medium">{testimonial.title}</p>
                 </div>
               </div>
             </div>
@@ -148,7 +149,7 @@ const TestimonialsPage = () => {
 
         {/* --- CTA SECTION --- */}
         <div className="mt-32">
-          <div className="bg-stone-50 rounded-3xl overflow-hidden shadow-xl border border-stone-100">
+          <div className="bg-secondary/10 rounded-3xl overflow-hidden shadow-xl border border-border">
             <div className="flex flex-col md:flex-row items-center">
               {/* Image Side */}
               <div className="w-full md:w-1/2 h-64 md:h-96 relative">
@@ -161,16 +162,16 @@ const TestimonialsPage = () => {
               
               {/* Text Side */}
               <div className="w-full md:w-1/2 p-10 md:p-16 text-center md:text-left">
-                <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4 font-heading">
                   Ready to start your journey?
                 </h2>
-                <p className="text-lg text-gray-600 mb-8">
+                <p className="text-lg text-muted-foreground mb-8">
                   Whether it's a single room or a complete renovation, we are ready to bring your vision to life.
                 </p>
                 <a
                   href="/contact"
                   onClick={(e) => e.preventDefault()}
-                  className="inline-block px-8 py-4 bg-[#E0683D] text-white font-bold rounded-lg shadow-lg hover:bg-[#c25730] transition-all duration-300 hover:-translate-y-1.5 hover:scale-105" // Bouncier hover
+                  className="inline-block px-8 py-4 bg-primary text-primary-foreground font-bold rounded-lg shadow-lg hover:bg-primary/90 transition-all duration-300 hover:-translate-y-1.5 hover:scale-105" // Bouncier hover
                   style={{ transitionTimingFunction: 'cubic-bezier(0.68, -0.55, 0.27, 1.55)' }} // Bouncy transition
                 >
                   Get a Free Consultation
@@ -179,7 +180,6 @@ const TestimonialsPage = () => {
             </div>
           </div>
         </div>
-
       </div>
 
       {/* --- STYLES --- */}
