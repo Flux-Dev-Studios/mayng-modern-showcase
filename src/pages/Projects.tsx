@@ -1,9 +1,3 @@
-import { useState } from "react";
-import Navigation from "@/components/Navigation";
-import PageHero from "@/components/PageHero";
-import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
-import { ArrowUpRight } from "lucide-react"; 
-
 import livingRoom1 from "@/assets/living-room-1.jpg";
 import livingRoom2 from "@/assets/living-room-2.jpg";
 import livingRoom3 from "@/assets/living-room-3.jpg";
@@ -18,103 +12,183 @@ import kitchen2 from "@/assets/kitchen2.jpg";
 import kitchen3 from "@/assets/kitchen3.jpg";
 import project3 from "@/assets/project-3.jpg";
 import project1 from "@/assets/project-1.jpg";
-import heroPortfolio from "@/assets/hero-portfolio.jpg";
 
-const projectsByCategory = {
-  "living-room": [
-    { id: 1, title: "Modern Minimalist Living", description: "Contemporary living space with clean lines.", image: livingRoom1 },
-    { id: 2, title: "Cozy Family Lounge", description: "Warm and inviting space perfect for family gatherings.", image: livingRoom2 },
-    { id: 3, title: "Open Concept Living", description: "Integrated living and dining area.", image: livingRoom3 },
-  ],
-  bedroom: [
-    { id: 4, title: "Serene Master Bedroom", description: "Luxurious bedroom design.", image: bedroom1 },
-    { id: 5, title: "Contemporary Guest Suite", description: "Elegant guest bedroom.", image: bedroom2 },
-    { id: 6, title: "Modern Luxury Suite", description: "Sophisticated bedroom with premium finishes.", image: bedroom3 },
-  ],
-  bathroom: [
-    { id: 7, title: "Spa-Inspired Bathroom", description: "Tranquil bathroom featuring marble.", image: bathroom1 },
-    { id: 8, title: "Modern Powder Room", description: "Sophisticated powder room.", image: bathroom2 },
-    { id: 13, title: "Minimalist Wet Room", description: "A sleek, modern wet room design.", image: bathroom3 },
-  ],
-  kitchen: [
-    { id: 9, title: "Gourmet Chef's Kitchen", description: "Functional and beautiful kitchen.", image: kitchen1 },
-    { id: 10, title: "Open Concept Kitchen", description: "Modern kitchen seamlessly integrated.", image: kitchen2 },
-    { id: 16, title: "Rustic Farmhouse Kitchen", description: "A warm, inviting kitchen with natural wood.", image: kitchen3 },
-  ],
-  office: [
-    { id: 11, title: "Executive Home Office", description: "Professional workspace.", image: project3 },
-    { id: 12, title: "Creative Studio Space", description: "Inspiring office design.", image: project1 },
-  ],
-};
+export const projects = [
+  // LIVING ROOMS
+  {
+    id: "living-1",
+    category: "living-room",
+    title: "Modern Minimalist Living",
+    description: "Contemporary living space with clean lines and neutral tones.",
+    image: livingRoom1,
+    client: "The Adebayo Family",
+    location: "Victoria Island, Lagos",
+    year: "2024",
+    challenge: "The client wanted a space that felt open and airy despite the limited square footage. They needed a place to relax that felt decluttered from the busy Lagos life.",
+    solution: "We utilized a monochromatic palette with varying textures to create depth without visual noise. Low-profile furniture and strategic lighting emphasized the ceiling height, creating a sense of expansive luxury."
+  },
+  {
+    id: "living-2",
+    category: "living-room",
+    title: "Cozy Family Lounge",
+    description: "Warm and inviting space perfect for family gatherings.",
+    image: livingRoom2,
+    client: "Private Residence",
+    location: "Ikoyi, Lagos",
+    year: "2023",
+    challenge: "Creating a warm, intimate atmosphere in a large, open-plan hall.",
+    solution: "We used rich earth tones and custom sectional seating to define the lounge area. Warm wood paneling and soft, layered textiles brought a sense of coziness and intimacy."
+  },
+  {
+    id: "living-3",
+    category: "living-room",
+    title: "Open Concept Living",
+    description: "Integrated living and dining area with modern kitchen.",
+    image: livingRoom3,
+    client: "Mr. & Mrs. Okon",
+    location: "Abuja, FCT",
+    year: "2024",
+    challenge: "Seamlessly blending three distinct functional areas (kitchen, dining, living) into one cohesive visual story.",
+    solution: "We used consistent flooring materials to unite the spaces, while using lighting fixtures and ceiling treatments to subtly zone each area without physical barriers."
+  },
 
-const categories = [
-  { id: "living-room", label: "Living Room" },
-  { id: "bedroom", label: "Bedroom" },
-  { id: "bathroom", label: "Bathroom" },
-  { id: "kitchen", label: "Kitchen" },
-  { id: "office", label: "Office" },
+  // BEDROOMS
+  {
+    id: "bed-1",
+    category: "bedroom",
+    title: "Serene Master Bedroom",
+    description: "Luxurious bedroom design with custom furniture and ambient lighting.",
+    image: bedroom1,
+    client: "The Johnsons",
+    location: "Banana Island",
+    year: "2023",
+    challenge: "The client requested a 'hotel-like' experience that promoted deep sleep and relaxation.",
+    solution: "We soundproofed the walls and used blackout velvet curtains. The color palette is restricted to soothing greys and blues, with a custom upholstered headboard acting as the room's centerpiece."
+  },
+  {
+    id: "bed-2",
+    category: "bedroom",
+    title: "Contemporary Guest Suite",
+    description: "Elegant guest bedroom with modern amenities.",
+    image: bedroom2,
+    client: "Private Client",
+    location: "Lekki Phase 1",
+    year: "2024",
+    challenge: "Designing a guest room that felt luxurious yet neutral enough to welcome any visitor.",
+    solution: "We focused on high-quality linens and a statement lighting fixture. The design is minimal but punctuated with Nigerian art pieces to give it local character."
+  },
+  {
+    id: "bed-3",
+    category: "bedroom",
+    title: "Modern Luxury Suite",
+    description: "Sophisticated bedroom with premium finishes and lighting.",
+    image: bedroom3,
+    client: "Confidential",
+    location: "Maitama, Abuja",
+    year: "2023",
+    challenge: "Integrating a workspace into the bedroom without disrupting the restful ambiance.",
+    solution: "We designed a bespoke desk unit that folds away when not in use, maintaining the room's serenity while offering full functionality."
+  },
+
+  // BATHROOMS
+  {
+    id: "bath-1",
+    category: "bathroom",
+    title: "Spa-Inspired Bathroom",
+    description: "Tranquil bathroom featuring marble and premium fixtures.",
+    image: bathroom1,
+    client: "Mrs. Alakija",
+    location: "Ikoyi",
+    year: "2024",
+    challenge: "Transforming a dated, cramped bathroom into a personal spa retreat.",
+    solution: "We replaced the bathtub with a large, glass-enclosed rain shower and used continuous marble cladding on walls and floors to visually expand the space."
+  },
+  {
+    id: "bath-2",
+    category: "bathroom",
+    title: "Modern Powder Room",
+    description: "Sophisticated powder room with artistic elements.",
+    image: bathroom2,
+    client: "Commercial Client",
+    location: "VI",
+    year: "2023",
+    challenge: "Making a small, windowless room feel dramatic and impressive.",
+    solution: "We used dark, moody wallpapers and dramatic vanity lighting to create a 'jewel box' effect that surprises and delights guests."
+  },
+  {
+    id: "bath-3",
+    category: "bathroom",
+    title: "Minimalist Wet Room",
+    description: "A sleek, modern wet room design.",
+    image: bathroom3,
+    client: "Private Residence",
+    location: "Lekki",
+    year: "2024",
+    challenge: "Ensuring waterproofing and drainage in an open-plan wet room concept.",
+    solution: "We engineered a subtle floor gradient for perfect drainage and used large-format porcelain tiles to minimize grout lines for a seamless look."
+  },
+
+  // KITCHEN
+  {
+    id: "kitchen-1",
+    category: "kitchen",
+    title: "Gourmet Chef's Kitchen",
+    description: "Functional and beautiful kitchen with custom cabinetry.",
+    image: kitchen1,
+    client: "Chef Tolu",
+    location: "Ikeja GRA",
+    year: "2023",
+    challenge: "A professional chef needed a kitchen that could handle heavy cooking but look elegant enough for hosting.",
+    solution: "We installed industrial-grade appliances hidden behind custom millwork. The island features a durable quartz countertop that mimics marble but resists staining."
+  },
+  {
+    id: "kitchen-2",
+    category: "kitchen",
+    title: "Open Concept Kitchen",
+    description: "Modern kitchen seamlessly integrated with dining area.",
+    image: kitchen2,
+    client: "The Davids",
+    location: "Ajah",
+    year: "2024",
+    challenge: "Connecting the kitchen to the living space without cooking smells permeating the house.",
+    solution: "We installed a high-velocity, silent extraction system and used glass sliding partitions that can close off the kitchen during heavy cooking."
+  },
+  {
+    id: "kitchen-3",
+    category: "kitchen",
+    title: "Rustic Farmhouse Kitchen",
+    description: "A warm, inviting kitchen with natural wood and stone.",
+    image: kitchen3,
+    client: "Private Estate",
+    location: "Epe",
+    year: "2023",
+    challenge: "Bringing a rustic, country feel to a modern new-build structure.",
+    solution: "We used reclaimed wood for the open shelving and hand-made clay tiles for the backsplash to introduce texture and history."
+  },
+
+  // OFFICE
+  {
+    id: "office-1",
+    category: "office",
+    title: "Executive Home Office",
+    description: "Professional workspace with bespoke wooden furniture.",
+    image: project3,
+    client: "CEO, Tech Firm",
+    location: "Ikoyi",
+    year: "2024",
+    challenge: "Creating a space that commands respect for video conferences but feels comfortable for long work hours.",
+    solution: "We designed a custom library wall as a backdrop and used ergonomic furniture upholstered in premium leather."
+  },
+  {
+    id: "office-2",
+    category: "office",
+    title: "Creative Studio Space",
+    description: "Inspiring office design for creative professionals.",
+    image: project1,
+    client: "Fashion Designer",
+    location: "Yaba",
+    year: "2023",
+    challenge: "Maximizing natural light and storage for fabrics and samples.",
+    solution: "We positioned the worktables to face the north windows for consistent light and built floor-to-ceiling white storage units to keep the space clutter-free."
+  }
 ];
-
-const Projects = () => {
-  const [activeCategory, setActiveCategory] = useState("living-room");
-
-  return (
-    <div className="min-h-screen bg-background">
-      <Navigation />
-      <PageHero 
-        title="Our Portfolio" 
-        subtitle="Curated spaces designed for modern living"
-        backgroundImage={heroPortfolio}
-      />
-      
-      <main className="py-20 md:py-32">
-        <div className="container mx-auto px-6 lg:px-12 flex flex-col items-center">
-          
-          <Tabs defaultValue="living-room" className="w-full flex flex-col items-center" onValueChange={setActiveCategory}>
-            <TabsList className="flex flex-wrap justify-center gap-2 bg-transparent mb-16 h-auto">
-              {categories.map((category) => (
-                <TabsTrigger 
-                  key={category.id} 
-                  value={category.id}
-                  // REVERTED: Changed 'text-white' back to 'text-primary-foreground' (Deep Blue)
-                  className="px-6 py-2.5 rounded-full text-sm font-medium border border-border/50 bg-background/50 backdrop-blur-sm text-muted-foreground data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:border-primary hover:border-primary/50 hover:text-foreground transition-all duration-300"
-                >
-                  {category.label}
-                </TabsTrigger>
-              ))}
-            </TabsList>
-
-            {categories.map((category) => (
-              <TabsContent key={category.id} value={category.id} className="w-full animate-in fade-in slide-in-from-bottom-4 duration-700">
-                <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-16 mx-auto max-w-7xl">
-                  {projectsByCategory[category.id as keyof typeof projectsByCategory].map((project, index) => (
-                    <div key={project.id} className="group flex flex-col gap-4 cursor-pointer" style={{ animationDelay: `${index * 100}ms` }}>
-                      <div className="relative aspect-[4/5] overflow-hidden rounded-md bg-muted">
-                        <img src={project.image} alt={project.title} className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105" />
-                        <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                        <div className="absolute top-4 right-4 bg-primary p-2.5 rounded-full opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500 shadow-lg shadow-black/20">
-                           <ArrowUpRight className="w-5 h-5 text-primary-foreground" /> 
-                        </div>
-                      </div>
-                      <div className="flex flex-col gap-1">
-                        <div className="flex justify-between items-start">
-                          <h3 className="font-heading font-semibold text-xl text-foreground group-hover:text-primary transition-colors">{project.title}</h3>
-                        </div>
-                        <p className="text-sm text-muted-foreground leading-relaxed line-clamp-2">{project.description}</p>
-                        <div className="mt-2">
-                          <span className="text-xs font-medium text-primary tracking-wider uppercase border-b border-primary/20 pb-0.5 group-hover:border-primary transition-all">View Case Study</span>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </TabsContent>
-            ))}
-          </Tabs>
-        </div>
-      </main>
-    </div>
-  );
-};
-
-export default Projects;
