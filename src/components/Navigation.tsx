@@ -11,6 +11,8 @@ const Navigation = () => {
 
   useEffect(() => {
     const handleScroll = () => {
+      // Transition triggers when the user scrolls past the Hero section
+      // (Viewport Height minus 150px buffer)
       const threshold = window.innerHeight - 150;
       setIsScrolled(window.scrollY > threshold);
     };
@@ -19,6 +21,7 @@ const Navigation = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // Close mobile menu when route changes
   useEffect(() => {
     setIsOpen(false);
   }, [location]);
@@ -32,7 +35,8 @@ const Navigation = () => {
     { name: "Contact", path: "/contact" },
   ];
 
-  // --- HELPER COMPONENT ---
+  // --- HELPER COMPONENT FOR LINKS ---
+  // This avoids code duplication for the two different link groups
   const NavLinksList = ({ isDark, spacingClass }: { isDark: boolean, spacingClass: string }) => (
     <div className={cn("flex items-center", spacingClass)}>
       {navLinks.map((link) => (
@@ -42,21 +46,23 @@ const Navigation = () => {
           className={cn(
             "text-sm font-medium transition-colors duration-300 relative py-1",
             
-            // --- COLOR LOGIC ---
-            // If Scrolled (Dark Text Mode): Use standard black/dark text
-            // If Hero (Light Text Mode): Use 'text-white/70' (Softer, not bright white)
-            isDark ? "text-foreground" : "text-white/70",
+            // --- BASE COLOR LOGIC ---
+            // Hero State (isDark=false): Solid White
+            // Scrolled State (isDark=true): Theme Foreground (Black/Dark)
+            isDark ? "text-foreground" : "text-white",
             
-            // Hover always turns to Primary Color
+            // --- HOVER LOGIC ---
+            // Always turns to your Primary Brand Color
             "hover:text-primary",
 
-            // Active link is fully opaque
-            location.pathname === link.path && (isDark ? "text-foreground font-semibold" : "text-white font-semibold")
+            // --- ACTIVE STATE LOGIC ---
+            location.pathname === link.path && "font-semibold"
           )}
         >
           {link.name}
           
           {/* UNDERLINE ANIMATION */}
+          {/* Always uses Primary Brand Color */}
           {location.pathname === link.path && (
             <span className="absolute -bottom-1 left-0 w-full h-0.5 rounded-full animate-fade-in bg-primary" />
           )}
@@ -69,52 +75,56 @@ const Navigation = () => {
     <nav
       className={cn(
         "fixed top-0 left-0 right-0 z-50 transition-all duration-700 ease-[cubic-bezier(0.4,0,0.2,1)] border-b",
+        // NAVBAR BACKGROUND TRANSITION
         isScrolled 
-          ? "bg-background/95 backdrop-blur-md shadow-sm py-4 border-border/10" 
-          : "bg-transparent py-6 border-transparent"
+          ? "bg-background/95 backdrop-blur-md shadow-sm py-4 border-border/10" // Scrolled: Glassy White/Dark
+          : "bg-transparent py-6 border-transparent" // Hero: Transparent
       )}
     >
       <div className="container mx-auto px-6 lg:px-12 relative h-full">
         <div className="flex items-center justify-between h-full relative">
           
-          {/* --- LOGO --- */}
+          {/* --- 1. LOGO (Always Left) --- */}
           <Link to="/" className="flex items-center hover:opacity-80 transition-opacity z-20">
             <img 
               src={logoImage} 
-              alt="Logo" 
+              alt="Design by Mays Logo" 
               className={cn(
                 "transition-all duration-500 w-auto",
+                // Optional: Invert logo color on scroll if using a white-only logo
                 isScrolled ? "h-10 invert" : "h-16" 
               )} 
             />
           </Link>
 
-          {/* --- CENTER LINKS (Scrolled State) --- */}
+          {/* --- 2. CENTER LINKS (Visible Only When Scrolled) --- */}
+          {/* Positioned Absolute Center relative to screen width */}
           <div className={cn(
             "hidden md:block absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transition-all duration-700 delay-100 ease-out",
             isScrolled 
-              ? "opacity-100 scale-100 pointer-events-auto"
-              : "opacity-0 scale-95 pointer-events-none translate-y-4"
+              ? "opacity-100 scale-100 pointer-events-auto" // Fade In
+              : "opacity-0 scale-95 pointer-events-none translate-y-4" // Fade Out & Drop Down
           )}>
             <NavLinksList isDark={true} spacingClass="gap-12" />
           </div>
 
-          {/* --- RIGHT LINKS (Hero State) --- */}
+          {/* --- 3. RIGHT LINKS (Visible Only on Hero) --- */}
+          {/* Positioned relative to flex container (Right side) */}
           <div className={cn(
-            "hidden md:flex items-center bg-white/5 backdrop-blur-[2px] border border-white/10 rounded-full px-8 py-2 transition-all duration-500 ease-in-out origin-right",
+            "hidden md:flex items-center bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-8 py-2 transition-all duration-500 ease-in-out origin-right",
             isScrolled 
-              ? "opacity-0 scale-90 translate-x-8 pointer-events-none"
-              : "opacity-100 scale-100 translate-x-0 pointer-events-auto"
+              ? "opacity-0 scale-90 translate-x-8 pointer-events-none" // Fade Out & Slide Right
+              : "opacity-100 scale-100 translate-x-0 pointer-events-auto" // Visible
           )}>
             <NavLinksList isDark={false} spacingClass="gap-8" />
           </div>
 
-          {/* --- MOBILE TOGGLE --- */}
+          {/* --- MOBILE MENU TOGGLE --- */}
           <button
             onClick={() => setIsOpen(!isOpen)}
             className={cn(
               "md:hidden p-2 transition-colors z-20",
-              isScrolled ? "text-foreground" : "text-white/80 hover:text-primary"
+              isScrolled ? "text-foreground" : "text-white hover:text-primary"
             )}
             aria-label="Toggle menu"
           >
@@ -122,7 +132,7 @@ const Navigation = () => {
           </button>
         </div>
 
-        {/* --- MOBILE DROPDOWN --- */}
+        {/* --- MOBILE DROPDOWN MENU --- */}
         <div className={cn(
             "md:hidden overflow-hidden transition-all duration-500 ease-in-out",
             isOpen ? "max-h-[500px] opacity-100 mt-4" : "max-h-0 opacity-0"
