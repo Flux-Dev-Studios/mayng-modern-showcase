@@ -191,7 +191,7 @@ export const projects = [
     year: "2023",
     challenge: "Maximizing natural light and storage for fabrics and samples.",
     solution: "We positioned the worktables to face the north windows for consistent light and built floor-to-ceiling white storage units to keep the space clutter-free."
-  }
+  },
   {
     id: "office-3",
     category: "office",
