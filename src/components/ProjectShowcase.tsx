@@ -1,20 +1,23 @@
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
-import project1 from "@/assets/project-1.jpg";
-import project2 from "@/assets/project-2.jpg";
-import project3 from "@/assets/project-3.jpg";
+
+// IMPORT YOUR MAIN PROJECT IMAGES HERE
+// I've selected one from each major category for a balanced showcase
+import project1 from "@/assets/living-room-1.jpg"; // Living Room
+import project2 from "@/assets/bedroom-1.jpg";     // Bedroom
+import project3 from "@/assets/office1.jpg";       // Office
 
 const projects = [
   {
     id: 1,
-    title: "Serene Bedroom Retreat",
+    title: "Modern Minimalist Living",
     category: "Residential",
     image: project1,
   },
   {
     id: 2,
-    title: "Contemporary Dining Space",
+    title: "Serene Master Bedroom",
     category: "Residential",
     image: project2,
   },
@@ -69,7 +72,9 @@ const ProjectShowcase = () => {
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                 />
               </div>
+              {/* Gradient Overlay */}
               <div className="absolute inset-0 bg-gradient-to-t from-foreground/90 via-foreground/50 to-transparent opacity-60 group-hover:opacity-80 transition-opacity" />
+              
               <div className="absolute bottom-0 left-0 right-0 p-6 text-background">
                 <p className="text-sm font-medium text-primary-foreground mb-2">{project.category}</p>
                 <h3 className="font-heading font-bold text-2xl mb-2">{project.title}</h3>
