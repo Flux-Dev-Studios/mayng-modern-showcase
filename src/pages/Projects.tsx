@@ -8,60 +8,6 @@ import { ArrowUpRight, ArrowLeft, MapPin, Calendar, User, ArrowRight } from "luc
 import heroPortfolio from "@/assets/hero-portfolio.jpg";
 
 // Import Data from the local file
-import { projects } from "./Projectdata";
-
-const categories = [
-  { id: "living-room", label: "Living Room" },
-  { id: "bedroom", label: "Bedroom" },
-  { id: "bathroom", label: "Bathroom" },
-  { id: "kitchen", label: "Kitchen" },
-  { id: "office", label: "Office" },
-];
-
-const Projects = () => {
-  const [activeCategory, setActiveCategory] = useState("living-room");
-  const [selectedProjectId, setSelectedProjectId] = useState<string | null>(null);
-
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [selectedProjectId]);
-
-  // --- VIEW 1: PROJECT DETAIL (Case Study) ---
-  if (selectedProjectId) {
-    const project = projects.find((p) => p.id === selectedProjectId);
-    
-    // Safety check
-    if (!project) {
-        setSelectedProjectId(null); 
-        return null; 
-    }
-
-    const currentIndex = projects.findIndex(p => p.id === selectedProjectId);
-    const nextProject = projects[(currentIndex + 1) % projects.length];
-
-    return (
-      <div className="min-h-screen bg-background animate-in fade-in duration-500">
-        {/* Force Navbar to solid state for readability */}
-        <Navigation forceScrolled={true} />
-        
-        <main className="pt-20">
-          {/* HERO IMAGE */}
-          <div className="container mx-auto px-6 lg:px-12 mb-12">
-            <div className="mb-8">
-              <button 
-                onClick={() => setSelectedProjectId(null)}
-                className="inline-flex items-center text-muted-foreground hover:text-primary mb-6 transition-colors text-sm uppercase tracking-widest font-medium"
-              >
-import { useState, useEffect } from "react";
-import Navigation from "@/components/Navigation";
-import PageHero from "@/components/PageHero";
-import Footer from "@/components/Footer";
-import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
-import { Button } from "@/components/ui/button";
-import { ArrowUpRight, ArrowLeft, MapPin, Calendar, User, ArrowRight } from "lucide-react"; 
-import heroPortfolio from "@/assets/hero-portfolio.jpg";
-
-// Import Data from the local file
 import { projects } from "./projectdata";
 
 const categories = [
@@ -97,7 +43,6 @@ const Projects = () => {
         {/* Force Navbar to solid state */}
         <Navigation forceScrolled={true} />
         
-        {/* FIX: Increased top padding from pt-20 to pt-32 to clear the navbar */}
         <main className="pt-32 md:pt-40">
           
           {/* HEADER CONTENT */}
@@ -214,7 +159,7 @@ const Projects = () => {
                 <TabsTrigger 
                   key={category.id} 
                   value={category.id}
-                  className="px-6 py-2.5 rounded-full text-sm font-medium border border-border/50 bg-background/50 backdrop-blur-sm text-muted-foreground data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:border-primary hover:border-primary/50 hover:text-foreground transition-all duration-300"
+                  className="px-6 py-2.5 rounded-full text-sm font-medium border border-border/50 bg-background/50 backdrop-blur-sm text-muted-foreground data-[state=active]:bg-primary data-[state=active]:text-white data-[state=active]:border-primary hover:border-primary/50 hover:text-foreground transition-all duration-300"
                 >
                   {category.label}
                 </TabsTrigger>
@@ -260,6 +205,3 @@ const Projects = () => {
 };
 
 export default Projects;
-
-
-  
