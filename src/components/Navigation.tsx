@@ -3,8 +3,9 @@ import { Link, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-// IMPORT NEW LOGO
+// IMPORT BOTH LOGOS
 import logoImage from "@/assets/logo.png";
+import logoScrolledImage from "@/assets/logo2.png";
 
 interface NavigationProps {
   forceScrolled?: boolean;
@@ -77,18 +78,18 @@ const Navigation = ({ forceScrolled = false }: NavigationProps) => {
       )}
     >
       <div className="container mx-auto px-6 lg:px-12 relative h-full">
-        {/* UPDATED: Changed back to justify-between to separate Logo (Left) and Menu (Right) */}
         <div className="flex items-center justify-between h-full relative">
           
-          {/* --- 1. LOGO (Added back) --- */}
+          {/* --- 1. LOGO --- */}
           <Link to="/" className="flex items-center hover:opacity-80 transition-opacity z-20">
             <img 
-              src={logoImage} 
+              // LOGIC: Use different images based on scroll state
+              src={isScrolled ? logoScrolledImage : logoImage} 
               alt="Design By May" 
               className={cn(
                 "transition-all duration-500 w-auto object-contain",
-                // If scrolled (white background), invert the white logo to black
-                isScrolled ? "h-10 invert brightness-0" : "h-12" 
+                // INCREASED SIZE: h-16 for hero, h-14 for scrolled
+                isScrolled ? "h-14" : "h-16" 
               )} 
             />
           </Link>
