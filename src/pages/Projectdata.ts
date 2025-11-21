@@ -10,8 +10,8 @@ import bathroom3 from "@/assets/bathroom3.jpg";
 import kitchen1 from "@/assets/kitchen1.jpg";
 import kitchen2 from "@/assets/kitchen2.jpg";
 import kitchen3 from "@/assets/kitchen3.jpg";
-import project3 from "@/assets/project-3.jpg";
-import project1 from "@/assets/project-1.jpg";
+import office2 from "@/assets/project-3.jpg";
+import office1 from "@/assets/project-1.jpg";
 
 export const projects = [
   // LIVING ROOMS
