@@ -1,8 +1,5 @@
 import { Link } from "react-router-dom";
-import { Instagram, Facebook, Linkedin, Mail, Phone, MapPin, ArrowRight } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-// Removed logoImage import
+import { Instagram, Facebook, Linkedin, Mail, Phone, MapPin } from "lucide-react";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -10,82 +7,64 @@ const Footer = () => {
   return (
     <footer className="bg-zinc-950 text-white pt-12 pb-8 border-t border-white/10">
       <div className="container mx-auto px-6 lg:px-12">
-        
-        {/* TOP SECTION: Grid Layout */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-10">
           
-          {/* 1. Social Icons (Logo & Text Removed) */}
+          {/* 1. Get In Touch */}
           <div className="space-y-4">
-            {/* Optional: You can add a title here like <h4 className="font-bold">Socials</h4> if you want */}
-            <div className="flex items-center gap-3">
-              <SocialIcon icon={<Instagram size={16} />} href="#" />
-              <SocialIcon icon={<Facebook size={16} />} href="#" />
-              <SocialIcon icon={<Linkedin size={16} />} href="#" />
-            </div>
+            <h4 className="font-heading font-bold text-base mb-4 text-white">Get In Touch</h4>
+            <p className="text-zinc-400 text-sm leading-relaxed">
+              We’d love to work with you to create beautiful furniture and art pieces, and to transform your space into something you’d be glad to be in and flaunt!
+            </p>
           </div>
 
-          {/* 2. Quick Links */}
+          {/* 2. Contact Details */}
           <div>
-            <h4 className="font-heading font-bold text-base mb-4 text-white">Explore</h4>
-            <ul className="space-y-2 text-sm text-zinc-400">
-              <li><FooterLink to="/">Home</FooterLink></li>
-              <li><FooterLink to="/about">About Studio</FooterLink></li>
-              <li><FooterLink to="/portfolio">Our Portfolio</FooterLink></li>
-              <li><FooterLink to="/services">Services</FooterLink></li>
-              <li><FooterLink to="/contact">Contact Us</FooterLink></li>
-            </ul>
-          </div>
-
-          {/* 3. Contact Info */}
-          <div>
-            <h4 className="font-heading font-bold text-base mb-4 text-white">Contact</h4>
+            <h4 className="font-heading font-bold text-base mb-4 text-white">Contact Details</h4>
             <ul className="space-y-3 text-sm text-zinc-400">
-              <li className="flex items-start gap-3">
-                <MapPin className="w-4 h-4 text-primary shrink-0 mt-0.5" />
-                <span>
-                  123 Victoria Island,<br />
-                  Lagos, Nigeria
-                </span>
-              </li>
+              <li className="font-semibold text-white">Designs By May</li>
               <li className="flex items-center gap-3">
                 <Phone className="w-4 h-4 text-primary shrink-0" />
-                <a href="tel:+2348000000000" className="hover:text-white transition-colors">
-                  +234 800 000 0000
+                <a href="tel:+2348037260838" className="hover:text-white transition-colors">
+                  +234 803 726 0838
                 </a>
               </li>
               <li className="flex items-center gap-3">
                 <Mail className="w-4 h-4 text-primary shrink-0" />
-                <a href="mailto:hello@designbymays.com" className="hover:text-white transition-colors">
-                  hello@designbymays.com
+                <a href="mailto:hello@designsbymayng.com" className="hover:text-white transition-colors">
+                  hello@designsbymayng.com
                 </a>
               </li>
             </ul>
           </div>
 
-          {/* 4. Newsletter */}
+          {/* 3. Location */}
           <div>
-            <h4 className="font-heading font-bold text-base mb-4 text-white">Newsletter</h4>
-            <p className="text-zinc-400 text-sm mb-3">
-              Subscribe for design inspiration.
-            </p>
-            <div className="flex gap-2">
-              <Input 
-                type="email" 
-                placeholder="Email address" 
-                className="h-9 text-sm bg-white/5 border-white/10 text-white placeholder:text-zinc-600 focus-visible:ring-primary"
-              />
-              <Button size="icon" className="h-9 w-9 bg-primary hover:bg-primary/90 text-white shrink-0">
-                <ArrowRight size={16} />
-              </Button>
+            <h4 className="font-heading font-bold text-base mb-4 text-white">Our Location</h4>
+            <ul className="space-y-3 text-sm text-zinc-400">
+              <li className="flex items-start gap-3">
+                <MapPin className="w-4 h-4 text-primary shrink-0 mt-0.5" />
+                <span>
+                  No 78 Woji road GRA Phase 3,<br />
+                  Port-Harcourt, Nigeria
+                </span>
+              </li>
+            </ul>
+          </div>
+
+          {/* 4. Follow Us */}
+          <div>
+            <h4 className="font-heading font-bold text-base mb-4 text-white">Follow Us</h4>
+            <div className="flex items-center gap-4">
+              <SocialIcon icon={<Instagram size={18} />} href="#" />
+              <SocialIcon icon={<Facebook size={18} />} href="#" />
+              <SocialIcon icon={<Linkedin size={18} />} href="#" />
             </div>
           </div>
         </div>
 
-        {/* BOTTOM SECTION: Copyright */}
+        {/* Copyright Section */}
         <div className="pt-6 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-zinc-500 text-xs">
-            © {currentYear} Designs By May. All rights reserved.
-          </p>
+          <p className="text-zinc-500 text-xs">© {currentYear} Designs By May. All rights reserved.</p>
           <div className="flex gap-6 text-xs text-zinc-500">
             <Link to="/privacy" className="hover:text-white transition-colors">Privacy</Link>
             <Link to="/terms" className="hover:text-white transition-colors">Terms</Link>
@@ -96,23 +75,12 @@ const Footer = () => {
   );
 };
 
-// --- Helper Components ---
-
-const FooterLink = ({ to, children }: { to: string; children: React.ReactNode }) => (
-  <Link 
-    to={to} 
-    className="hover:text-primary hover:pl-1 transition-all duration-300 inline-block"
-  >
-    {children}
-  </Link>
-);
-
 const SocialIcon = ({ icon, href }: { icon: React.ReactNode; href: string }) => (
   <a 
     href={href} 
     target="_blank" 
     rel="noopener noreferrer"
-    className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center text-zinc-400 hover:bg-primary hover:text-white transition-all duration-300 border border-white/10 hover:border-primary"
+    className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-zinc-400 hover:bg-primary hover:text-white transition-all duration-300 border border-white/10 hover:border-primary"
   >
     {icon}
   </a>
