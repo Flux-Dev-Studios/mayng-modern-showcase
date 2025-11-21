@@ -192,4 +192,16 @@ export const projects = [
     challenge: "Maximizing natural light and storage for fabrics and samples.",
     solution: "We positioned the worktables to face the north windows for consistent light and built floor-to-ceiling white storage units to keep the space clutter-free."
   }
+  {
+    id: "office-3",
+    category: "office",
+    title: "Minimalist Co-Working Hub",
+    description: "A flexible workspace designed for collaboration and focus.",
+    image: office3,
+    client: "StartUp Nigeria",
+    location: "Lekki Phase 1",
+    year: "2024",
+    challenge: "Balancing open collaboration areas with private focus zones in a limited footprint.",
+    solution: "We utilized acoustic glass partitions and modular furniture that can be rearranged. Biophilic design elements were added to reduce stress and improve air quality."
+  }
 ];
