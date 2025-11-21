@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
-import logoImage from "@/assets/logo-dm-transparent.png";
+// Removed logoImage import
 
 // Define props interface
 interface NavigationProps {
@@ -14,8 +14,7 @@ const Navigation = ({ forceScrolled = false }: NavigationProps) => {
   const [scrollState, setScrollState] = useState(false);
   const location = useLocation();
 
-  // Determine effective state: 
-  // If forceScrolled is passed (e.g. Case Study page), use it. Otherwise use scroll listener.
+  // Determine effective state
   const isScrolled = forceScrolled || scrollState;
 
   // --- SCROLL DETECTION ---
@@ -78,24 +77,15 @@ const Navigation = ({ forceScrolled = false }: NavigationProps) => {
         "fixed top-0 left-0 right-0 z-50 transition-all duration-700 ease-[cubic-bezier(0.4,0,0.2,1)] border-b",
         // NAVBAR BACKGROUND TRANSITION
         isScrolled 
-          ? "bg-background/95 backdrop-blur-md shadow-sm py-4 border-border/10" // Scrolled: Glassy White/Dark
-          : "bg-transparent py-6 border-transparent" // Hero: Transparent
+          ? "bg-background/95 backdrop-blur-md shadow-sm py-4 border-border/10" 
+          : "bg-transparent py-6 border-transparent" 
       )}
     >
       <div className="container mx-auto px-6 lg:px-12 relative h-full">
-        <div className="flex items-center justify-between h-full relative">
+        {/* UPDATED ALIGNMENT: Changed justify-between to justify-end since Logo is removed */}
+        <div className="flex items-center justify-end h-full relative">
           
-          {/* --- 1. LOGO --- */}
-          <Link to="/" className="flex items-center hover:opacity-80 transition-opacity z-20">
-            <img 
-              src={logoImage} 
-              alt="Logo" 
-              className={cn(
-                "transition-all duration-500 w-auto",
-                isScrolled ? "h-10 invert" : "h-16" 
-              )} 
-            />
-          </Link>
+          {/* LOGO REMOVED HERE */}
 
           {/* --- 2. CENTER LINKS (Scrolled) --- */}
           <div className={cn(
