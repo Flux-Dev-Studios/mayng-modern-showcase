@@ -3,7 +3,8 @@ import { Link, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-// REMOVED: import logoImage ...
+// IMPORT NEW LOGO
+import logoImage from "@/assets/logo.png";
 
 interface NavigationProps {
   forceScrolled?: boolean;
@@ -76,10 +77,21 @@ const Navigation = ({ forceScrolled = false }: NavigationProps) => {
       )}
     >
       <div className="container mx-auto px-6 lg:px-12 relative h-full">
-        {/* UPDATED: Changed justify-between to justify-end so items stick to the right */}
-        <div className="flex items-center justify-end h-full relative">
+        {/* UPDATED: Changed back to justify-between to separate Logo (Left) and Menu (Right) */}
+        <div className="flex items-center justify-between h-full relative">
           
-          {/* LOGO REMOVED */}
+          {/* --- 1. LOGO (Added back) --- */}
+          <Link to="/" className="flex items-center hover:opacity-80 transition-opacity z-20">
+            <img 
+              src={logoImage} 
+              alt="Design By May" 
+              className={cn(
+                "transition-all duration-500 w-auto object-contain",
+                // If scrolled (white background), invert the white logo to black
+                isScrolled ? "h-10 invert brightness-0" : "h-12" 
+              )} 
+            />
+          </Link>
 
           {/* --- 2. CENTER LINKS (Scrolled) --- */}
           <div className={cn(
