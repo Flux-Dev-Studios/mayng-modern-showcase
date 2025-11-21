@@ -2,9 +2,10 @@ import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
-// Removed logoImage import
 
-// Define props interface
+// FIX: Import your new logo here
+import logoImage from "@/assets/logo.png";
+
 interface NavigationProps {
   forceScrolled?: boolean;
 }
@@ -14,10 +15,8 @@ const Navigation = ({ forceScrolled = false }: NavigationProps) => {
   const [scrollState, setScrollState] = useState(false);
   const location = useLocation();
 
-  // Determine effective state
   const isScrolled = forceScrolled || scrollState;
 
-  // --- SCROLL DETECTION ---
   useEffect(() => {
     const handleScroll = () => {
       const isHomePage = location.pathname === "/";
@@ -33,7 +32,6 @@ const Navigation = ({ forceScrolled = false }: NavigationProps) => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [location.pathname]);
 
-  // --- ROUTE CHANGE HANDLING ---
   useEffect(() => {
     setIsOpen(false);
   }, [location]);
@@ -47,7 +45,6 @@ const Navigation = ({ forceScrolled = false }: NavigationProps) => {
     { name: "Contact", path: "/contact" },
   ];
 
-  // --- HELPER COMPONENT FOR LINKS ---
   const NavLinksList = ({ isDark, spacingClass }: { isDark: boolean, spacingClass: string }) => (
     <div className={cn("flex items-center", spacingClass)}>
       {navLinks.map((link) => (
@@ -56,7 +53,6 @@ const Navigation = ({ forceScrolled = false }: NavigationProps) => {
           to={link.path}
           className={cn(
             "text-sm font-medium transition-colors duration-300 relative py-1",
-            // Desktop Text Colors
             isDark ? "text-foreground" : "text-white",
             "hover:text-primary",
             location.pathname === link.path && "font-semibold"
@@ -75,17 +71,28 @@ const Navigation = ({ forceScrolled = false }: NavigationProps) => {
     <nav
       className={cn(
         "fixed top-0 left-0 right-0 z-50 transition-all duration-700 ease-[cubic-bezier(0.4,0,0.2,1)] border-b",
-        // NAVBAR BACKGROUND TRANSITION
         isScrolled 
           ? "bg-background/95 backdrop-blur-md shadow-sm py-4 border-border/10" 
           : "bg-transparent py-6 border-transparent" 
       )}
     >
       <div className="container mx-auto px-6 lg:px-12 relative h-full">
-        {/* UPDATED ALIGNMENT: Changed justify-between to justify-end since Logo is removed */}
-        <div className="flex items-center justify-end h-full relative">
+        {/* RESTORED: justify-between to separate Logo (Left) and Menu (Right) */}
+        <div className="flex items-center justify-between h-full relative">
           
-          {/* LOGO REMOVED HERE */}
+          {/* --- 1. LOGO (Restored) --- */}
+          <Link to="/" className="flex items-center hover:opacity-80 transition-opacity z-20">
+            <img 
+              src={logoImage} 
+              alt="Design By May" 
+              className={cn(
+                "transition-all duration-500 w-auto object-contain",
+                // LOGIC: If scrolled, 'invert' turns the White Logo -> Black so it's visible on white background
+                // 'h-12' on hero (larger), 'h-10' on scroll (compact)
+                isScrolled ? "h-10 invert brightness-0" : "h-12" 
+              )} 
+            />
+          </Link>
 
           {/* --- 2. CENTER LINKS (Scrolled) --- */}
           <div className={cn(
@@ -112,7 +119,6 @@ const Navigation = ({ forceScrolled = false }: NavigationProps) => {
             onClick={() => setIsOpen(!isOpen)}
             className={cn(
               "md:hidden p-2 transition-colors z-50 relative flex items-center justify-center",
-              // Color Logic
               isScrolled ? "text-foreground" : "text-primary"
             )}
             aria-label="Toggle menu"
