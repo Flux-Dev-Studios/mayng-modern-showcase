@@ -3,9 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-// FIX: Reverted to the existing logo file so the build succeeds.
-// Once you upload 'logo.png' to your src/assets/ folder, you can change this back.
-import logoImage from "@/assets/logo-dm-transparent.png";
+// REMOVED: import logoImage ...
 
 interface NavigationProps {
   forceScrolled?: boolean;
@@ -78,20 +76,10 @@ const Navigation = ({ forceScrolled = false }: NavigationProps) => {
       )}
     >
       <div className="container mx-auto px-6 lg:px-12 relative h-full">
-        <div className="flex items-center justify-between h-full relative">
+        {/* UPDATED: Changed justify-between to justify-end so items stick to the right */}
+        <div className="flex items-center justify-end h-full relative">
           
-          {/* --- 1. LOGO --- */}
-          <Link to="/" className="flex items-center hover:opacity-80 transition-opacity z-20">
-            <img 
-              src={logoImage} 
-              alt="Design By May" 
-              className={cn(
-                "transition-all duration-500 w-auto object-contain",
-                // If scrolled, invert colors to make it visible on white
-                isScrolled ? "h-10 invert" : "h-16" 
-              )} 
-            />
-          </Link>
+          {/* LOGO REMOVED */}
 
           {/* --- 2. CENTER LINKS (Scrolled) --- */}
           <div className={cn(
