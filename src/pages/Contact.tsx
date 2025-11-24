@@ -190,8 +190,8 @@ const Contact = () => {
                       <div>
                         <p className="font-medium text-gray-900 mb-1">Email</p>
                         {/* CHANGED: hover:text-[#E0683D] -> hover:text-[#E2BC63] */}
-                        <a href="mailto:info@designsbymay.com" className="text-gray-500 hover:text-[#E2BC63] transition-colors">
-                          info@designsbymay.com
+                        <a href="mailto:hello@designsbymayng.com" className="text-gray-500 hover:text-[#E2BC63] transition-colors">
+                          hello@designsbymayng.com
                         </a>
                       </div>
                     </div>
@@ -205,8 +205,8 @@ const Contact = () => {
                       <div>
                         <p className="font-medium text-gray-900 mb-1">Phone</p>
                         {/* CHANGED: hover:text-[#E0683D] -> hover:text-[#E2BC63] */}
-                        <a href="tel:+2341234567890" className="text-gray-500 hover:text-[#E2BC63] transition-colors">
-                          +234 123 456 7890
+                        <a href="tel:+2348037260838" className="text-gray-500 hover:text-[#E2BC63] transition-colors">
+                          +2348037260838
                         </a>
                       </div>
                     </div>
@@ -220,7 +220,7 @@ const Contact = () => {
                       <div>
                         <p className="font-medium text-gray-900 mb-1">Location</p>
                         <p className="text-gray-500">
-                          Lagos, Nigeria
+                          No 78 Woji road GRA Phase 3,Port-Harcourt, Nigeria
                         </p>
                       </div>
                     </div>
