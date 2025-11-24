@@ -5,23 +5,6 @@ import { Mail, Phone, MapPin } from "lucide-react";
 import { toast } from "sonner";
 
 
-
-// ==========================================
-
-// 1. REAL IMPORTS (Uncomment these in your project)
-
-// ==========================================
-
-// import { Button } from "@/components/ui/button";
-
-// import { Input } from "@/components/ui/input";
-
-// import { Textarea } from "@/components/ui/textarea";
-
-
-
-// ==========================================
-
 // 2. MOCK COMPONENTS (Delete these in your project)
 
 // ==========================================
