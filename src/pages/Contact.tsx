@@ -1,241 +1,186 @@
 import { useState, useEffect } from "react";
-import { Mail, Phone, MapPin } from "lucide-react";
+import Navigation from "@/components/Navigation";
+import Footer from "@/components/Footer";
+import PageHero from "@/components/PageHero";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { MapPin, Phone, Mail, Clock } from "lucide-react";
 import { toast } from "sonner";
-
-// ==========================================
-// 1. REAL IMPORTS (Uncomment these in your project)
-// ==========================================
-// import { Button } from "@/components/ui/button";
-// import { Input } from "@/components/ui/input";
-// import { Textarea } from "@/components/ui/textarea";
-
-// ==========================================
-// 2. MOCK COMPONENTS (Delete these in your project)
-// ==========================================
-const Button = ({ className, variant, size, ...props }: any) => (
-  <button 
-    className={`inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none disabled:opacity-50 disabled:pointer-events-none ring-offset-background bg-[#E0683D] text-white hover:bg-[#c25730] h-11 px-8 ${className}`} 
-    {...props} 
-  />
-);
-
-const Input = ({ className, ...props }: any) => (
-  <input 
-    className={`flex h-12 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E0683D] disabled:cursor-not-allowed disabled:opacity-50 ${className}`} 
-    {...props} 
-  />
-);
-
-const Textarea = ({ className, ...props }: any) => (
-  <textarea 
-    className={`flex min-h-[150px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E0683D] disabled:cursor-not-allowed disabled:opacity-50 ${className}`} 
-    {...props} 
-  />
-);
-// ==========================================
-
+import heroContact from "@/assets/hero-interior.jpg"; 
 
 const Contact = () => {
-  // Added state for hero animation
-  const [isVisible, setIsVisible] = useState(false);
-
-  useEffect(() => {
-    const timer = setTimeout(() => setIsVisible(true), 100); 
-    return () => clearTimeout(timer);
-  }, []);
-
+  // State for form submission
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    phone: "",
+    subject: "",
     message: "",
   });
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    toast.success("Thank you! We'll get back to you soon.");
-    setFormData({ name: "", email: "", phone: "", message: "" });
-  };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    // Mock submission
+    toast.success("Message sent successfully! We'll get back to you soon.");
+    setFormData({ name: "", email: "", subject: "", message: "" });
+  };
+
   return (
-    <div className="min-h-screen bg-white text-gray-900 font-sans">
-      {/* Navigation Removed */}
-
-      {/* --- NEW HERO BANNER WITH REPLACED IMAGE --- */}
-      <div className="relative h-[50vh] min-h-[400px] w-full overflow-hidden">
-        {/* Background Image */}
-        <div 
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat transform scale-105 transition-transform duration-[20s] ease-linear hover:scale-110"
-          // Updated Image URL below
-          style={{ backgroundImage: 'url("https://images.unsplash.com/photo-1618219908412-a29a1bb7b86e?q=80&w=2728&auto=format&fit=crop")' }}
-        ></div>
-        {/* Dark Overlay */}
-        <div className="absolute inset-0 bg-black/40"></div>
-        
-        {/* Hero Content */}
-        <div className="absolute inset-0 flex flex-col justify-center items-center text-center px-4">
-          <p className={`text-[#E0683D] font-bold tracking-wider uppercase mb-4 transition-all duration-700 delay-300 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-            Get In Touch
-          </p>
-          <h1 className={`text-4xl md:text-6xl font-bold text-white mb-6 max-w-4xl leading-tight transition-all duration-700 delay-500 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-            Let's Start Your <br/> Design Journey
-          </h1>
-          <p className={`text-lg md:text-xl text-gray-200 max-w-2xl mx-auto transition-all duration-700 delay-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-            Ready to transform your space? Let's create something extraordinary together.
-          </p>
-        </div>
-      </div>
+    <div className="min-h-screen bg-background text-foreground font-sans selection:bg-primary/20">
+      <Navigation />
       
-      <main className="py-24">
+      <PageHero 
+        title="Contact Us" 
+        subtitle="Let's discuss how we can transform your space"
+        backgroundImage={heroContact}
+      />
+
+      <main className="py-20 md:py-32">
         <div className="container mx-auto px-6 lg:px-12">
-          <div className="max-w-6xl mx-auto">
-
-            <div className="grid lg:grid-cols-2 gap-12 lg:gap-16">
-              {/* Contact Form */}
-              <div className="animate-scale-in">
-                <form onSubmit={handleSubmit} className="space-y-6">
-                  <div>
-                    <label htmlFor="name" className="block text-sm font-medium mb-2 text-gray-700">
-                      Your Name
-                    </label>
-                    <Input
-                      id="name"
-                      name="name"
-                      type="text"
-                      required
-                      value={formData.name}
-                      onChange={handleChange}
-                      placeholder="John Doe"
-                      className="h-12 border-gray-200" 
-                    />
-                  </div>
-
-                  <div>
-                    <label htmlFor="email" className="block text-sm font-medium mb-2 text-gray-700">
-                      Email Address
-                    </label>
-                    <Input
-                      id="email"
-                      name="email"
-                      type="email"
-                      required
-                      value={formData.email}
-                      onChange={handleChange}
-                      placeholder="john@example.com"
-                      className="h-12 border-gray-200"
-                    />
-                  </div>
-
-                  <div>
-                    <label htmlFor="phone" className="block text-sm font-medium mb-2 text-gray-700">
-                      Phone Number
-                    </label>
-                    <Input
-                      id="phone"
-                      name="phone"
-                      type="tel"
-                      value={formData.phone}
-                      onChange={handleChange}
-                      placeholder="+234 xxx xxx xxxx"
-                      className="h-12 border-gray-200"
-                    />
-                  </div>
-
-                  <div>
-                    <label htmlFor="message" className="block text-sm font-medium mb-2 text-gray-700">
-                      Tell Us About Your Project
-                    </label>
-                    <Textarea
-                      id="message"
-                      name="message"
-                      required
-                      value={formData.message}
-                      onChange={handleChange}
-                      placeholder="Describe your project, space, or design vision..."
-                      className="min-h-[150px] border-gray-200"
-                    />
-                  </div>
-
-                  <Button 
-                    type="submit" 
-                    size="lg" 
-                    className="w-full"
-                  >
-                    Send Message
-                  </Button>
-                </form>
+          
+          <div className="grid lg:grid-cols-2 gap-16 lg:gap-24">
+            
+            {/* LEFT COLUMN: Contact Info */}
+            <div className="space-y-12">
+              <div>
+                <h2 className="font-heading text-3xl md:text-4xl font-bold mb-6 text-foreground">
+                  Get In Touch
+                </h2>
+                <p className="text-muted-foreground text-lg leading-relaxed">
+                  We’d love to work with you to create beautiful furniture and art pieces, and to transform your space into something you’d be glad to be in and flaunt!
+                </p>
               </div>
 
-              {/* Contact Information */}
-              <div className="space-y-8" style={{ animationDelay: "200ms" }}>
-                <div className="bg-white p-8 rounded-2xl shadow-lg border border-gray-100">
-                  <h2 className="font-bold text-2xl mb-6 text-gray-900">Get In Touch</h2>
-                  
-                  <div className="space-y-6">
-                    <div className="flex items-start gap-4">
-                      <div className="w-12 h-12 rounded-lg bg-[#E0683D]/10 flex items-center justify-center flex-shrink-0">
-                        <Mail className="w-5 h-5 text-[#E0683D]" />
-                      </div>
-                      <div>
-                        <p className="font-medium text-gray-900 mb-1">Email</p>
-                        <a href="mailto:info@designsbymay.com" className="text-gray-500 hover:text-[#E0683D] transition-colors">
-                          info@designsbymay.com
-                        </a>
-                      </div>
-                    </div>
-
-                    <div className="flex items-start gap-4">
-                      <div className="w-12 h-12 rounded-lg bg-[#E0683D]/10 flex items-center justify-center flex-shrink-0">
-                        <Phone className="w-5 h-5 text-[#E0683D]" />
-                      </div>
-                      <div>
-                        <p className="font-medium text-gray-900 mb-1">Phone</p>
-                        <a href="tel:+2341234567890" className="text-gray-500 hover:text-[#E0683D] transition-colors">
-                          +234 123 456 7890
-                        </a>
-                      </div>
-                    </div>
-
-                    <div className="flex items-start gap-4">
-                      <div className="w-12 h-12 rounded-lg bg-[#E0683D]/10 flex items-center justify-center flex-shrink-0">
-                        <MapPin className="w-5 h-5 text-[#E0683D]" />
-                      </div>
-                      <div>
-                        <p className="font-medium text-gray-900 mb-1">Location</p>
-                        <p className="text-gray-500">
-                          Lagos, Nigeria
-                        </p>
-                      </div>
-                    </div>
+              <div className="space-y-8">
+                {/* Address */}
+                <div className="flex items-start gap-4">
+                  <div className="p-3 bg-primary/10 rounded-full text-primary shrink-0">
+                    <MapPin className="w-6 h-6" />
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-lg mb-1">Visit Our Studio</h4>
+                    <p className="text-muted-foreground">
+                      No 78 Woji road GRA Phase 3,<br />
+                      Port-Harcourt, Nigeria
+                    </p>
                   </div>
                 </div>
 
-                <div className="bg-gray-50 p-8 rounded-2xl border border-gray-100">
-                  <h3 className="font-bold text-xl mb-4 text-gray-900">Business Hours</h3>
-                  <div className="space-y-2 text-gray-500">
-                    <p className="flex justify-between">
-                      <span>Monday - Friday:</span>
-                      <span className="font-medium text-gray-900">9:00 AM - 6:00 PM</span>
-                    </p>
-                    <p className="flex justify-between">
-                      <span>Saturday:</span>
-                      <span className="font-medium text-gray-900">10:00 AM - 4:00 PM</span>
-                    </p>
-                    <p className="flex justify-between">
-                      <span>Sunday:</span>
-                      <span className="font-medium text-gray-900">Closed</span>
+                {/* Email */}
+                <div className="flex items-start gap-4">
+                  <div className="p-3 bg-primary/10 rounded-full text-primary shrink-0">
+                    <Mail className="w-6 h-6" />
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-lg mb-1">Email Us</h4>
+                    <a href="mailto:hello@designsbymayng.com" className="text-muted-foreground hover:text-primary transition-colors">
+                      hello@designsbymayng.com
+                    </a>
+                  </div>
+                </div>
+
+                {/* Phone */}
+                <div className="flex items-start gap-4">
+                  <div className="p-3 bg-primary/10 rounded-full text-primary shrink-0">
+                    <Phone className="w-6 h-6" />
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-lg mb-1">Call Us</h4>
+                    <a href="tel:+2348037260838" className="text-muted-foreground hover:text-primary transition-colors">
+                      +234 803 726 0838
+                    </a>
+                  </div>
+                </div>
+
+                {/* Hours */}
+                <div className="flex items-start gap-4">
+                  <div className="p-3 bg-primary/10 rounded-full text-primary shrink-0">
+                    <Clock className="w-6 h-6" />
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-lg mb-1">Business Hours</h4>
+                    <p className="text-muted-foreground">
+                      Mon - Fri: 9:00 AM - 6:00 PM<br />
+                      Sat: 10:00 AM - 4:00 PM
                     </p>
                   </div>
                 </div>
               </div>
             </div>
+
+            {/* RIGHT COLUMN: Contact Form */}
+            <div className="bg-secondary/5 border border-border p-8 md:p-10 rounded-3xl shadow-lg">
+              <h3 className="font-heading text-2xl font-bold mb-6">Send a Message</h3>
+              <form onSubmit={handleSubmit} className="space-y-6">
+                <div className="grid md:grid-cols-2 gap-6">
+                  <div className="space-y-2">
+                    <label htmlFor="name" className="text-sm font-medium text-muted-foreground">Name</label>
+                    <Input 
+                      id="name" 
+                      name="name"
+                      value={formData.name}
+                      onChange={handleChange}
+                      placeholder="Your full name" 
+                      required
+                      className="bg-background border-border focus:ring-primary" 
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <label htmlFor="email" className="text-sm font-medium text-muted-foreground">Email</label>
+                    <Input 
+                      id="email" 
+                      name="email"
+                      type="email" 
+                      value={formData.email}
+                      onChange={handleChange}
+                      placeholder="Your email address" 
+                      required
+                      className="bg-background border-border focus:ring-primary" 
+                    />
+                  </div>
+                </div>
+                
+                <div className="space-y-2">
+                  <label htmlFor="subject" className="text-sm font-medium text-muted-foreground">Subject</label>
+                  <Input 
+                    id="subject" 
+                    name="subject"
+                    value={formData.subject}
+                    onChange={handleChange}
+                    placeholder="Project type or inquiry" 
+                    required
+                    className="bg-background border-border focus:ring-primary" 
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <label htmlFor="message" className="text-sm font-medium text-muted-foreground">Message</label>
+                  <Textarea 
+                    id="message" 
+                    name="message"
+                    value={formData.message}
+                    onChange={handleChange}
+                    placeholder="Tell us about your project..." 
+                    required
+                    className="min-h-[150px] bg-background border-border focus:ring-primary resize-none" 
+                  />
+                </div>
+
+                <Button type="submit" size="lg" className="w-full bg-primary text-primary-foreground hover:bg-primary/90">
+                  Send Message
+                </Button>
+              </form>
+            </div>
+
           </div>
         </div>
       </main>
+
+      <Footer />
     </div>
   );
 };
