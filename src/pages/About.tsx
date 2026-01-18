@@ -1,4 +1,3 @@
-import Navigation from "@/components/Navigation";
 import PageHero from "@/components/PageHero";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
@@ -32,7 +31,6 @@ const About = () => {
 
   return (
     <div className="min-h-screen bg-background selection:bg-primary/20">
-      <Navigation />
       <PageHero 
         title="About Our Studio" 
         subtitle="Designing spaces that inspire, comfort, and empower."

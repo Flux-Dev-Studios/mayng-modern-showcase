@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import Navigation from "@/components/Navigation"; // Ensure this is imported
 
 // --- Testimonial Data ---
 const testimonials = [
@@ -62,7 +61,6 @@ const TestimonialsPage = () => {
 
   return (
     <div className="min-h-screen bg-background text-foreground font-sans">
-      <Navigation />
       
       {/* --- HERO SECTION --- */}
       <div className="relative h-[50vh] min-h-[400px] w-full overflow-hidden">

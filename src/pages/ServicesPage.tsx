@@ -1,4 +1,3 @@
-import Navigation from "@/components/Navigation";
 import PageHero from "@/components/PageHero";
 import { Home, Armchair, Palette, Lightbulb, Layout, PackageCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -47,7 +46,6 @@ const services = [
 const ServicesPage = () => {
   return (
     <div className="min-h-screen bg-background">
-      <Navigation />
       <PageHero 
         title="Our Services" 
         subtitle="Comprehensive design solutions tailored to transform your space from concept to completion"
