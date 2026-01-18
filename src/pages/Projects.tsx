@@ -1,7 +1,5 @@
 import { useState, useEffect } from "react";
-import Navigation from "@/components/Navigation";
 import PageHero from "@/components/PageHero";
-import Footer from "@/components/Footer";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import { ArrowUpRight, ArrowLeft, MapPin, Calendar, User, ArrowRight } from "lucide-react"; 
@@ -40,9 +38,6 @@ const Projects = () => {
 
     return (
       <div className="min-h-screen bg-background animate-in fade-in duration-500">
-        {/* Force Navbar to solid state */}
-        <Navigation forceScrolled={true} />
-        
         <main className="pt-32 md:pt-40">
           
           {/* HEADER CONTENT */}
@@ -133,7 +128,6 @@ const Projects = () => {
             </div>
           </div>
         </main>
-        <Footer />
       </div>
     );
   }
@@ -143,7 +137,6 @@ const Projects = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      <Navigation />
       <PageHero 
         title="Our Portfolio" 
         subtitle="Curated spaces designed for modern living"
