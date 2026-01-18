@@ -11,8 +11,7 @@ import ServicesPage from "./pages/ServicesPage";
 import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
 import Navigation from "./components/Navigation";
-
-// 1. Import the Footer component
+import ScrollToTop from "./components/ScrollToTop";
 import Footer from "@/components/Footer"; 
 
 const queryClient = new QueryClient();
@@ -23,9 +22,8 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
-        {/* Layout Wrapper to ensure Footer pushes to bottom if content is short */}
+        <ScrollToTop />
         <div className="flex flex-col min-h-screen">
-          
           <Navigation />
           
           {/* Flex-grow ensures this section takes up remaining space */}

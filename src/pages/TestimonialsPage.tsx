@@ -135,25 +135,6 @@ const TestimonialsPage = () => {
         </div>
       </div>
 
-      {/* --- STATS BAR --- */}
-      <div className="bg-secondary py-12">
-        <div className="container mx-auto px-6 lg:px-12">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-            {[
-              { number: "150+", label: "Happy Clients" },
-              { number: "200+", label: "Projects Completed" },
-              { number: "12+", label: "Years Experience" },
-              { number: "5.0", label: "Average Rating" },
-            ].map((stat, index) => (
-              <div key={index} className="space-y-1">
-                <p className="text-3xl md:text-4xl font-bold text-primary">{stat.number}</p>
-                <p className="text-sm text-secondary-foreground/70 uppercase tracking-wider">{stat.label}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-
       {/* --- TESTIMONIALS GRID --- */}
       <div className="container mx-auto px-6 lg:px-12 py-24">
         <div className="text-center mb-16">

@@ -100,7 +100,7 @@ const Hero = () => {
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
           <Button variant="hero" size="lg" asChild className="shadow-xl">
-            <Link to="/portfolio">View Our Work</Link>
+            <Link to="/projects">View Our Work</Link>
           </Button>
           <Button variant="outline" size="lg" asChild className="shadow-xl bg-black/20 border-white/40 hover:bg-white hover:text-black text-white backdrop-blur-sm">
             <Link to="/contact">Get Started</Link>
